@@ -5,5 +5,5 @@ def start_task(id_val, pw_val):
     init()
     # 로그인
     execute_login(id_val, pw_val)
-    # post_blog("title", "content")
+    post_blog("title", "content")
     post_cafe("dsarwercqeadfadsgag", "dascxvasraw", "자유게시판")
