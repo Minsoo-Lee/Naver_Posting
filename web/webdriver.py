@@ -1,5 +1,6 @@
 import time
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from data.URL import *
@@ -37,6 +38,41 @@ def init_chrome():
 
     main_window = driver.current_window_handle
 
-@sleep_after()
 def enter_url(url):
     driver.get(url)
+
+def click_element_xpath(xpath):
+    driver.find_element(By.XPATH, xpath).click()
+
+def get_element_xpath(xpath):
+    return driver.find_element(By.XPATH, xpath)
+
+def click_element_among_classes(class_name, text):
+    elements = driver.find_elements(By.CLASS_NAME, class_name)
+
+    for element in elements:
+        if element.text == text:
+            print("찾음:", element.text)
+            element.click()  # 클릭하고 싶으면 이 줄 사용
+            break
+
+def switch_frame(frame):
+    driver.switch_to.frame(frame)
+
+def switch_frame_to_default():
+    driver.switch_to.default_content()
+
+def switch_tab():
+    tab = driver.window_handles[-1]
+    driver.switch_to.window(window_name=tab)
+
+def exit_tab():
+    driver.close()
+    driver.switch_to.window(main_window)
+
+def send_keys_action(value):
+    actions = ActionChains(driver)
+    actions.send_keys(value).perform()
+
+def send_data_by_xpath(xpath, value):
+    driver.find_element(By.XPATH, xpath).send_keys(value)
