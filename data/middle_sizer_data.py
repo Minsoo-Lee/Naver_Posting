@@ -14,6 +14,7 @@ class MiddleSizerData:
         self.form_label_sizer = None
         self.form_input_sizer = None
         self.task_button_sizer = None
+        self._initialized = True
 
     def set_form_label_sizer(self, form_label_sizer):
         self.form_label_sizer = form_label_sizer

@@ -1,14 +1,14 @@
 # 싱글톤으로 제작
 class ButtonData:
     _instance = None
+    _initialized = False  # 여기서 플래그 설정
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(ButtonData, cls).__new__(cls)
-            cls._instance._initialized = False  # 여기서 플래그 설정
         return cls._instance
     def __init__(self):
-        if self._initialized:
+        if ButtonData._initialized:
             return  # 이미 초기화된 경우, 바로 리턴
 
         # 한 번만 초기화할 내용
@@ -18,8 +18,9 @@ class ButtonData:
         self.blog_button = None
         self.execute_button = None
         self.stop_button = None
+        self.toggle_button = None
 
-        self._initialized = True  # 이제 초기화 완료
+        ButtonData._initialized = True  # 이제 초기화 완료
 
     # 버튼 세팅
     def set_account_button(self, account_button):
@@ -39,6 +40,9 @@ class ButtonData:
 
     def set_stop_button(self, stop_button):
         self.stop_button = stop_button
+
+    def set_toggle_button(self, toggle_button):
+        self.toggle_button = toggle_button
 
     # 버튼 활성화 설정
     def account_button_Enable(self, boolean):

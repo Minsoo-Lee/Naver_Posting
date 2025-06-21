@@ -21,7 +21,17 @@ def post_blog(title, content):
     blog.cancel_continue()
     blog.exit_help()
     blog.write_title(title)
-    blog.write_content(content)
+    # blog.write_content(content)
+
+    # 영상 업로드 확인
+    blog.upload_image("/Users/minsoo/Desktop/Logo.jpg")
+    print("image1 uploaded")
+    blog.upload_image("/Users/minsoo/Desktop/photo1.jpg")
+    print("image2 uploaded")
+    blog.upload_video("/Users/minsoo/Desktop/video1.mov")
+    print("video1 uploaded")
+    # 확인 끝
+
     blog.click_post_button()
     blog.complete_posting()
     blog.exit_iframe()

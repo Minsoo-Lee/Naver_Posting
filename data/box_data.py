@@ -1,15 +1,19 @@
 class BoxData:
     _instance = None
+    _initialized = False
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(BoxData, cls).__new__(cls)
-            cls._instance._initialized = False  # 여기서 플래그 설정
         return cls._instance
 
     def __init__(self):
+        if BoxData._initialized:
+            return  # 이미 초기화된 경우, 바로 리턴
+
         self.status_rb = None
         self.comment_cb = None
+        BoxData._initialized = True
 
     # 박스 세팅
     def set_status_rb(self, status_rb):

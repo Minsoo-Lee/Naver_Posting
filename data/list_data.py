@@ -1,17 +1,22 @@
 class ListData:
     _instance = None
+    _initialized = False
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(ListData, cls).__new__(cls)
-            cls._instance._initialized = False  # 여기서 플래그 설정
         return cls._instance
 
     def __init__(self):
+        if ListData._initialized:
+            return  # 이미 초기화된 경우, 바로 리턴
+
         self.account_list = None
         self.keyword_list = None
         self.blog_list = None
         self.cafe_list = None
+
+        ListData._initialized = True
 
     # 리스트 세팅
     def set_account_list(self, account_list):

@@ -47,6 +47,9 @@ def click_element_xpath(xpath):
 def get_element_xpath(xpath):
     return driver.find_element(By.XPATH, xpath)
 
+def get_element_css(css):
+    return driver.find_element(By.CSS_SELECTOR, css)
+
 def click_element_among_classes(class_name, text):
     elements = driver.find_elements(By.CLASS_NAME, class_name)
 

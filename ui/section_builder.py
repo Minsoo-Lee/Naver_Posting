@@ -84,19 +84,59 @@ class SectionBuilder:
         rb_title = wx.StaticText(rb_panel, wx.ID_ANY, "플랫폼 선택")
 
         rb_labels = ['블로그', '카페', "둘 다"]
-        self.radio_box = wx.RadioBox(rb_panel, -1,
+        radio_box = wx.RadioBox(rb_panel, -1,
                                 size = (-1, -1),
                                 choices=rb_labels,
                                 majorDimension=3)
 
         rb_sizer.Add(rb_title, 0, wx.ALL, 5)
-        rb_sizer.Add(self.radio_box, 0, wx.ALL , 5)
+        rb_sizer.Add(radio_box, 0, wx.ALL , 5)
         rb_panel.SetSizer(rb_sizer)
 
-        self.radio_box.Bind(wx.EVT_RADIOBOX, self.binding.on_radio_selected)
+        radio_box.Bind(wx.EVT_RADIOBOX, self.binding.on_radio_selected)
 
         self.left_panel_data.set_rb_panel(rb_panel)
-        self.box_data.set_status_rb(self.radio_box)
+        self.box_data.set_status_rb(radio_box)
+
+    def waiting_section(self, panel):
+        waiting_panel = wx.Panel(panel, wx.ID_ANY)
+        waiting_box = wx.StaticBox(waiting_panel)
+        waiting_sizer = wx.StaticBoxSizer(waiting_box, wx.VERTICAL)
+
+        waiting_label = wx.StaticText(waiting_panel, wx.ID_ANY, "대기시간 설정")
+        waiting_sizer.Add(waiting_label, 0, wx.ALL | wx.ALIGN_LEFT, 15)
+
+        grid_box = wx.StaticBox(waiting_panel)
+        grid_box_sizer = wx.StaticBoxSizer(grid_box, wx.VERTICAL)
+
+        grid_panel = wx.Panel(waiting_panel, wx.ID_ANY)
+        grid_sizer = wx.FlexGridSizer(2, 2, 10, 10)  # (행, 열, 수직 간격, 수평 간격)
+        grid_sizer.AddGrowableCol(1, 1)  # 두 번째 열 (input 쪽)을 확장 가능하게 설정
+
+        max_label = wx.StaticText(grid_panel, wx.ID_ANY, "최대 (분)")
+        max_input = wx.TextCtrl(grid_panel, wx.ID_ANY, size=wx.Size(100, 20))
+        min_label = wx.StaticText(grid_panel, wx.ID_ANY, "최소 (분)")
+        min_input = wx.TextCtrl(grid_panel, wx.ID_ANY, size=wx.Size(100, 20))
+
+        grid_sizer.AddMany([
+            (max_label, 0, wx.ALIGN_CENTER_VERTICAL),
+            (max_input, 0, wx.EXPAND),
+            (min_label, 0, wx.ALIGN_CENTER_VERTICAL),
+            (min_input, 0, wx.EXPAND),
+        ])
+
+        grid_panel.SetSizer(grid_sizer)
+        grid_box_sizer.Add(grid_panel, 1, wx.ALL | wx.EXPAND, 10)
+        waiting_sizer.Add(grid_box_sizer, 1, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.ALIGN_LEFT, 10)
+
+        self.ip_section(waiting_panel)
+        waiting_sizer.Add(self.left_panel_data.ip_panel, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 10)
+
+        waiting_panel.SetSizer(waiting_sizer)
+
+        self.left_panel_data.set_waiting_panel(waiting_panel)
+        self.text_data.set_waiting_max(max_input)
+        self.text_data.set_waiting_min(min_input)
 
     # 좌측 위 좌측: 라벨 + 라디오박스 패널
     def current_section(self, panel):
@@ -105,22 +145,56 @@ class SectionBuilder:
 
         self.current_status_label(current_panel)
         self.platform_radio_box(current_panel)
+        self.waiting_section(current_panel)
 
-        # ✅ 이미지 삽입 부분
-        # 이미지 경로: 루트 디렉토리에 있는 logo.png
-        root_path = os.path.dirname(os.path.dirname(__file__))
-        image_path = os.path.join(root_path, "logo.png")
+        # # ✅ 이미지 삽입 부분
+        # # 이미지 경로: 루트 디렉토리에 있는 logo.png
+        # root_path = os.path.dirname(os.path.dirname(__file__))
+        # image_path = os.path.join(root_path, "logo.png")
+        #
+        # image = wx.Image(image_path, wx.BITMAP_TYPE_PNG).Scale(160, 160)
+        # bitmap = wx.StaticBitmap(current_panel, wx.ID_ANY, wx.BitmapBundle(image))
+        # # 이미지 삽입 끝
 
-        image = wx.Image(image_path, wx.BITMAP_TYPE_PNG).Scale(160, 160)
-        bitmap = wx.StaticBitmap(current_panel, wx.ID_ANY, wx.BitmapBundle(image))
-        # 이미지 삽입 끝
-
-        current_sizer.Add(self.left_panel_data.status_panel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        current_sizer.Add(self.left_panel_data.rb_panel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        current_sizer.Add(bitmap, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 20)
+        current_sizer.Add(self.left_panel_data.status_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
+        current_sizer.Add(self.left_panel_data.rb_panel, 0, wx.BOTTOM | wx.ALIGN_LEFT, 20)
+        # current_sizer.Add(bitmap, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 20)
+        current_sizer.Add(self.left_panel_data.waiting_panel, wx.ALIGN_LEFT)
         current_panel.SetSizer(current_sizer)
 
         self.left_panel_data.set_current_panel(current_panel)
+
+    # 유동IP 토글 버튼
+    def ip_section(self, panel):
+        ip_panel = wx.Panel(panel, wx.ID_ANY)
+        ip_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        ip_toggle = wx.ToggleButton(ip_panel, wx.ID_ANY, "유동 IP 사용여부")
+        # ip_toggle.Bind(wx.EVT_TOGGLEBUTTON, on_toggled)
+
+        ip_sizer.Add(ip_toggle, 0, wx.TOP | wx.BOTTOM, 8)
+        ip_panel.SetSizer(ip_sizer)
+
+        self.left_panel_data.set_ip_panel(ip_panel)
+        self.button_data.set_toggle_button(ip_toggle)
+
+    # API KEY 입력
+    def api_section(self, panel):
+        api_panel = wx.Panel(panel, wx.ID_ANY)
+        api_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        api_input_label = wx.StaticText(api_panel, wx.ID_ANY, "API KEY", size=(80, 20))
+        api_input = wx.TextCtrl(api_panel, wx.ID_ANY, size=(150, 20))
+
+        api_input_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        api_input_sizer.Add(api_input_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)  # wx.ALIGN_CENTER_VERTICAL로 수직 가운데 정렬
+        api_input_sizer.Add(api_input, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        api_sizer.Add(api_input_sizer, 0)
+        api_panel.SetSizer(api_sizer)
+
+        self.left_panel_data.set_api_panel(api_panel)
+        self.text_data.set_api_number(api_input)
 
     # 핸드폰 번호 입력
     def phone_section(self, panel):
@@ -134,7 +208,7 @@ class SectionBuilder:
         phone_input_sizer.Add(phone_input_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)  # wx.ALIGN_CENTER_VERTICAL로 수직 가운데 정렬
         phone_input_sizer.Add(phone_input, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        phone_sizer.Add(phone_input_sizer, 0, wx.ALL, 5)
+        phone_sizer.Add(phone_input_sizer, 0)
         phone_panel.SetSizer(phone_sizer)
 
         self.left_panel_data.set_phone_panel(phone_panel)
@@ -150,12 +224,16 @@ class SectionBuilder:
         account_button.Enable(True)
 
         account_list = wx.ListCtrl(account_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
-        account_list.InsertColumn(0, "주소", width=120)
-        account_list.InsertColumn(1, "업체", width=130)
+        account_list.InsertColumn(0, "계정명", width=120)
 
         account_sizer.Add(account_button, 0, wx.ALL, border=3)
-        account_sizer.Add(account_list, 0, wx.ALL, border=3)
+        account_sizer.Add(account_list, 0, wx.BOTTOM, border=10)
         account_panel.SetSizer(account_sizer)
+
+        account_button.Bind(
+            wx.EVT_BUTTON,
+            lambda event: self.binding.on_list_button_clicked(event, account_panel)
+        )
 
         self.left_panel_data.set_account_panel(account_panel)
         self.button_data.set_account_button(account_button)
@@ -167,11 +245,15 @@ class SectionBuilder:
         phone_account_box = wx.StaticBox(phone_account_panel)
         phone_account_sizer = wx.StaticBoxSizer(phone_account_box, wx.VERTICAL)
 
+        self.api_section(phone_account_panel)
         self.phone_section(phone_account_panel)
         self.account_section(phone_account_panel)
-
-        phone_account_sizer.Add(self.left_panel_data.phone_panel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        phone_account_sizer.Add(self.left_panel_data.account_panel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        # self.ip_section(phone_account_panel)
+        #
+        # phone_account_sizer.Add(self.left_panel_data.ip_panel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        phone_account_sizer.Add(self.left_panel_data.api_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
+        phone_account_sizer.Add(self.left_panel_data.phone_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
+        phone_account_sizer.Add(self.left_panel_data.account_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
         phone_account_panel.SetSizer(phone_account_sizer)
 
         self.left_panel_data.set_phone_account_panel(phone_account_panel)
@@ -183,7 +265,7 @@ class SectionBuilder:
         self.current_section(up_panel)
         self.phone_account_panel(up_panel)
 
-        up_sizer.Add(self.left_panel_data.current_panel, 0, wx.RIGHT, 30)
+        up_sizer.Add(self.left_panel_data.current_panel, 0, wx.RIGHT, 20)
         up_sizer.Add(self.left_panel_data.phone_account_panel, 0, wx.ALL, 5)
         up_panel.SetSizer(up_sizer)
 
@@ -201,7 +283,14 @@ class SectionBuilder:
 
         keyword_list = wx.ListCtrl(keyword_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(550, LIST_BOX_HEIGHT))
         keyword_list.InsertColumn(0, "주소", width=120)
-        keyword_list.InsertColumn(1, "업체", width=130)
+        keyword_list.InsertColumn(1, "업체", width=120)
+        keyword_list.InsertColumn(2, "파일 경로", width=120)
+        keyword_list.InsertColumn(3, "해시태그", width=120)
+
+        keyword_button.Bind(
+            wx.EVT_BUTTON,
+            lambda event: self.binding.on_list_button_clicked(event, keyword_panel)
+        )
 
         keyword_sizer.Add(keyword_button, 0, wx.ALL, border=3)
         keyword_sizer.Add(keyword_list, 0, wx.ALL, border=3)
@@ -222,7 +311,12 @@ class SectionBuilder:
 
         blog_list = wx.ListCtrl(blog_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
         blog_list.InsertColumn(0, "이름", width=120)
-        blog_list.InsertColumn(1, "카테고리", width=130)
+        blog_list.InsertColumn(1, "게시판 이름", width=130)
+
+        blog_button.Bind(
+            wx.EVT_BUTTON,
+            lambda event: self.binding.on_list_button_clicked(event, blog_panel)
+        )
 
         blog_sizer.Add(blog_button, 0, wx.ALL, 3)
         blog_sizer.Add(blog_list, 0, wx.ALL, 3)
@@ -243,20 +337,25 @@ class SectionBuilder:
 
         cafe_list = wx.ListCtrl(cafe_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
         cafe_list.InsertColumn(0, "이름", width=120)
-        cafe_list.InsertColumn(1, "카테고리", width=130)
+        cafe_list.InsertColumn(1, "게시판 이름", width=130)
         cafe_list.Enable(False)
 
-        self.cafe_checkbox = wx.CheckBox(cafe_panel, wx.ID_ANY, "댓글 기능 허용")
-        self.cafe_checkbox.Enable(False)
+        cafe_button.Bind(
+            wx.EVT_BUTTON,
+            lambda event: self.binding.on_list_button_clicked(event, cafe_panel)
+        )
+
+        cafe_checkbox = wx.CheckBox(cafe_panel, wx.ID_ANY, "댓글 기능 허용")
+        cafe_checkbox.Enable(False)
 
         cafe_sizer.Add(cafe_button, 0, wx.ALL, 3)
         cafe_sizer.Add(cafe_list, 0, wx.ALL, 3)
-        cafe_sizer.Add(self.cafe_checkbox, 0, wx.TOP, 5)
+        cafe_sizer.Add(cafe_checkbox, 0, wx.TOP, 5)
         cafe_panel.SetSizer(cafe_sizer)
 
         self.left_panel_data.set_cafe_panel(cafe_panel)
         self.button_data.set_cafe_button(cafe_button)
-        self.box_data.set_comment_cb(self.cafe_checkbox)
+        self.box_data.set_comment_cb(cafe_checkbox)
         self.list_data.set_cafe_list(cafe_list)
 
     def down_section(self, panel):
@@ -267,8 +366,8 @@ class SectionBuilder:
         self.blog_section(down_panel)
         self.cafe_section(down_panel)
 
-        down_sizer.Add(self.left_panel_data.blog_panel, 0, wx.RIGHT, 30)
-        down_sizer.Add(self.left_panel_data.cafe_panel, 0, wx.ALL, 5)
+        down_sizer.Add(self.left_panel_data.blog_panel, 0, wx.RIGHT | wx.ALIGN_TOP, 30)
+        down_sizer.Add(self.left_panel_data.cafe_panel, 0, wx.ALL | wx.ALIGN_TOP, 5)
         down_panel.SetSizer(down_sizer)
 
         self.left_panel_data.set_down_panel(down_panel)
@@ -285,16 +384,29 @@ class SectionBuilder:
 
     # 텍스트 형식 입력
     def content_input_section(self, panel):
-        form_input = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=wx.Size(MIDDLE_WIDTH, 400))
+        form_input = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=wx.Size(MIDDLE_WIDTH, 400),
+                                 value="안녕하세요. 헤더입니다. 여기서 등록하는 미디어는 테스트를 위한 임의의 사진 및 영상입니다.\n\n" +
+                                       "[사진]\n\n" +
+                                       "이곳부터는 AI가 작성할 글이 들어갈 본문입니다.\n\n" +
+                                       "[사진]\n\n" +
+                                       "이 밑에는 영상이 들어갑니다.\n\n" +
+                                       "[영상]\n\n" +
+                                       "맺음말입니다.")
         form_input_sizer = wx.BoxSizer(wx.VERTICAL)
         form_input_sizer.Add(form_input, 1, wx.TOP | wx.LEFT | wx.RIGHT, 3)
 
+        self.text_data.set_content_input(form_input)
         self.middle_sizer_data.set_form_input_sizer(form_input_sizer)
 
     # 작업 수행 버튼
     def execute_section(self, panel):
         task_button = wx.Button(panel, wx.ID_ANY, "작업 수행", size=wx.Size(MIDDLE_WIDTH, 50))
         task_button.Enable(True)
+
+        task_button.Bind(wx.EVT_BUTTON,
+                         lambda event: self.binding.on_execute_button_clicked(event, self.text_data.get_content_input())
+        )
+
         task_button_sizer = wx.BoxSizer(wx.VERTICAL)
         task_button_sizer.Add(task_button, 0)
 

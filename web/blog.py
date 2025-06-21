@@ -61,3 +61,26 @@ def complete_posting():
 @sleep_after()
 def exit_iframe():
     webdriver.switch_frame_to_default()
+
+# 시각 자료 넣기
+@sleep_after()
+def upload_image(image_path):
+    # 업로드 버튼 클릭
+    # img_btn = webdriver.get_element_css("button[data-name='image']")
+    # img_btn.click()
+    # time.sleep(2)
+
+    img_input = webdriver.get_element_css("input[type='file']")
+    img_input.send_keys(image_path)
+    time.sleep(3)  # 업로드 대기
+
+# 영상 업로드
+@sleep_after()
+def upload_video(video_path):
+    video_btn = webdriver.get_element_css("button[data-name='video']")
+    video_btn.click()
+    time.sleep(2)
+
+    video_input = webdriver.get_element_css("input[type='file']")
+    video_input.send_keys("/path/to/video1.mp4")
+    time.sleep(5)  # 업로드 대기

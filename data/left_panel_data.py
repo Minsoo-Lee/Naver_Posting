@@ -19,6 +19,9 @@ class LeftPanelData:
         self.status_panel = None
         self.rb_panel = None
         self.current_panel = None
+        self.ip_panel = None
+        self.waiting_panel = None
+        self.api_panel = None
         self.phone_panel = None
         self.account_panel = None
         self.phone_account_panel = None
@@ -38,6 +41,12 @@ class LeftPanelData:
 
     def set_current_panel(self, current_panel):
         self.current_panel = current_panel
+
+    def set_ip_panel(self, ip_panel):
+        self.ip_panel = ip_panel
+
+    def set_waiting_panel(self, waiting_panel):
+        self.waiting_panel = waiting_panel
 
     def set_phone_panel(self, phone_panel):
         self.phone_panel = phone_panel
@@ -62,3 +71,6 @@ class LeftPanelData:
 
     def set_down_panel(self, down_panel):
         self.down_panel = down_panel
+
+    def set_api_panel(self, api_panel):
+        self.api_panel = api_panel
