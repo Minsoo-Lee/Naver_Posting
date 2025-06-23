@@ -1,10 +1,14 @@
 from selenium.webdriver import ActionChains
-
+from selenium.webdriver.common.keys import Keys
 from utils.decorators import sleep_after
 from web import webdriver
 from data.URL import *
-from selenium.webdriver.common.by import By
 import time
+from utils import image, video
+from web.webdriver import hide_finder
+
+# 윈도우일 경우 다르게 (혹은 운영체제 감지해서 다르게 작동하게)
+KEY = Keys.COMMAND
 
 @sleep_after(3)
 def enter_posting_window():
@@ -41,6 +45,7 @@ def write_title(title):
 @sleep_after()
 def write_content(content):
     webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
+    webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)
     # title_input = webdriver.driver.find_element(By.XPATH,
     #                                             "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
@@ -61,26 +66,3 @@ def complete_posting():
 @sleep_after()
 def exit_iframe():
     webdriver.switch_frame_to_default()
-
-# 시각 자료 넣기
-@sleep_after()
-def upload_image(image_path):
-    # 업로드 버튼 클릭
-    # img_btn = webdriver.get_element_css("button[data-name='image']")
-    # img_btn.click()
-    # time.sleep(2)
-
-    img_input = webdriver.get_element_css("input[type='file']")
-    img_input.send_keys(image_path)
-    time.sleep(3)  # 업로드 대기
-
-# 영상 업로드
-@sleep_after()
-def upload_video(video_path):
-    video_btn = webdriver.get_element_css("button[data-name='video']")
-    video_btn.click()
-    time.sleep(2)
-
-    video_input = webdriver.get_element_css("input[type='file']")
-    video_input.send_keys("/path/to/video1.mp4")
-    time.sleep(5)  # 업로드 대기

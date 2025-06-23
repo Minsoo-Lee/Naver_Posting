@@ -1,5 +1,6 @@
 from web import login, webdriver, blog, cafe
 from ui import log
+from utils import image, video
 
 def init():
     webdriver.init_chrome()
@@ -21,14 +22,14 @@ def post_blog(title, content):
     blog.cancel_continue()
     blog.exit_help()
     blog.write_title(title)
-    # blog.write_content(content)
+    blog.write_content(content)
 
     # 영상 업로드 확인
-    blog.upload_image("/Users/minsoo/Desktop/Logo.jpg")
+    image.upload_image("/Users/minsoo/Desktop/Logo.jpg")
     print("image1 uploaded")
-    blog.upload_image("/Users/minsoo/Desktop/photo1.jpg")
+    image.upload_image("/Users/minsoo/Desktop/photo1.png")
     print("image2 uploaded")
-    blog.upload_video("/Users/minsoo/Desktop/video1.mov")
+    video.upload_video_to_blog("/Users/minsoo/Desktop/video1.mov")
     print("video1 uploaded")
     # 확인 끝
 
@@ -42,6 +43,24 @@ def post_cafe(title, content, board_name):
     cafe.click_board_choice()
     cafe.choose_board(board_name)
     cafe.write_title(title)
-    # cafe.enter_iframe()
+
+    cafe.enter_content_input()
+
+    # 영상 업로드 확인
     cafe.write_content(content)
+
+    image.upload_image("/Users/minsoo/Desktop/Logo.jpg")
+    print("image1 uploaded")
+    cafe.write_content(content)
+
+    image.upload_image("/Users/minsoo/Desktop/photo1.png")
+    print("image2 uploaded")
+    cafe.write_content(content)
+
+    video.upload_video_to_cafe("/Users/minsoo/Desktop/video1.mov")
+    print("video1 uploaded")
+    cafe.write_content(content)
+
+    # cafe.enter_iframe()
+
     cafe.click_register_button()

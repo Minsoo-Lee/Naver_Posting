@@ -1,4 +1,7 @@
-from selenium.webdriver import ActionChains
+from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from utils.decorators import sleep_after
 from web import webdriver
@@ -36,6 +39,8 @@ def enter_iframe():
 @sleep_after()
 def write_content(content):
     webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
+    time.sleep(1)
+    webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)
 
 @sleep_after()
@@ -59,3 +64,25 @@ def exit_help():
         webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/article/div/header/button")
     except:
         pass
+
+@sleep_after()
+def enter_content_input():
+    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
+
+# def write_content(content):
+#     # 1. 입력 칸 클릭
+#     webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
+#     time.sleep(0.5)
+#
+#     # focused_element = webdriver.driver.switch_to.active_element
+#
+#     # focused_element.send_keys(Keys.RETURN)
+#     # focused_element.send_keys(content)
+#
+#     # # 2. 진짜로 포커스가 갔는지 확인
+#     # WebDriverWait(webdriver.driver, 10).until(
+#     #     EC.presence_of_element_located((By.CSS_SELECTOR, 'div.se-canvas-bottom'))
+#     # ).click()
+#     # time.sleep(0.2)
+#     #
+#     # # 3. 현재 활성화된 요소에 직접 입력

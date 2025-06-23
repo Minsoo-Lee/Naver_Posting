@@ -1,7 +1,14 @@
 import wx
 from ui.panel_builder import PanelBuilder
+from cache import upload_cache
 
 MARGIN = 10
+
+
+def set_caches():
+    upload_cache.show_text()
+    upload_cache.show_lists()
+
 
 class MainFrame(wx.Frame):
     def __init__(self):
@@ -27,6 +34,9 @@ class MainFrame(wx.Frame):
         self.init_ui_separator()
         self.set_layout()
         self.set_position_and_show()
+
+        set_caches()
+
 
     def init_ui_separator(self):
         # 구분선 1
@@ -58,3 +68,6 @@ class MainFrame(wx.Frame):
 
         self.SetPosition(wx.Point(x, y))
         self.Show()
+
+
+

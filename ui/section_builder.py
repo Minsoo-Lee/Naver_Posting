@@ -5,6 +5,7 @@ from data.button_data import ButtonData
 from data.left_panel_data import LeftPanelData
 from data.list_data import ListData
 from data.middle_sizer_data import MiddleSizerData
+from cache.upload_cache import show_text
 import os
 
 from data.text_data import TextData
@@ -384,14 +385,20 @@ class SectionBuilder:
 
     # 텍스트 형식 입력
     def content_input_section(self, panel):
-        form_input = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=wx.Size(MIDDLE_WIDTH, 400),
-                                 value="안녕하세요. 헤더입니다. 여기서 등록하는 미디어는 테스트를 위한 임의의 사진 및 영상입니다.\n\n" +
-                                       "[사진]\n\n" +
-                                       "이곳부터는 AI가 작성할 글이 들어갈 본문입니다.\n\n" +
-                                       "[사진]\n\n" +
-                                       "이 밑에는 영상이 들어갑니다.\n\n" +
-                                       "[영상]\n\n" +
-                                       "맺음말입니다.")
+        form_input = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=wx.Size(MIDDLE_WIDTH, 400))
+        # 안녕하세요. 헤더입니다. 여기서 등록하는 미디어는 테스트를 위한 임의의 사진 및 영상입니다.
+        #
+        # [사진]
+        #
+        # 이곳부터는 AI가 작성할 글이 들어갈 본문입니다.
+        #
+        # [사진]
+        #
+        # 이 밑에는 영상이 들어갑니다.
+        #
+        # [영상]
+        #
+        # 맺음말입니다.
         form_input_sizer = wx.BoxSizer(wx.VERTICAL)
         form_input_sizer.Add(form_input, 1, wx.TOP | wx.LEFT | wx.RIGHT, 3)
 

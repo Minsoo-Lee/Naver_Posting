@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from data.URL import *
 from utils.decorators import sleep_after
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 driver = None
 URL = "https://localhost:"
@@ -44,11 +46,17 @@ def enter_url(url):
 def click_element_xpath(xpath):
     driver.find_element(By.XPATH, xpath).click()
 
+def click_element_css(css):
+    driver.find_element(By.CSS_SELECTOR, css).click()
+
 def get_element_xpath(xpath):
     return driver.find_element(By.XPATH, xpath)
 
 def get_element_css(css):
     return driver.find_element(By.CSS_SELECTOR, css)
+
+def execute_javascript(js_code, element):
+    driver.execute_script(js_code, element)
 
 def click_element_among_classes(class_name, text):
     elements = driver.find_elements(By.CLASS_NAME, class_name)
@@ -79,3 +87,13 @@ def send_keys_action(value):
 
 def send_data_by_xpath(xpath, value):
     driver.find_element(By.XPATH, xpath).send_keys(value)
+
+def hide_finder():
+    driver.execute_script("""
+    	document.addEventListener('click', function(event) {
+    		if (event.target.tagName === 'INPUT' && event.target.type && event.target.type === 'file') {
+    			event.preventDefault();
+    		}
+    	}, true);
+    """)
+    time.sleep(3)
