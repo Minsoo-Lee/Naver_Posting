@@ -1,6 +1,7 @@
 from web import login, webdriver, blog, cafe
 from ui import log
 from utils import image, video
+from data import box_data
 
 def init():
     webdriver.init_chrome()
@@ -40,6 +41,10 @@ def post_blog(title, content):
 def post_cafe(title, content, board_name):
     cafe.enter_cafe()
     cafe.click_posting_button()
+
+    if box_data.BoxData().get_cb_value() is False:
+        cafe.disable_comment()
+
     cafe.click_board_choice()
     cafe.choose_board(board_name)
     cafe.write_title(title)

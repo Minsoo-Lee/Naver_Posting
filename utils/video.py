@@ -1,6 +1,5 @@
-import pyperclip
-import pyautogui
 import time
+from moviepy.video.VideoClip import ImageClip
 
 from utils.decorators import sleep_after
 from web import webdriver
@@ -52,3 +51,18 @@ def click_video_inform():
 @sleep_after()
 def complete_upload(xpath):
     webdriver.click_element_xpath(xpath)
+
+@sleep_after()
+def generate_video():
+
+    # 1. 이미지 파일을 불러옴
+    image_clip = ImageClip("photo.jpg")
+
+    # 2. 클립의 지속 시간을 설정 (예: 10초)
+    image_clip.duration = 10
+
+    # 3. 출력 영상 크기 (선택사항)
+    # image_clip = image_clip.resize(height=720)  # 높이 720으로 리사이즈 (선택)
+
+    # 4. 영상으로 저장
+    image_clip.write_videofile("output.mp4", fps=24)

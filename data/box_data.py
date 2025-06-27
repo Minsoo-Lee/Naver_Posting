@@ -25,3 +25,7 @@ class BoxData:
     # 박스 활성화 설정
     def comment_cb_Enable(self, boolean):
         self.comment_cb.Enable(boolean)
+
+    # 체크박스 bool 값 가져오기
+    def get_cb_value(self):
+        return self.comment_cb.GetValue()

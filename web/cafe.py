@@ -19,6 +19,10 @@ def click_posting_button():
     time.sleep(1)
     webdriver.switch_tab()
 
+@sleep_after(3)
+def disable_comment():
+    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[2]/div[2]/ul/li[1]/div/input")
+
 @sleep_after()
 def click_board_choice():
     webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[1]/div/div[1]/div[1]/div/div[1]/button")
