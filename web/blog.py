@@ -2,7 +2,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from utils.decorators import sleep_after
 from web import webdriver
-from data.URL import *
+from data.const import *
 import time
 from utils import image, video
 from web.webdriver import hide_finder

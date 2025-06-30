@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from utils.decorators import sleep_after
 from web import webdriver
-from data.URL import *
+from data.const import *
 import time
 
 @sleep_after(3)

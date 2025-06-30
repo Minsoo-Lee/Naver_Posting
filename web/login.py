@@ -6,7 +6,7 @@ from selenium.webdriver import ActionChains, Keys
 
 from utils.decorators import sleep_after
 from web import webdriver
-from data.URL import *
+from data.const import *
 from selenium.webdriver.common.by import By
 
 @sleep_after()
