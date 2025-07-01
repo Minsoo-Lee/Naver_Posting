@@ -1,6 +1,6 @@
 from web import login, webdriver, blog, cafe
 from ui import log
-from utils import image, video
+from media import video, image
 from data import box_data
 
 def init():

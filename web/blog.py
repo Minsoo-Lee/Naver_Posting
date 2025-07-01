@@ -1,11 +1,7 @@
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from utils.decorators import sleep_after
 from web import webdriver
-from data.const import *
 import time
-from utils import image, video
-from web.webdriver import hide_finder
 
 # 윈도우일 경우 다르게 (혹은 운영체제 감지해서 다르게 작동하게)
 KEY = Keys.COMMAND

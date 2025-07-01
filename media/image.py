@@ -71,14 +71,14 @@ def draw_bold_text(draw, position, text, font, fill, boldness=1.0):
     for ox, oy in offsets:
         draw.text((x + ox, y + oy), text, font=font, fill=fill)
 
-def draw_border(draw, width, height, thickness=3, color="red"):
+def draw_border_thumbnail(draw, width, height, thickness=3, color="red"):
     for i in range(thickness):
         draw.rectangle(
             [i, i, width - i - 1, height - i - 1],
             outline=color
         )
 
-def generate_image():
+def generate_image(phone, company):
     colors = Colors()
     text_color, bg_color = colors.get_colors()
     width, height = 400, 300
@@ -88,7 +88,7 @@ def generate_image():
     font_size = 35
     line_spacing = int(font_size * 1.5)
     font = get_korean_font(font_size)
-    lines = ["010-9872-1349", "성수동 설비업체"]
+    lines = [phone, company]
 
     # ✅ 수정된 전체 텍스트 높이 계산
     total_text_height = font_size * len(lines) + line_spacing * (len(lines) - 1)
@@ -101,5 +101,20 @@ def generate_image():
         draw_bold_text(draw, (x, start_y), line, font, fill=text_color, boldness=0.5)
         start_y += font_size + line_spacing
 
-    draw_border(draw, width, height, thickness=5, color=text_color)
+    draw_border_thumbnail(draw, width, height, thickness=5, color=text_color)
     image.save("output.png")
+
+def draw_border_sample(image_path, thickness=3, color="red"):
+    image = Image.open(image_path)
+    draw = ImageDraw.Draw(image)
+    width, height = image.size
+    for i in range(thickness):
+        draw.rectangle(
+            [i, i, width - i - 1, height - i - 1],
+            outline=color
+        )
+
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    new_image_path = os.path.join(root_dir, "..", "sample", "revised_sample1.jpg")
+    image.save(new_image_path)
+
