@@ -69,7 +69,7 @@ def generate_image(phone, company):
     colors = Colors()
     for i in range(100):
         bg_color, text_color = colors.get_color(i)
-        width, height = 400, 400
+        width, height = 400, 300
         thumbnail = Image.new('RGB', (width, height), bg_color)
         draw = ImageDraw.Draw(thumbnail)
 
@@ -92,4 +92,30 @@ def generate_image(phone, company):
         draw_border_thumbnail(draw, width, height, thickness=3, color=text_color)
         thumbnail.save(f"../thumbnail/thumbnail{i}.png")
 
-generate_image("010-9872-1349", "성수동 설비업체")
+def generate_image_for_video(phone, company):
+    colors = Colors()
+    bg_color, text_color = colors.get_color(0)
+    width, height = 300, 300
+    thumbnail = Image.new('RGB', (width, height), bg_color)
+    draw = ImageDraw.Draw(thumbnail)
+
+    font_size = 35
+    line_spacing = int(font_size * 1.5)
+    font = get_korean_font(font_size)
+    lines = [phone, company]
+
+    # ✅ 수정된 전체 텍스트 높이 계산
+    total_text_height = font_size * len(lines) + line_spacing * (len(lines) - 1)
+    start_y = (height - total_text_height) // 2
+
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line, font=font)
+        text_width = bbox[2] - bbox[0]
+        x = (width - text_width) // 2
+        draw_bold_text(draw, (x, start_y), line, font, fill=text_color, boldness=0.5)
+        start_y += font_size + line_spacing
+
+    draw_border_thumbnail(draw, width, height, thickness=3, color=text_color)
+    thumbnail.save("thumbnail.png")
+
+generate_image_for_video("010-9872-1349", "성수동 설비업체")

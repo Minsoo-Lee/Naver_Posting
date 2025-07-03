@@ -56,13 +56,13 @@ def complete_upload(xpath):
 def generate_video():
 
     # 1. 이미지 파일을 불러옴
-    image_clip = ImageClip("photo.jpg")
+    image_clip = ImageClip("thumbnail.png")
 
     # 2. 클립의 지속 시간을 설정 (예: 10초)
     image_clip.duration = 10
 
     # 3. 출력 영상 크기 (선택사항)
-    # image_clip = image_clip.resize(height=720)  # 높이 720으로 리사이즈 (선택)
+    # image_clip = image_clip.resized(width=500, height=300)
 
     # 4. 영상으로 저장
     image_clip.write_videofile("output.mp4", fps=24)
