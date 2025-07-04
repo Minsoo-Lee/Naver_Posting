@@ -39,7 +39,7 @@ def write_title(title):
     # actions.send_keys(title).perform()
 
 @sleep_after()
-def write_content(content):
+def write_text(content):
     webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
     webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)

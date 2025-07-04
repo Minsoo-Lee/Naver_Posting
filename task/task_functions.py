@@ -23,7 +23,8 @@ def post_blog(title, content):
     blog.cancel_continue()
     blog.exit_help()
     blog.write_title(title)
-    blog.write_content(content)
+
+    blog.write_text(content)
 
     # 영상 업로드 확인
     image.upload_image("/Users/minsoo/Desktop/Logo.jpg")
@@ -37,6 +38,10 @@ def post_blog(title, content):
     blog.click_post_button()
     blog.complete_posting()
     blog.exit_iframe()
+
+def write_content_blog():
+    for
+
 
 def post_cafe(title, content, board_name):
     cafe.enter_cafe()
