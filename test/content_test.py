@@ -33,15 +33,3 @@ header, footer = head_foot[0], head_foot[1]
 print(f"[header] = {header}")
 get_body()
 print(f"[footer] = {footer}")
-
-def link_lists():
-    list1 = [1, 2, 3]
-    list2 = [2, 3, 4]
-    list3 = [3, 4, 5]
-    lists = []
-    lists.extend(list1)
-    lists.extend(list2)
-    lists.extend(list3)
-    print(lists)
-
-link_lists()

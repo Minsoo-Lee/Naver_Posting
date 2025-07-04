@@ -13,6 +13,9 @@ from utils.decorators import sleep_after
 from web import webdriver
 from PIL import Image, ImageDraw, ImageFont
 from utils.colors import Colors
+
+from data.const import *
+
 # 시각 자료 넣기
 @sleep_after()
 def upload_image(image_path):
@@ -107,7 +110,7 @@ def generate_image(phone, company):
         start_y += font_size + line_spacing
 
     draw_border_thumbnail(draw, width, height, thickness=5, color=text_revised)
-    image.save("output.png")
+    image.save(THUMBNAIL_PATH)
 
 def draw_border_sample(image_path, thickness=3, color="red"):
     image = Image.open(image_path)

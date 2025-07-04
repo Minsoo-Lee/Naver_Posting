@@ -1,6 +1,8 @@
 import time
 from moviepy.video.VideoClip import ImageClip
 
+
+from data.const import *
 from utils.decorators import sleep_after
 from web import webdriver
 
@@ -56,7 +58,7 @@ def complete_upload(xpath):
 def generate_video():
 
     # 1. 이미지 파일을 불러옴
-    image_clip = ImageClip("thumbnail.png")
+    image_clip = ImageClip(THUMBNAIL_PATH)
 
     # 2. 클립의 지속 시간을 설정 (예: 10초)
     image_clip.duration = 10
@@ -65,4 +67,4 @@ def generate_video():
     # image_clip = image_clip.resized(width=500, height=300)
 
     # 4. 영상으로 저장
-    image_clip.write_videofile("output.mp4", fps=24)
+    image_clip.write_videofile(VIDEO_PATH, fps=24)

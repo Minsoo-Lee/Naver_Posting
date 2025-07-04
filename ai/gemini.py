@@ -1,3 +1,4 @@
+import dotenv
 import google.generativeai as genai
 from dotenv import load_dotenv
 from data import text_data
@@ -9,8 +10,11 @@ model = None
 
 def init_gemini():
     global model
-    api_key = text_data.TextData().get_api_number()
-    genai.configure(api_key=api_key)
+    # api_key = text_data.TextData().get_api_number()
+    # genai.configure(api_key=api_key)
+    # model = genai.GenerativeModel('gemini-1.5-flash')
+    dotenv.load_dotenv()
+    genai.configure(api_key=os.getenv("API_KEY"))
     model = genai.GenerativeModel('gemini-1.5-flash')
 
 

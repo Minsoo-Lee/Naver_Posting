@@ -67,3 +67,12 @@ www.4252100.quv.kr 로 들어오시면 모든게 가능합니다.
 소중한 우리집 가깝다고해서 아무나에게 맡기실 건가요?
 꼭 전문가와 상의하세요....
 """
+
+PHOTO = "%사진%"
+THUMBNAIL = "%썸네일%"
+VIDEO = "%영상%"
+ADDRESS = "%주소%"
+COMPANY = "%업체%"
+
+THUMBNAIL_PATH = "thumbnail.png"
+VIDEO_PATH = "output.png"

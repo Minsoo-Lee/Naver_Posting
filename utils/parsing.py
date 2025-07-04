@@ -4,11 +4,11 @@ import re
 
 PATTERN = r'  |\n+'
 
-def parse_contents():
+def parse_contents(address, company):
     header, footer = parse_boilerplate()
     body = get_body()
     content = []
-    header = parse_header(header, "성수동", "설비업체")
+    header = parse_header(header, address, company)
     content.extend(header)
     content.extend(body)
     content.extend(footer)
