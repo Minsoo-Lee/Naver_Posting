@@ -233,7 +233,7 @@ class SectionBuilder:
 
         account_button.Bind(
             wx.EVT_BUTTON,
-            lambda event: self.binding.on_list_button_clicked(event, account_panel)
+            lambda event: self.binding.on_cafe_keyword_button_clicked(event, account_panel)
         )
 
         self.left_panel_data.set_account_panel(account_panel)
@@ -290,7 +290,7 @@ class SectionBuilder:
 
         keyword_button.Bind(
             wx.EVT_BUTTON,
-            lambda event: self.binding.on_list_button_clicked(event, keyword_panel)
+            lambda event: self.binding.on_cafe_keyword_button_clicked(event, keyword_panel)
         )
 
         keyword_sizer.Add(keyword_button, 0, wx.ALL, border=3)
@@ -316,7 +316,7 @@ class SectionBuilder:
 
         blog_button.Bind(
             wx.EVT_BUTTON,
-            lambda event: self.binding.on_list_button_clicked(event, blog_panel)
+            lambda event: self.binding.on_cafe_keyword_button_clicked(event, blog_panel)
         )
 
         blog_sizer.Add(blog_button, 0, wx.ALL, 3)
@@ -343,7 +343,7 @@ class SectionBuilder:
 
         cafe_button.Bind(
             wx.EVT_BUTTON,
-            lambda event: self.binding.on_list_button_clicked(event, cafe_panel)
+            lambda event: self.binding.on_cafe_keyword_button_clicked(event, cafe_panel)
         )
 
         cafe_checkbox = wx.CheckBox(cafe_panel, wx.ID_ANY, "댓글 기능 허용")

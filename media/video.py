@@ -1,3 +1,4 @@
+import os
 import time
 from moviepy.video.VideoClip import ImageClip
 
@@ -12,7 +13,7 @@ def input_title(xpath, title):
 
 
 @sleep_after()
-def upload_video_to_blog(video_path):
+def upload_video_to_blog(video_path, title):
     webdriver.hide_finder()
 
     webdriver.click_element_css("button[data-name='video']")
@@ -23,7 +24,7 @@ def upload_video_to_blog(video_path):
     time.sleep(1)
 
     webdriver.send_data_by_xpath("//*[@type='file']", video_path)
-    input_title("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[1]/div[2]/input", "title")
+    input_title("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[1]/div[2]/input", title)
 
     time.sleep(30)  # 업로드 대기
 
@@ -68,3 +69,7 @@ def generate_video():
 
     # 4. 영상으로 저장
     image_clip.write_videofile(VIDEO_PATH, fps=24)
+
+@sleep_after()
+def remove_video(video_path):
+    os.remove(video_path)

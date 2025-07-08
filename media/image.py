@@ -9,6 +9,7 @@ import colorsys
 from PIL import ImageColor
 import random
 
+from utils import colors
 from utils.decorators import sleep_after
 from web import webdriver
 from PIL import Image, ImageDraw, ImageFont
@@ -112,19 +113,22 @@ def generate_image(phone, company):
     draw_border_thumbnail(draw, width, height, thickness=5, color=text_revised)
     image.save(THUMBNAIL_PATH)
 
-def draw_border_sample(image_path, thickness=3, color="red"):
+def draw_border_sample(image_path):
+    random_thickness = random.randint(0, 4)
+    random_color = colors.Colors().get_random_colors()
+
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
     width, height = image.size
-    for i in range(thickness):
+    for i in range(random_thickness):
         draw.rectangle(
             [i, i, width - i - 1, height - i - 1],
-            outline=color
+            outline=random_color
         )
 
-    root_dir = os.path.dirname(os.path.abspath(__file__))
-    new_image_path = os.path.join(root_dir, "..", "sample", "revised_sample1.jpg")
-    image.save(new_image_path)
+    # root_dir = os.path.dirname(os.path.abspath(__file__))
+    # new_image_path = os.path.join(root_dir, "..", "sample", "revised_sample1.jpg")
+    image.save(NEW_IMAGE_PATH)
 
 def get_luminance(rgb):
     srgb = [c / 255.0 for c in rgb]
@@ -164,3 +168,5 @@ def adjust_color_preserving_contrast(fg_color_name, bg_color_name, lightness_shi
     else:
         return fg_rgb_orig, bg_rgb_orig  # 조정 실패 → 원본 반환
 
+def remove_image(image_path):
+    os.remove(image_path)

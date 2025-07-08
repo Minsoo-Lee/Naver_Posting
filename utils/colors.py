@@ -76,3 +76,7 @@ class Colors:
 
     def get_color(self, index):
         return self.color_map["bg"][index], self.color_map["text"][index]
+
+    def get_one_random_color(self):
+        index = random.randint(0, 100)
+        return self.color_map["bg"][index]

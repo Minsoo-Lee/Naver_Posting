@@ -2,7 +2,7 @@
 import time
 from functools import wraps
 
-def sleep_after(seconds=2):
+def sleep_after(seconds=3):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):

@@ -1,3 +1,19 @@
+def get_list_data(list_name):
+    row_count = list_name.GetItemCount()
+    col_count = list_name.GetColumnCount()
+
+    data = []
+
+    for row in range(row_count):
+        row_data = []
+        for col in range(col_count):
+            item_text = list_name.GetItemText(row, col)
+            row_data.append(item_text)
+        data.append(row_data)
+
+    return data
+
+
 class ListData:
     _instance = None
     _initialized = False
@@ -43,3 +59,5 @@ class ListData:
 
     def cafe_list_Enable(self, boolean):
         self.cafe_list.Enable(boolean)
+
+    # 리스트 값 불러오기

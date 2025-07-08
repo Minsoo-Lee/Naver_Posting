@@ -9,9 +9,9 @@ from data.const import *
 import time
 
 @sleep_after(3)
-def enter_cafe():
+def enter_cafe(cafe_url):
     print(time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime()))
-    webdriver.enter_url(CAFE)
+    webdriver.enter_url(cafe_url)
 
 @sleep_after(3)
 def click_posting_button():
@@ -21,7 +21,7 @@ def click_posting_button():
 
 @sleep_after(3)
 def disable_comment():
-    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[2]/div[2]/ul/li[1]/div/input")
+    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[2]/div[2]/ul/li[1]/div/label")
 
 @sleep_after()
 def click_board_choice():
@@ -41,11 +41,23 @@ def enter_iframe():
     webdriver.switch_frame('mainFrame')
 
 @sleep_after()
-def write_content(content):
-    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
-    time.sleep(1)
+def enter_context_input():
+    webdriver.click_element_xpath(
+        "/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
+
+@sleep_after()
+def write_text(content):
+    # webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
+    # time.sleep(1)
     webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)
+
+@sleep_after()
+def insert_enter():
+    # webdriver.click_element_xpath(
+
+    #     "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
+    webdriver.send_keys_action(Keys.RETURN)
 
 @sleep_after()
 def click_register_button():

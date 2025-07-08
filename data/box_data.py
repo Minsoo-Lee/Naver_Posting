@@ -29,3 +29,7 @@ class BoxData:
     # 체크박스 bool 값 가져오기
     def get_cb_value(self):
         return self.comment_cb.GetValue()
+
+    # 라디오박스 값 가져오기
+    def get_rb_value(self):
+        return self.status_rb.GetSelection()

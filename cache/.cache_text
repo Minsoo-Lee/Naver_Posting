@@ -1,7 +1,7 @@
 {
     "waiting_max": "",
     "waiting_min": "",
-    "phone_number": "",
+    "phone_number": "010-9872-1349",
     "api_number": "AIzaSyDo6wlM9Q6SFKS-rpHoS_sJQabVt9OEDnI",
-    "content_input": "헤더, %주소%이고, %업체%\n\n[본문]\n\n푸터"
+    "content_input": "헤더, %주소%이고, %업체%\n\n%썸네일%\n\n[본문]\n\n%영상%\n\n푸터"
 }

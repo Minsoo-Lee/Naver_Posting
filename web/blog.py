@@ -6,10 +6,23 @@ import time
 # 윈도우일 경우 다르게 (혹은 운영체제 감지해서 다르게 작동하게)
 KEY = Keys.COMMAND
 
+@sleep_after()
+def enter_blog():
+    time.sleep(1)
+    webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[2]/div/div/ul/li[3]/a")
+    webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[2]/div/div/ul/li[3]/a")
+    time.sleep(1)
+    webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[1]/a[2]")
+    time.sleep(1)
+    webdriver.switch_tab()
+
+
 @sleep_after(3)
 def enter_posting_window():
-    print(time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime()))
-    webdriver.enter_url(f"{BLOG}/?Redirect=Write&")
+    webdriver.click_element_xpath("/html/body/div[6]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div[1]/div/div[2]/div[2]/a[1]")
+    time.sleep(3)
+    # print(time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime()))
+    # webdriver.enter_url(f"{BLOG}/?Redirect=Write&")
 
 @sleep_after()
 def enter_iframe():
@@ -39,8 +52,13 @@ def write_title(title):
     # actions.send_keys(title).perform()
 
 @sleep_after()
+def enter_context_input():
+    webdriver.click_element_xpath(
+        "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
+
+@sleep_after()
 def write_text(content):
-    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
+    # webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
     webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)
     # title_input = webdriver.driver.find_element(By.XPATH,
@@ -50,9 +68,25 @@ def write_text(content):
     # actions.send_keys(content).perform()
 
 @sleep_after()
+def insert_enter():
+    # webdriver.click_element_xpath(
+
+    #     "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
+    webdriver.send_keys_action(Keys.RETURN)
+
+@sleep_after()
 def click_post_button():
     webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/button")
     # webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div[2]/button").click()
+
+@sleep_after()
+def click_category_listbox():
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]/div/div/button")
+
+@sleep_after()
+def choose_category(category_name):
+    webdriver.click_element_among_classes("text__sraQE", category_name)
+
 
 @sleep_after()
 def complete_posting():
@@ -62,3 +96,7 @@ def complete_posting():
 @sleep_after()
 def exit_iframe():
     webdriver.switch_frame_to_default()
+
+@sleep_after()
+def exit_tab():
+    webdriver.exit_tab()

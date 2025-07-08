@@ -42,7 +42,7 @@ class Binding:
         self.lists.cafe_list_Enable(not boolean if is_each else boolean)
         self.boxes.comment_cb_Enable(not boolean if is_each else boolean)
 
-    def on_list_button_clicked(self, event, panel):
+    def on_cafe_keyword_button_clicked(self, event, panel):
 
         self.set_collection()
 
@@ -60,20 +60,20 @@ class Binding:
         list_data = self.list_collection[index]
 
         # ListCtrl에 표시
-        self.upload_list(csv_data, list_data, True if index == 0 else False)
+        self.upload_list(csv_data, list_data)
 
     def set_collection(self):
         self.parse_setter = [
             self.parsing_data.set_account_data,
-            self.parsing_data.set_keyword_data,
             self.parsing_data.set_blog_data,
+            self.parsing_data.set_keyword_data,
             self.parsing_data.set_cafe_data
         ]
 
         self.parse_getter = [
             self.parsing_data.get_account_data,
-            self.parsing_data.get_keyword_data,
             self.parsing_data.get_blog_data,
+            self.parsing_data.get_keyword_data,
             self.parsing_data.get_cafe_data
         ]
 
@@ -96,20 +96,19 @@ class Binding:
             except FileNotFoundError as e:
                 print(f"파일을 열 수 업습니다.\n{e}")
 
-    def upload_list(self, csv_data, list_data, is_account):
+    def upload_list(self, csv_data, list_data):
 
         list_data.DeleteAllItems()
 
         # 유효성 검사 할 것 (데이터 열 개수와 리스트 행 개수가 맞는지)
-        if len(csv_data[0]) != list_data.GetColumnCount() and is_account is False:
+        if len(csv_data[0]) != list_data.GetColumnCount():
             log.append_log("[ERROR] 데이터의 열 개수와 리스트의 열 개수가 맞지 않습니다.파일의 열 개수를 다시 확인해주세요.")
             return
 
         for i in range(len(csv_data)):
             index = list_data.InsertItem(list_data.GetItemCount(), csv_data[i][0])
-            if is_account is False:
-                for j in range(1, len(csv_data[i])):
-                    list_data.SetItem(index, j, csv_data[i][j])
+            for j in range(1, len(csv_data[i])):
+                list_data.SetItem(index, j, csv_data[i][j])
 
     def on_execute_button_clicked(self, event, content_value):
         self.parsing_data.content_data = content_value
