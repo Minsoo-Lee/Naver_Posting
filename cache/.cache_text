@@ -3,5 +3,6 @@
     "waiting_min": "",
     "phone_number": "010-9872-1349",
     "api_number": "AIzaSyDjTR8G2RpGYH58e3dtAD4cuUYn2JzWkdU",
-    "content_input": "헤더, %주소%이고, %업체%\n\n%썸네일%\n\n[본문]\n\n%영상%\n\n맺음말\n"
+    "content_input": "헤더, %주소%이고, %업체%\n\n%썸네일%\n\n[본문]\n\n%영상%\n\n맺음말\n",
+    "status_rb": 1
 }

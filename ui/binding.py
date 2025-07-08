@@ -126,8 +126,6 @@ class Binding:
             list_data = self.list_collection[i]
             list_data.DeleteAllItems()
 
-            print(csv_data)
-
             new_csv_data = [[row[0], row[i - 1]] for row in csv_data]
             for row in new_csv_data[1:]:
                 if not row:  # 빈 줄이면 건너뜀

@@ -31,7 +31,7 @@ def upload_video_to_blog(video_path, title):
     complete_upload("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[3]/button")
 
 @sleep_after()
-def upload_video_to_cafe(video_path):
+def upload_video_to_cafe(video_path, video_title):
     webdriver.hide_finder()
 
     webdriver.click_element_css("button[data-name='video']")
@@ -42,7 +42,7 @@ def upload_video_to_cafe(video_path):
 
     webdriver.send_data_by_xpath("//*[@type='file']", video_path)
     time.sleep(1)
-    input_title("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[1]/div[2]/input", "title")
+    input_title("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[1]/div[2]/input", video_title)
 
     time.sleep(30)  # 업로드 대기
 

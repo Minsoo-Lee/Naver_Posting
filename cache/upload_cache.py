@@ -1,8 +1,10 @@
 import os, json, csv
-from data import list_data, text_data
+from data import list_data, text_data, box_data, button_data
 
 lists = list_data.ListData()
 texts = text_data.TextData()
+boxes = box_data.BoxData()
+buttons = button_data.ButtonData()
 is_exist = False
 
 # def is_JSON_exist():
@@ -33,6 +35,27 @@ def show_text():
     for text_input, key in zip(text_list, text_keys):
         text_input.SetValue(text_json.get(key, ""))
 
+    rb_data = text_json["status_rb"]
+    boxes.set_rb_index(rb_data)
+
+    if rb_data == 0:
+        set_rb_index_utils(True)
+    elif rb_data == 1:
+        set_rb_index_utils(False)
+    else:
+        set_rb_index_utils(True, False)
+
+
+
+def set_rb_index_utils(boolean, is_each=True):
+    # 블로그 활성화 다중 설정
+    # self.buttons.blog_button_Enable(boolean)
+    lists.blog_list_Enable(boolean)
+
+    # 카페 활성화 다중 설정
+    buttons.cafe_button_Enable(not boolean if is_each else boolean)
+    lists.cafe_list_Enable(not boolean if is_each else boolean)
+    boxes.comment_cb_Enable(not boolean if is_each else boolean)
 
 def upload_CSV(file_name):
     file_path = os.path.join(os.getcwd(), "cache", file_name)

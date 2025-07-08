@@ -33,17 +33,12 @@ def post_blog(title, contents, category_name):
         blog.cancel_continue()
         blog.exit_help()
         blog.write_title(title)
-        print(1)
         blog.enter_context_input()
-        print(2)
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
-        print(3)
 
         # 본문 제작
         article = parsing.parse_contents(address, company)
-        print(4)
-        print(f"[article] = {article}")
 
         # 사진 개수 파악
         count = sum(1 for text in article if text == PHOTO)
@@ -94,7 +89,6 @@ def write_content_blog(address, company, article, image_path, image_length):
             image.upload_image(NEW_IMAGE_PATH)
             image_index += 1
             image.remove_image(NEW_IMAGE_PATH)
-            pass
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
@@ -130,7 +124,6 @@ def post_cafe(title, contents, cafe_list):
 
             # 본문 제작
             article = parsing.parse_contents(address, company)
-            print(f"[article] = {article}")
 
             # 사진 개수 파악
             count = sum(1 for text in article if text == PHOTO)
@@ -164,6 +157,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
     image.generate_image(phone, address + " " + company)
     video.generate_video()
     image_index = 0
+    video_path = ""
 
     # 여기서 텍스트는 한 줄로 묶기 (텍스트 -> 텍스트 이렇게 말고, 텍스트는 한번에 입력)
 
@@ -175,13 +169,18 @@ def write_content_cafe(address, company, article, image_path, image_length):
             image.upload_image(THUMBNAIL_PATH)
         elif PHOTO in content and image_index < image_length:
             # 고객이 넣은 이미지를 테두리 입혀서 작성
-            image.upload_image(image_path[image_index])
+            image.draw_border_sample(image_path[image_index])
+            image.upload_image(NEW_IMAGE_PATH)
             image_index += 1
-            pass
+            image.remove_image(NEW_IMAGE_PATH)
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
-            video.upload_video_to_cafe(VIDEO_PATH)
+            video_path = os.path.abspath(VIDEO_PATH)
+            video.upload_video_to_cafe(video_path, f"{address} {company}")
         elif ENTER is content:
             cafe.insert_enter()
         else:
             cafe.write_text(content)
+
+    video.remove_video(video_path)
+    image.remove_image(THUMBNAIL_PATH)

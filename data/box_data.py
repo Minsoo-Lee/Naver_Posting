@@ -33,3 +33,6 @@ class BoxData:
     # 라디오박스 값 가져오기
     def get_rb_value(self):
         return self.status_rb.GetSelection()
+
+    def set_rb_index(self, index):
+        self.status_rb.SetSelection(index)

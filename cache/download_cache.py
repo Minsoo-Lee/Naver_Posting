@@ -1,10 +1,10 @@
-from data import text_data
+from data import text_data, box_data
 from data import list_data
 import json, csv
 
 lists = list_data.ListData()
 texts = text_data.TextData()
-
+boxes = box_data.BoxData()
 
 def convert_JSON():
     global texts
@@ -13,7 +13,8 @@ def convert_JSON():
         "waiting_min": texts.waiting_min.GetValue(),
         "phone_number": texts.phone_number.GetValue(),
         "api_number": texts.api_number.GetValue(),
-        "content_input": texts.content_input.GetValue()
+        "content_input": texts.content_input.GetValue(),
+        "status_rb": boxes.status_rb.GetSelection()
     }
 
 def download_JSON():
