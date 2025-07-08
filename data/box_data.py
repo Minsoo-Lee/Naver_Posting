@@ -36,3 +36,6 @@ class BoxData:
 
     def set_rb_index(self, index):
         self.status_rb.SetSelection(index)
+
+    def set_cb_value(self, value):
+        self.comment_cb.SetValue(value)

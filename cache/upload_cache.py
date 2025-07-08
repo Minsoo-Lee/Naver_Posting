@@ -45,6 +45,8 @@ def show_text():
     else:
         set_rb_index_utils(True, False)
 
+    cb_data = text_json["comment_cb"]
+    boxes.set_cb_value(cb_data)
 
 
 def set_rb_index_utils(boolean, is_each=True):

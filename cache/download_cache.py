@@ -14,7 +14,8 @@ def convert_JSON():
         "phone_number": texts.phone_number.GetValue(),
         "api_number": texts.api_number.GetValue(),
         "content_input": texts.content_input.GetValue(),
-        "status_rb": boxes.status_rb.GetSelection()
+        "status_rb": boxes.status_rb.GetSelection(),
+        "comment_cb": boxes.comment_cb.GetValue(),
     }
 
 def download_JSON():
