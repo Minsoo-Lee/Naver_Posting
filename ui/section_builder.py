@@ -226,6 +226,7 @@ class SectionBuilder:
 
         account_list = wx.ListCtrl(account_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
         account_list.InsertColumn(0, "계정명", width=120)
+        account_list.InsertColumn(1, "비밀번호", width=120)
 
         account_sizer.Add(account_button, 0, wx.ALL, border=3)
         account_sizer.Add(account_list, 0, wx.BOTTOM, border=10)
@@ -305,26 +306,29 @@ class SectionBuilder:
     def blog_section(self, panel):
         blog_panel = wx.Panel(panel, wx.ID_ANY)
         blog_sizer = wx.BoxSizer(wx.VERTICAL)
+        blog_sizer.AddSpacer(16)
 
-        # 업체 버튼 설정
-        blog_button = wx.Button(blog_panel, wx.ID_ANY, "블로그 업로드", size=wx.Size(250, 50))
-        blog_button.Enable(True)
+        # 라벨 설정
+        blog_label = wx.StaticText(blog_panel, wx.ID_ANY, "* 계정 파일 업로드 시 자동으로 업로드 됩니다.")
+        # blog_sizer.Add(blog_label, 0, wx.ALL | wx.ALIGN_LEFT, 15)
+        blog_sizer.Add(blog_label, 0, wx.ALL | wx.ALIGN_LEFT, 15)
+        # blog_button = wx.Button(blog_panel, wx.ID_ANY, "블로그 업로드", size=wx.Size(250, 50))
+        # blog_button.Enable(True)
 
         blog_list = wx.ListCtrl(blog_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
         blog_list.InsertColumn(0, "이름", width=120)
         blog_list.InsertColumn(1, "게시판 이름", width=130)
 
-        blog_button.Bind(
-            wx.EVT_BUTTON,
-            lambda event: self.binding.on_cafe_keyword_button_clicked(event, blog_panel)
-        )
-
-        blog_sizer.Add(blog_button, 0, wx.ALL, 3)
-        blog_sizer.Add(blog_list, 0, wx.ALL, 3)
+        # blog_button.Bind(
+        #     wx.EVT_BUTTON,
+        #     lambda event: self.binding.on_cafe_keyword_button_clicked(event, blog_panel)
+        # )
+        #
+        # blog_sizer.Add(blog_button, 0, wx.ALL, 3)
+        blog_sizer.Add(blog_list, 0, wx.LEFT, 5)
         blog_panel.SetSizer(blog_sizer)
 
         self.left_panel_data.set_blog_panel(blog_panel)
-        self.button_data.set_blog_button(blog_button)
         self.list_data.set_blog_list(blog_list)
 
     # 카페 박스

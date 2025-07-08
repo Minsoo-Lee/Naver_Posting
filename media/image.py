@@ -114,17 +114,25 @@ def generate_image(phone, company):
     image.save(THUMBNAIL_PATH)
 
 def draw_border_sample(image_path):
-    random_thickness = random.randint(0, 4)
-    random_color = colors.Colors().get_random_colors()
+    random_thickness = random.randint(1, 5)
+    random_color = colors.Colors().get_one_random_color()
 
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
     width, height = image.size
-    for i in range(random_thickness):
+
+    i = 0
+    while i < random_thickness:
         draw.rectangle(
-            [i, i, width - i - 1, height - i - 1],
-            outline=random_color
-        )
+                [i, i, width - i - 1, height - i - 1],
+                outline=random_color
+            )
+        i += 0.5
+    # for i in range(0, random_thickness):
+    #     draw.rectangle(
+    #         [i, i, width - i - 1, height - i - 1],
+    #         outline=random_color
+    #     )
 
     # root_dir = os.path.dirname(os.path.abspath(__file__))
     # new_image_path = os.path.join(root_dir, "..", "sample", "revised_sample1.jpg")

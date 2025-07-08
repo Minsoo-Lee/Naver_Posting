@@ -19,7 +19,7 @@ class Binding:
         self.parse_setter = []
         self.parse_getter = []
         self.list_collection = []
-        self.LABEL_LIST = ["계정", "키워드", "블로그", "카페"]
+        self.LABEL_LIST = ["키워드", "카페", "계정"]
 
     def on_radio_selected(self, event):
         selected = event.GetString()
@@ -31,10 +31,9 @@ class Binding:
         else:
             self.on_radio_selected_utils(True, False)
 
-
     def on_radio_selected_utils(self, boolean, is_each=True):
         # 블로그 활성화 다중 설정
-        self.buttons.blog_button_Enable(boolean)
+        # self.buttons.blog_button_Enable(boolean)
         self.lists.blog_list_Enable(boolean)
 
         # 카페 활성화 다중 설정
@@ -56,29 +55,32 @@ class Binding:
         self.upload_data(index, panel)
 
         # 멤버 변수를 지역 변수로 치환 (인덱스 접근 X)
-        csv_data = self.parse_getter[index]()
-        list_data = self.list_collection[index]
+        # csv_data = self.parse_getter[index]()
+        # list_data = self.list_collection[index]
 
         # ListCtrl에 표시
-        self.upload_list(csv_data, list_data)
+        if index == 2:
+            self.upload_account_blog_list(index)
+        else:
+            self.upload_keyword_cafe_list(index)
 
     def set_collection(self):
         self.parse_setter = [
-            self.parsing_data.set_account_data,
-            self.parsing_data.set_blog_data,
             self.parsing_data.set_keyword_data,
-            self.parsing_data.set_cafe_data
+            self.parsing_data.set_cafe_data,
+            self.parsing_data.set_account_data,
+            self.parsing_data.set_blog_data
         ]
 
         self.parse_getter = [
-            self.parsing_data.get_account_data,
-            self.parsing_data.get_blog_data,
             self.parsing_data.get_keyword_data,
-            self.parsing_data.get_cafe_data
+            self.parsing_data.get_cafe_data,
+            self.parsing_data.get_account_data,
+            self.parsing_data.get_blog_data
         ]
 
         self.list_collection = [
-            self.lists.account_list, self.lists.keyword_list, self.lists.blog_list, self.lists.cafe_list
+            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.blog_list
         ]
 
     def upload_data(self, index, panel):
@@ -96,8 +98,9 @@ class Binding:
             except FileNotFoundError as e:
                 print(f"파일을 열 수 업습니다.\n{e}")
 
-    def upload_list(self, csv_data, list_data):
-
+    def upload_keyword_cafe_list(self, index):
+        csv_data = self.parse_getter[index]()
+        list_data = self.list_collection[index]
         list_data.DeleteAllItems()
 
         # 유효성 검사 할 것 (데이터 열 개수와 리스트 행 개수가 맞는지)
@@ -105,10 +108,33 @@ class Binding:
             log.append_log("[ERROR] 데이터의 열 개수와 리스트의 열 개수가 맞지 않습니다.파일의 열 개수를 다시 확인해주세요.")
             return
 
-        for i in range(len(csv_data)):
-            index = list_data.InsertItem(list_data.GetItemCount(), csv_data[i][0])
-            for j in range(1, len(csv_data[i])):
-                list_data.SetItem(index, j, csv_data[i][j])
+        # for i in range(len(csv_data)):
+        #     index = list_data.InsertItem(list_data.GetItemCount(), csv_data[i][0])
+        #     for j in range(1, len(csv_data[i])):
+        #         list_data.SetItem(index, j, csv_data[i][j])
+        for row in csv_data[1:]:
+            if not row:  # 빈 줄이면 건너뜀
+                continue
+            index = list_data.InsertItem(list_data.GetItemCount(), row[0])
+            for j in range(1, len(row)):
+                list_data.SetItem(index, j, row[j])
+
+    def upload_account_blog_list(self, index):
+        csv_data = self.parse_getter[index]()
+        list_data = self.list_collection[index]
+        for i in range(2, 4):
+            list_data = self.list_collection[i]
+            list_data.DeleteAllItems()
+
+            print(csv_data)
+
+            new_csv_data = [[row[0], row[i - 1]] for row in csv_data]
+            for row in new_csv_data[1:]:
+                if not row:  # 빈 줄이면 건너뜀
+                    continue
+                index = list_data.InsertItem(list_data.GetItemCount(), row[0])
+                for j in range(1, len(row)):
+                    list_data.SetItem(index, j, row[j])
 
     def on_execute_button_clicked(self, event, content_value):
         self.parsing_data.content_data = content_value

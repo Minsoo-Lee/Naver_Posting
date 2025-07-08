@@ -16,6 +16,7 @@ def init_gemini():
     dotenv.load_dotenv()
     genai.configure(api_key=os.getenv("API_KEY"))
     model = genai.GenerativeModel('gemini-1.5-flash')
+    # model = genai.GenerativeModel('gemini-1.0-pro')
 
 
 def create_content(contents):

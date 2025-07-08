@@ -31,8 +31,6 @@ def show_text():
         "waiting_max", "waiting_min", "api_number", "phone_number", "content_input"
     ]
     for text_input, key in zip(text_list, text_keys):
-        print(text_input)
-        print(key)
         text_input.SetValue(text_json.get(key, ""))
 
 

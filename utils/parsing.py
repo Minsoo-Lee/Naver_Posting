@@ -12,6 +12,7 @@ def parse_contents(address, company):
     content.extend(header)
     content.extend(body)
     content.extend(footer)
+    print(content)
     return content
 
 
@@ -29,7 +30,6 @@ def get_body():
 
 def parse_boilerplate():
     boilerplate = get_boilerplate()
-    print(len(boilerplate))
     for i in range(2):
         boilerplate[i] = [item.strip() for item in re.split(PATTERN, boilerplate[i])]
     return boilerplate[0], boilerplate[1]

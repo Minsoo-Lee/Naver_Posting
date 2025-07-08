@@ -33,14 +33,16 @@ def post_blog(title, contents, category_name):
         blog.cancel_continue()
         blog.exit_help()
         blog.write_title(title)
-
+        print(1)
         blog.enter_context_input()
-
+        print(2)
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
+        print(3)
 
         # 본문 제작
         article = parsing.parse_contents(address, company)
+        print(4)
         print(f"[article] = {article}")
 
         # 사진 개수 파악
@@ -70,6 +72,7 @@ def post_blog(title, contents, category_name):
         blog.exit_tab()
 
 def write_content_blog(address, company, article, image_path, image_length):
+    print(article)
     # 먼저, 썸네일 이미지부터 생성
     phone = text_data.TextData().get_phone_number()
     image.generate_image(phone, address + " " + company)
@@ -100,9 +103,9 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.insert_enter()
         else:
             blog.write_text(content)
-        video.remove_video(video_path)
-        image.remove_image(THUMBNAIL_PATH)
         time.sleep(1)
+    video.remove_video(video_path)
+    image.remove_image(THUMBNAIL_PATH)
 
 def post_cafe(title, contents, cafe_list):
     for cafe_data in cafe_list:

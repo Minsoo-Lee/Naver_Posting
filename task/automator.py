@@ -62,3 +62,5 @@ def start_task():
         elif task_index == 2:
             post_blog("TITLE", contents, category_name)
             post_cafe("TITLE", contents, cafe_list)
+
+        login.click_logout()
