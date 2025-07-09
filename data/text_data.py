@@ -65,3 +65,7 @@ class TextData:
 
     def get_body(self):
         return self.body
+
+    def replace_title(self, address, company):
+        self.title = self.title.replace("%주소%", address)
+        self.title = self.title.replace("%업체%", company)

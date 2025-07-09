@@ -52,6 +52,7 @@ def post_blog(title, contents, category_name):
 
         texts = text_data.TextData()
         texts.divide_title_body()
+        texts.replace_title(address, company)
 
         title = texts.get_title()
 
@@ -162,6 +163,7 @@ def post_cafe(title, contents, cafe_list):
 
             texts = text_data.TextData()
             texts.divide_title_body()
+            texts.replace_title(address, company)
 
             title = texts.get_title()
 
@@ -169,8 +171,6 @@ def post_cafe(title, contents, cafe_list):
             cafe.write_title(title)
 
             cafe.enter_content_input()
-
-
 
             # 본문 제작
             article = parsing.parse_contents(address, company)
