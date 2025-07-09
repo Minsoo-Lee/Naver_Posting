@@ -14,7 +14,7 @@ def init():
 def execute_login(id_val, pw_val):
     login.enter_naver()
     login.enter_login_window()
-    login.input_id_pw("minsoo1101", "msLee9164@@")
+    login.input_id_pw(id_val, pw_val)
     login.click_login_button()
     log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")
     while True:
