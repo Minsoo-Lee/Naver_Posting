@@ -326,7 +326,7 @@ class SectionBuilder:
         # )
         #
         # blog_sizer.Add(blog_button, 0, wx.ALL, 3)
-        blog_sizer.Add(blog_list, 0, wx.LEFT, 5)
+        blog_sizer.Add(blog_list, 0, wx.LEFT, 15)
         blog_panel.SetSizer(blog_sizer)
 
         self.left_panel_data.set_blog_panel(blog_panel)
