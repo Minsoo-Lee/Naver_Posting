@@ -51,8 +51,8 @@ class PanelBuilder:
         self.section_builder.content_input_section(self.middle_panel)
         self.section_builder.execute_section(self.middle_panel)
 
-        sizer.Add(self.section_builder.middle_sizer_data.form_label_sizer, 1, wx.TOP | wx.LEFT | wx.RIGHT | wx.EXPAND, 3)
-        sizer.Add(self.section_builder.middle_sizer_data.form_input_sizer, 1, wx.TOP | wx.LEFT | wx.RIGHT | wx.EXPAND, 3)
+        sizer.Add(self.section_builder.middle_sizer_data.form_label_sizer, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.EXPAND, 3)
+        sizer.Add(self.section_builder.middle_sizer_data.form_input_sizer, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.EXPAND, 3)
         sizer.Add(self.section_builder.middle_sizer_data.task_button_sizer, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.EXPAND, 3)
 
         self.middle_panel.SetSizer(sizer)

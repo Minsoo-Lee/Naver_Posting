@@ -383,7 +383,39 @@ class SectionBuilder:
     # ================================ 중앙 패널 ================================================
     # 안내글 표시
     def inform_section(self, panel):
-        form_label = wx.StaticText(panel, wx.ID_ANY, "폼 형식 지정 안내글 - 추후에 채울 예정", size=wx.Size(MIDDLE_WIDTH, 400))
+        inform = """
+[폼 형식 지정 안내글]
+        
+        
+[제목]을 기준으로 제목과 글이 나뉘어집니다.
+        
+글에서는 [본문]을 기준으로 서론, 본문, 결론으로 나뉘어집니다.
+
+본문은 AI로 작성한 1500자 내외의 글이며,
+고객님께서 keyword.csv를 통해 업로드한 이미지 중 랜덤으로 5개가 같이 들어갑니다.
+        
+keyword.csv에서 받아온 정보 중에서
+%주소% 문자열은 주소 열의 데이터를, %업체% 문자열은 업체 열의 데이터로 치환됩니다.
+        
+%썸네일% 문자열은 썸네일 사진으로, %영상% 문자열은 썸네일 사진을 바탕으로 제작된 영상으로 치환됩니다.
+
+문자열 치환 예시)
+
+%주소%이고, %업체%입니다.
+%썸네일%
+[본문]
+%영상%
+감사합니다.                
+=======================
+성수동이고, 설비업체입니다.
+'썸네일 사진'
+'AI로 작성한 본문'
+'썸네일 사진 기반 영상'
+감사합니다.
+
+
+        """
+        form_label = wx.StaticText(panel, wx.ID_ANY, inform, size=wx.Size(MIDDLE_WIDTH, 550))
         form_label_sizer = wx.BoxSizer(wx.HORIZONTAL)
         form_label_sizer.Add(form_label, 0, wx.ALL, 5)
 
@@ -391,7 +423,7 @@ class SectionBuilder:
 
     # 텍스트 형식 입력
     def content_input_section(self, panel):
-        form_input = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=wx.Size(MIDDLE_WIDTH, 400))
+        form_input = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=wx.Size(MIDDLE_WIDTH, 310))
         # 안녕하세요. 헤더입니다. 여기서 등록하는 미디어는 테스트를 위한 임의의 사진 및 영상입니다.
         #
         # [사진]
@@ -406,7 +438,7 @@ class SectionBuilder:
         #
         # 맺음말입니다.
         form_input_sizer = wx.BoxSizer(wx.VERTICAL)
-        form_input_sizer.Add(form_input, 1, wx.TOP | wx.LEFT | wx.RIGHT, 3)
+        form_input_sizer.Add(form_input, 0, wx.TOP | wx.LEFT | wx.RIGHT, 3)
 
         self.text_data.set_content_input(form_input)
         self.middle_sizer_data.set_form_input_sizer(form_input_sizer)
@@ -421,7 +453,7 @@ class SectionBuilder:
         )
 
         task_button_sizer = wx.BoxSizer(wx.VERTICAL)
-        task_button_sizer.Add(task_button, 0)
+        task_button_sizer.Add(task_button, 0, wx.ALL, 5)
 
         self.middle_sizer_data.set_task_button_sizer(task_button_sizer)
         self.button_data.set_execute_button(task_button)
