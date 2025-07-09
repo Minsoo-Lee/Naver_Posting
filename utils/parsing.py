@@ -6,7 +6,7 @@ PATTERN = r'  |\n+'
 
 def parse_contents(address, company):
     header, footer = parse_boilerplate()
-    body = get_body()
+    body = get_body(address, company)
     content = []
     header = parse_header(header, address, company)
     content.extend(header)
