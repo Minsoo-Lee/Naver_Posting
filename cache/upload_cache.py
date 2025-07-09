@@ -102,4 +102,13 @@ def show_lists():
             for col_idx in range(1, len(row)):
                 list_ctrl.SetItem(item_index, col_idx, row[col_idx])
 
+    lists.account_list.SetColumnWidth(0, 200)
     lists.account_list.SetColumnWidth(1, 0)
+
+    lists.keyword_list.SetColumnWidth(2, 250)
+
+    lists.blog_list.SetColumnWidth(0, 120)
+    lists.blog_list.SetColumnWidth(1, 120)
+
+    lists.cafe_list.SetColumnWidth(0, 120)
+    lists.cafe_list.SetColumnWidth(1, 120)

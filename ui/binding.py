@@ -119,6 +119,12 @@ class Binding:
             for j in range(1, len(row)):
                 list_data.SetItem(index, j, row[j])
 
+        if index == 0:
+            list_data.SetColumnWidth(2, 400)
+        else:
+            list_data.SetColumnWidth(0, 200)
+            list_data.SetColumnWidth(1, 200)
+
     def upload_account_blog_list(self, index):
         csv_data = self.parse_getter[index]()
         for i in range(2, 4):
@@ -134,7 +140,11 @@ class Binding:
                     list_data.SetItem(index, j, row[j])
 
             if i == 2:
+                list_data.SetColumnWidth(0, 250)
                 list_data.SetColumnWidth(1, 0)
+            else:
+                list_data.SetColumnWidth(0, 200)
+                list_data.SetColumnWidth(1, 200)
 
     def on_execute_button_clicked(self, event, content_value):
         self.parsing_data.content_data = content_value
