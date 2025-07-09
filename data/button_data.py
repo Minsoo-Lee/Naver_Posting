@@ -62,3 +62,6 @@ class ButtonData:
 
     def stop_button_Enable(self, boolean):
         self.stop_button.Enable(boolean)
+
+    def get_toggle_value(self):
+        return self.toggle_button.GetValue()

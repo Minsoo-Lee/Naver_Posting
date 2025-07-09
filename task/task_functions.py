@@ -1,14 +1,16 @@
 import os
 import random
 
-from web import login, webdriver, blog, cafe
+from web import login, webdriver, blog, cafe, ip
 from ui import log
 from media import video, image
-from data import box_data, content_data, text_data
+from data import box_data, content_data, text_data, button_data
 from utils import parsing
 from data.const import *
 import time
 from ui import log
+from web.ip import get_current_ip
+
 
 def init():
     webdriver.init_chrome()
@@ -77,6 +79,12 @@ def post_blog(title, contents, category_name):
         log.append_log("포스팅을 완료하였습니다.")
         blog.exit_iframe()
         blog.exit_tab()
+
+    if button_data.ButtonData().get_toggle_value() is True:
+        log.append_log("IP를 변경합니다.")
+        ip.toggle_airplane_mode()
+        curren_ip = ip.get_current_ip()
+        log.append_log(f"현재 IP = {curren_ip}")
 
     log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
     time.sleep(waiting_time)
@@ -168,6 +176,12 @@ def post_cafe(title, contents, cafe_list):
 
             cafe.click_register_button()
             log.append_log("포스팅을 완료하였습니다.")
+
+    if button_data.ButtonData().get_toggle_value() is True:
+        log.append_log("IP를 변경합니다.")
+        ip.toggle_airplane_mode()
+        curren_ip = ip.get_current_ip()
+        log.append_log(f"현재 IP = {curren_ip}")
 
     log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
     time.sleep(waiting_time)

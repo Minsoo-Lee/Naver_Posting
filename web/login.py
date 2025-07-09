@@ -20,12 +20,24 @@ def enter_login_window():
 
 @sleep_after()
 def input_id_pw(id_val, pw_val):
-    webdriver.driver.find_element(By.XPATH,
-                        "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input").send_keys(id_val)
+    # 천천히 입력하여 캡챠 우회 (되는지 확인 필요)
+    id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
+    pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
 
-    webdriver.driver.find_element(By.XPATH,
-                        "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input").send_keys(pw_val)
-    # IP 보안?
+    for ch in id_val:
+        id_input.send_keys(ch)
+        time.sleep(0.2)
+
+    for ch in pw_val:
+        pw_input.send_keys(ch)
+        time.sleep(0.2)
+
+    # 기존 코드
+    # webdriver.driver.find_element(By.XPATH,
+    #                     "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input").send_keys(id_val)
+    #
+    # webdriver.driver.find_element(By.XPATH,
+    #                     "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input").send_keys(pw_val)
 
 @sleep_after()
 def click_login_button():
