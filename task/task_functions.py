@@ -76,6 +76,13 @@ def post_blog(title, contents, category_name):
         blog.click_category_listbox()
         log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
         blog.choose_category(category_name)
+        # 해시태그 추가
+        hashtags = contents.get_hashtags()
+        print(hashtags)
+        blog.click_hashtag()
+        for hashtag in hashtags:
+            blog.send_hashtag(hashtag)
+            blog.insert_enter()
         blog.complete_posting()
         log.append_log("포스팅을 완료하였습니다.")
         blog.exit_iframe()
@@ -157,6 +164,14 @@ def post_cafe(title, contents, cafe_list):
 
             log.append_log("본문을 작성합니다.")
             write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
+
+            # 해시태그 추가
+            hashtags = contents.get_hashtags()
+            print(hashtags)
+            cafe.click_hashtag()
+            for hashtag in hashtags:
+                cafe.send_hashtag(hashtag)
+                cafe.insert_enter()
 
             # # 영상 업로드 확인
             # cafe.write_content(content)

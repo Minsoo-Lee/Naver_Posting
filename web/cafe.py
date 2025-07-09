@@ -60,6 +60,14 @@ def insert_enter():
     webdriver.send_keys_action(Keys.RETURN)
 
 @sleep_after()
+def click_hashtag():
+    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[4]/div/div")
+
+@sleep_after()
+def send_hashtag(hashtag):
+    webdriver.send_keys_action(hashtag)
+
+@sleep_after()
 def click_register_button():
     webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[1]/div/a")
     time.sleep(1)

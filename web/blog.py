@@ -87,6 +87,14 @@ def click_category_listbox():
 def choose_category(category_name):
     webdriver.click_element_among_classes("text__sraQE", category_name)
 
+@sleep_after()
+def click_hashtag():
+    # webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]/div[2]/div/div/div/input")
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]/div[2]/div/div/div")
+
+@sleep_after()
+def send_hashtag(hashtag):
+    webdriver.send_keys_action(hashtag)
 
 @sleep_after()
 def complete_posting():

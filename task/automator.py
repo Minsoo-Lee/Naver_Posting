@@ -38,6 +38,8 @@ def start_task():
     contents.combinate_keywords()
     contents.set_image_path([row[2] for row in keywords])
 
+    contents.set_hashtags([row[3] for row in keywords])
+
     cafe_list = list_data.get_list_data(list_data.ListData().cafe_list)
     blog_data = list_data.get_list_data(list_data.ListData().blog_list)
     blog_dict = dict(blog_data)

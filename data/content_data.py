@@ -17,6 +17,7 @@ class ContentData:
         self.keywords = None
         self.image_path = None
         self.keywords_concat = None
+        self.hashtags = None
 
         ContentData._initialized = True
 
@@ -41,7 +42,11 @@ class ContentData:
         return len(self.keywords)
 
     def set_image_path(self, path):
-        self.image_path = path
+        for i, row in enumerate(path):
+            if all(cell == '' for cell in row):
+                self.image_path = path[:i]
+                return
+        self.image_path = path  # 모두 비어있지 않다면 원본 그대로
 
     def get_random_image_path(self, num):
         print(self.image_path)
@@ -52,3 +57,13 @@ class ContentData:
 
     def set_keywords_concat(self, keywords_concat):
         self.keywords_concat = keywords_concat
+
+    def set_hashtags(self, hashtags):
+        for i, row in enumerate(hashtags):
+            if all(cell == '' for cell in row):
+                self.hashtags = hashtags[:i]
+                return
+        self.hashtags = hashtags  # 모두 비어있지 않다면 원본 그대로
+
+    def get_hashtags(self):
+        return self.hashtags

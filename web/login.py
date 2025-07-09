@@ -40,6 +40,10 @@ def input_id_pw(id_val, pw_val):
     #                     "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input").send_keys(pw_val)
 
 @sleep_after()
+def click_ip_secure():
+    webdriver.click_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[2]/div[2]/span")
+
+@sleep_after()
 def click_login_button():
     # driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[11]/button").click()
     webdriver.driver.find_element(By.ID, "log.login").click()
