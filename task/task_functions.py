@@ -161,26 +161,31 @@ def write_content_cafe(address, company, article, image_path, image_length):
 
     # 여기서 텍스트는 한 줄로 묶기 (텍스트 -> 텍스트 이렇게 말고, 텍스트는 한번에 입력)
 
-    for content in article:
-        # 썸네일일 경우
-        if THUMBNAIL in content:
-            # 이미지 생성 후 해당 이미지 업로드
-            # 이미지 삭제는 글 작성을 완료한 후에 수행
-            image.upload_image(THUMBNAIL_PATH)
-        elif PHOTO in content and image_index < image_length:
-            # 고객이 넣은 이미지를 테두리 입혀서 작성
-            image.draw_border_sample(image_path[image_index])
-            image.upload_image(NEW_IMAGE_PATH)
-            image_index += 1
-            image.remove_image(NEW_IMAGE_PATH)
-        elif VIDEO in content:
-            # 썸네일 사진을 이용한 영상을 업로드
-            video_path = os.path.abspath(VIDEO_PATH)
-            video.upload_video_to_cafe(video_path, f"{address} {company}")
-        elif ENTER is content:
-            cafe.insert_enter()
-        else:
-            cafe.write_text(content)
+    # 이미지, 영상 업로드 테스트
+    image.upload_image(THUMBNAIL_PATH)
+    video_path = os.path.abspath(VIDEO_PATH)
+    video.upload_video_to_cafe(video_path, f"{address} {company}")
+    # 이미지, 영상 업로드 테스트를 위해서 잠깐 주석처리
+    # for content in article:
+    #     # 썸네일일 경우
+    #     if THUMBNAIL in content:
+    #         # 이미지 생성 후 해당 이미지 업로드
+    #         # 이미지 삭제는 글 작성을 완료한 후에 수행
+    #         image.upload_image(THUMBNAIL_PATH)
+    #     elif PHOTO in content and image_index < image_length:
+    #         # 고객이 넣은 이미지를 테두리 입혀서 작성
+    #         image.draw_border_sample(image_path[image_index])
+    #         image.upload_image(NEW_IMAGE_PATH)
+    #         image_index += 1
+    #         image.remove_image(NEW_IMAGE_PATH)
+    #     elif VIDEO in content:
+    #         # 썸네일 사진을 이용한 영상을 업로드
+    #         video_path = os.path.abspath(VIDEO_PATH)
+    #         video.upload_video_to_cafe(video_path, f"{address} {company}")
+    #     elif ENTER is content:
+    #         cafe.insert_enter()
+    #     else:
+    #         cafe.write_text(content)
 
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)

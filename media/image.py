@@ -17,6 +17,8 @@ from utils.colors import Colors
 
 from data.const import *
 
+COMMAND_CONTROL = Keys.COMMAND if platform.system() == "Darwin" else Keys.CONTROL
+
 # 시각 자료 넣기
 @sleep_after()
 def upload_image(image_path):
@@ -24,7 +26,7 @@ def upload_image(image_path):
     copy_image_to_clipboard(image_path)
     time.sleep(1)
     # 윈도우면 Keys.CONTROL
-    actions.key_down(Keys.COMMAND).send_keys('v').key_up(Keys.COMMAND).perform()
+    actions.key_down(COMMAND_CONTROL).send_keys('v').key_up(COMMAND_CONTROL).perform()
 
 @sleep_after()
 def copy_image_to_clipboard(image_path):
