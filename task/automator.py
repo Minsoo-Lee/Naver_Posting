@@ -68,3 +68,11 @@ def start_task():
 
         log.append_log(f"{id_val} 계정으로 모든 포스팅을 완료하였습니다.")
         login.click_logout()
+
+        # # 테스트 코드
+        # if button_data.ButtonData().get_toggle_value() is True:
+        #     log.append_log("IP를 변경합니다.")
+        #     ip.toggle_airplane_mode()
+        #     curren_ip = ip.get_current_ip()
+        #     log.append_log(f"현재 IP = {curren_ip}")
+
