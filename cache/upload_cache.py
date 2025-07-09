@@ -48,7 +48,7 @@ def show_text():
         set_rb_index_utils(True, False)
         texts.status_label.SetLabel("둘 다")
 
-    cb_data = text_json["comment_cb"]
+    cb_data = text_json.get("comment_cb", True)
     boxes.set_cb_value(cb_data)
 
 
