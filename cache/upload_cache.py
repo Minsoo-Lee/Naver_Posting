@@ -40,10 +40,13 @@ def show_text():
 
     if rb_data == 0:
         set_rb_index_utils(True)
+        texts.status_label.SetLabel("블로그")
     elif rb_data == 1:
         set_rb_index_utils(False)
+        texts.status_label.SetLabel("카페")
     else:
         set_rb_index_utils(True, False)
+        texts.status_label.SetLabel("둘 다")
 
     cb_data = text_json["comment_cb"]
     boxes.set_cb_value(cb_data)
