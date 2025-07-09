@@ -1,18 +1,22 @@
+import os
+
 import platform
 import subprocess
-import pyautogui
 import time
-import os
+import io
 
 from selenium.webdriver import ActionChains, Keys
 import colorsys
-from PIL import ImageColor
 import random
+
+if platform.system() == "Windows":
+	import win32clipboard
+	import win32con
 
 from utils import colors
 from utils.decorators import sleep_after
 from web import webdriver
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageColor
 from utils.colors import Colors
 
 from data.const import *
@@ -44,16 +48,22 @@ def copy_image_to_clipboard(image_path):
             print("Clipboard updated.")
         time.sleep(1)  # 클립보드 반영 시간 확보
     elif system == "Windows":
-        # Windows에서는 pyautogui로 우회하여 드래그 복사
-        # 이미지 아이콘을 직접 선택해야 해서, 다음과 같은 방식 사용
-        if not os.path.exists(image_path):
-            raise FileNotFoundError("Image path not found")
-        os.startfile(os.path.dirname(image_path))  # 폴더 열기
+        image = Image.open(image_path)
+
+        # BMP로 변환 (CF_DIB를 위해)
+        output = io.BytesIO()
+        image.convert("RGB").save(output, "BMP")
+        data = output.getvalue()[14:]  # BMP 헤더 14바이트 제거
+        output.close()
+
+        # 클립보드에 복사
+        win32clipboard.OpenClipboard()
+        win32clipboard.EmptyClipboard()
+        win32clipboard.SetClipboardData(win32con.CF_DIB, data)
+        win32clipboard.CloseClipboard()
+
+        print("Clipboard updated.")
         time.sleep(1)
-        pyautogui.hotkey("ctrl", "a")  # 폴더 내 전체 선택 (해당 폴더에 이미지 1개만 있다고 가정)
-        time.sleep(0.5)
-        pyautogui.hotkey("ctrl", "c")  # 복사
-        time.sleep(0.5)
     else:
         raise NotImplementedError("Unsupported OS")
 
