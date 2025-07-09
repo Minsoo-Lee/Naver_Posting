@@ -61,10 +61,10 @@ class TextData:
         self.title, self.body = self.content_input.GetValue().split("[제목]")
 
     def get_title(self):
-        return self.title
+        return self.title.strip()
 
     def get_body(self):
-        return self.body
+        return self.body.strip()
 
     def replace_title(self, address, company):
         self.title = self.title.replace("%주소%", address)
