@@ -114,16 +114,16 @@ class SectionBuilder:
         grid_sizer = wx.FlexGridSizer(2, 2, 10, 10)  # (행, 열, 수직 간격, 수평 간격)
         grid_sizer.AddGrowableCol(1, 1)  # 두 번째 열 (input 쪽)을 확장 가능하게 설정
 
-        max_label = wx.StaticText(grid_panel, wx.ID_ANY, "최대 (분)")
-        max_input = wx.TextCtrl(grid_panel, wx.ID_ANY, size=wx.Size(100, 20))
         min_label = wx.StaticText(grid_panel, wx.ID_ANY, "최소 (분)")
         min_input = wx.TextCtrl(grid_panel, wx.ID_ANY, size=wx.Size(100, 20))
+        max_label = wx.StaticText(grid_panel, wx.ID_ANY, "최대 (분)")
+        max_input = wx.TextCtrl(grid_panel, wx.ID_ANY, size=wx.Size(100, 20))
 
         grid_sizer.AddMany([
-            (max_label, 0, wx.ALIGN_CENTER_VERTICAL),
-            (max_input, 0, wx.EXPAND),
             (min_label, 0, wx.ALIGN_CENTER_VERTICAL),
             (min_input, 0, wx.EXPAND),
+            (max_label, 0, wx.ALIGN_CENTER_VERTICAL),
+            (max_input, 0, wx.EXPAND),
         ])
 
         grid_panel.SetSizer(grid_sizer)
@@ -136,8 +136,8 @@ class SectionBuilder:
         waiting_panel.SetSizer(waiting_sizer)
 
         self.left_panel_data.set_waiting_panel(waiting_panel)
-        self.text_data.set_waiting_max(max_input)
         self.text_data.set_waiting_min(min_input)
+        self.text_data.set_waiting_max(max_input)
 
     # 좌측 위 좌측: 라벨 + 라디오박스 패널
     def current_section(self, panel):
@@ -226,7 +226,7 @@ class SectionBuilder:
 
         account_list = wx.ListCtrl(account_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
         account_list.InsertColumn(0, "계정명", width=120)
-        account_list.InsertColumn(1, "비밀번호", width=120)
+        account_list.InsertColumn(1, "비밀번호", width=0)
 
         account_sizer.Add(account_button, 0, wx.ALL, border=3)
         account_sizer.Add(account_list, 0, wx.BOTTOM, border=10)
