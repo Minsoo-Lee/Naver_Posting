@@ -35,7 +35,7 @@ def show_text():
     for text_input, key in zip(text_list, text_keys):
         text_input.SetValue(text_json.get(key, ""))
 
-    rb_data = text_json["status_rb"]
+    rb_data = text_json.get("status_rb", 0)
     boxes.set_rb_index(rb_data)
 
     if rb_data == 0:
