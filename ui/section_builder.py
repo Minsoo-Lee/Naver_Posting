@@ -307,7 +307,7 @@ class SectionBuilder:
     def blog_section(self, panel):
         blog_panel = wx.Panel(panel, wx.ID_ANY)
         blog_sizer = wx.BoxSizer(wx.VERTICAL)
-        blog_sizer.AddSpacer(16)
+        # blog_sizer.AddSpacer()
 
         # 라벨 설정
         blog_label = wx.StaticText(blog_panel, wx.ID_ANY, "* 계정 파일 업로드 시 자동으로 업로드 됩니다.")
