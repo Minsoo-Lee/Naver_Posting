@@ -227,7 +227,8 @@ class SectionBuilder:
 
         account_list = wx.ListCtrl(account_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
         account_list.InsertColumn(0, "계정명", width=120)
-        account_list.InsertColumn(1, "비밀번호", width=0)
+        account_list.InsertColumn(1, "비밀번호")
+        account_list.SetColumnWidth(1, 0)
 
         account_sizer.Add(account_button, 0, wx.ALL, border=3)
         account_sizer.Add(account_list, 0, wx.BOTTOM, border=10)

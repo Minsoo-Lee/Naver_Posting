@@ -101,3 +101,5 @@ def show_lists():
             item_index = list_ctrl.InsertItem(list_ctrl.GetItemCount(), row[0])
             for col_idx in range(1, len(row)):
                 list_ctrl.SetItem(item_index, col_idx, row[col_idx])
+
+    lists.account_list.SetColumnWidth(1, 0)
