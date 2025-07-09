@@ -45,10 +45,10 @@ class TextData:
         return self.phone_number.GetValue()
 
     def get_waiting_max(self):
-        return self.waiting_max.GetValue() * 60
+        return int(self.waiting_max.GetValue()) * 60
 
     def get_waiting_min(self):
-        return self.waiting_min.GetValue() * 60
+        return int(self.waiting_min.GetValue()) * 60
 
     def get_api_number(self):
         return self.api_number.GetValue()

@@ -16,6 +16,7 @@ def init():
     webdriver.init_chrome()
 
 def execute_login(id_val, pw_val):
+    get_waiting_time()
     log.append_log("Naver에 접속합니다.")
     login.enter_naver()
     log.append_log("로그인 화면에 진입합니다.")
@@ -219,7 +220,9 @@ def write_content_cafe(address, company, article, image_path, image_length):
     image.remove_image(THUMBNAIL_PATH)
 
 def get_waiting_time():
-    min_time = int(text_data.TextData().get_waiting_min())
-    max_time = int(text_data.TextData().get_waiting_max())
+    min_time = text_data.TextData().get_waiting_min()
+    max_time = text_data.TextData().get_waiting_max()
+    print(f"min_time = {min_time}")
+    print(f"max_time = {max_time}")
     waiting_time = random.randint(min_time, max_time)
     return waiting_time
