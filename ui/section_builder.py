@@ -11,6 +11,7 @@ import os
 from data.text_data import TextData
 from ui.binding import Binding
 
+BUTTON_HEIGHT = 30
 LIST_BOX_HEIGHT = 180
 MIDDLE_WIDTH = 400
 
@@ -221,7 +222,7 @@ class SectionBuilder:
         account_sizer = wx.BoxSizer(wx.VERTICAL)
 
         # 업체 버튼 설정
-        account_button = wx.Button(account_panel, wx.ID_ANY, "계정 업로드", size=wx.Size(250, 50))
+        account_button = wx.Button(account_panel, wx.ID_ANY, "계정 업로드", size=wx.Size(250, BUTTON_HEIGHT))
         account_button.Enable(True)
 
         account_list = wx.ListCtrl(account_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
@@ -280,7 +281,7 @@ class SectionBuilder:
         keyword_sizer = wx.StaticBoxSizer(keyword_box, wx.VERTICAL)
 
         # 업체 버튼 설정
-        keyword_button = wx.Button(keyword_panel, wx.ID_ANY, "키워드 업로드", size=wx.Size(250, 50))
+        keyword_button = wx.Button(keyword_panel, wx.ID_ANY, "키워드 업로드", size=wx.Size(250, BUTTON_HEIGHT))
         keyword_button.Enable(True)
 
         keyword_list = wx.ListCtrl(keyword_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(550, LIST_BOX_HEIGHT))
@@ -337,7 +338,7 @@ class SectionBuilder:
         cafe_sizer = wx.BoxSizer(wx.VERTICAL)
 
         # 업체 버튼 설정
-        cafe_button = wx.Button(cafe_panel, wx.ID_ANY, "카페 업로드", size=wx.Size(250, 50))
+        cafe_button = wx.Button(cafe_panel, wx.ID_ANY, "카페 업로드", size=wx.Size(250, BUTTON_HEIGHT))
         cafe_button.Enable(False)
 
         cafe_list = wx.ListCtrl(cafe_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
@@ -411,7 +412,7 @@ class SectionBuilder:
 
     # 작업 수행 버튼
     def execute_section(self, panel):
-        task_button = wx.Button(panel, wx.ID_ANY, "작업 수행", size=wx.Size(MIDDLE_WIDTH, 50))
+        task_button = wx.Button(panel, wx.ID_ANY, "작업 수행", size=wx.Size(MIDDLE_WIDTH, BUTTON_HEIGHT))
         task_button.Enable(True)
 
         task_button.Bind(wx.EVT_BUTTON,
