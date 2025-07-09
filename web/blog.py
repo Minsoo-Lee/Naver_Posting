@@ -42,7 +42,7 @@ def exit_help():
     except:
         pass
 
-@sleep_after()
+@sleep_after(3)
 def write_title(title):
     webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[1]/div[1]/div/div/p/span[2]")
     webdriver.send_keys_action(title)
