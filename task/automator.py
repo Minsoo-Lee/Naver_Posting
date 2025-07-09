@@ -8,10 +8,9 @@ import os
 from utils import parsing
 
 # def start_task():
-#     download_cache.download_JSON()
-#     download_cache.download_CSV()
-#     content = parsing.parse_contents()
-#     print(content)
+#     t = text_data.TextData()
+#     t.divide_title_body()
+
 
 def start_task():
     # 캐시 먼저 저장

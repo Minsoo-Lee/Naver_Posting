@@ -17,6 +17,10 @@ class TextData:
         self.waiting_min = None
         self.api_number = None
         self.content_input = None
+
+        self.title = None
+        self.body = None
+
         TextData._initialized = True
 
     def set_status_label(self, status_label):
@@ -53,3 +57,11 @@ class TextData:
     def get_api_number(self):
         return self.api_number.GetValue()
 
+    def divide_title_body(self):
+        self.title, self.body = self.content_input.GetValue().split("[제목]")
+
+    def get_title(self):
+        return self.title
+
+    def get_body(self):
+        return self.body

@@ -35,8 +35,12 @@ def parse_boilerplate():
     return boilerplate[0], boilerplate[1]
 
 def get_boilerplate():
-    text = text_data.TextData().get_content_input()
+    text = text_data.TextData().get_body()
     return re.split(r"\[본문\]", text)
+
+# def get_boilerplate():
+#     text = text_data.TextData().get_content_input()
+#     return re.split(r"\[본문\]", text)
 
 def parse_header(headers, address, company):
     result = []

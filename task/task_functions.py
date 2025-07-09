@@ -43,12 +43,17 @@ def post_blog(title, contents, category_name):
         # blog.enter_iframe()
         blog.cancel_continue()
         blog.exit_help()
-        log.append_log(f"제목을 작성합니다. 제목 = {title}")
-        blog.write_title(title)
-        log.append_log("본문을 작성합니다.")
-        blog.enter_context_input()
+        # log.append_log(f"제목을 작성합니다. 제목 = {title}")
+        # blog.write_title(title)
+        # log.append_log("본문을 작성합니다.")
+        # blog.enter_context_input()
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
+
+        texts = text_data.TextData()
+        texts.divide_title_body()
+
+        title = texts.get_title()
 
         # 본문 제작
         article = parsing.parse_contents(address, company)
@@ -57,6 +62,11 @@ def post_blog(title, contents, category_name):
         count = sum(1 for text in article if text == PHOTO)
         image_len = contents.get_image_path_length()
         length = image_len if count > image_len else count
+
+        log.append_log(f"제목을 작성합니다. 제목 = {title}")
+        blog.write_title(title)
+        log.append_log("본문을 작성합니다.")
+        blog.enter_context_input()
 
         write_content_blog(address, company, article, contents.get_random_image_path(length), length)
 
@@ -146,13 +156,21 @@ def post_cafe(title, contents, cafe_list):
             cafe.click_board_choice()
             log.append_log(f"카테고리를 선택합니다. 카테고리 = {cafe_data[1]}")
             cafe.choose_board(cafe_data[1])
+
+            # 주소, 업체 추출
+            address, company = contents.get_address(i), contents.get_company(i)
+
+            texts = text_data.TextData()
+            texts.divide_title_body()
+
+            title = texts.get_title()
+
             log.append_log(f"제목을 작성합니다. 제목 = {title}")
             cafe.write_title(title)
 
             cafe.enter_content_input()
 
-            # 주소, 업체 추출
-            address, company = contents.get_address(i), contents.get_company(i)
+
 
             # 본문 제작
             article = parsing.parse_contents(address, company)
