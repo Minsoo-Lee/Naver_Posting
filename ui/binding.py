@@ -121,7 +121,6 @@ class Binding:
 
     def upload_account_blog_list(self, index):
         csv_data = self.parse_getter[index]()
-        list_data = self.list_collection[index]
         for i in range(2, 4):
             list_data = self.list_collection[i]
             list_data.DeleteAllItems()
@@ -133,6 +132,9 @@ class Binding:
                 index = list_data.InsertItem(list_data.GetItemCount(), row[0])
                 for j in range(1, len(row)):
                     list_data.SetItem(index, j, row[j])
+
+            if i == 2:
+                list_data.SetColumnWidth(1, 0)
 
     def on_execute_button_clicked(self, event, content_value):
         self.parsing_data.content_data = content_value
