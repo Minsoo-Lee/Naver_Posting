@@ -36,6 +36,15 @@ def init_chrome():
 
         driver = webdriver.Chrome(options=chrome_options)
 
+        # webdriver 속성 제거
+        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+            "source": """
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            });
+            """
+        })
+
         time.sleep(1)
 
     main_window = driver.current_window_handle

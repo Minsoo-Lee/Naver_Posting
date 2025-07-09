@@ -1,4 +1,5 @@
 import os
+import random
 
 from web import login, webdriver, blog, cafe
 from ui import log
@@ -7,13 +8,17 @@ from data import box_data, content_data, text_data
 from utils import parsing
 from data.const import *
 import time
+from ui import log
 
 def init():
     webdriver.init_chrome()
 
 def execute_login(id_val, pw_val):
+    log.append_log("Naver에 접속합니다.")
     login.enter_naver()
+    log.append_log("로그인 화면에 진입합니다.")
     login.enter_login_window()
+    log.append_log(f"로그인을 실행합니다. id = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
     log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")
@@ -21,18 +26,23 @@ def execute_login(id_val, pw_val):
         if login.check_capcha_done() is True:
             break
     login.click_login_not_save()
+    log.append_log("로그인을 완료하였습니다.")
 
 # 키워드 조합 개수대로 블로그 발행
 def post_blog(title, contents, category_name):
+    waiting_time = random.randint(text_data.TextData().get_waiting_min(), text_data.TextData().get_waiting_max())
     keyword_len = contents.get_keywords_length()
     for i in range(keyword_len):
+        log.append_log("블로그에 진입합니다.")
         blog.enter_blog()
         blog.enter_iframe()
         blog.enter_posting_window()
         # blog.enter_iframe()
         blog.cancel_continue()
         blog.exit_help()
+        log.append_log(f"제목을 작성합니다. 제목 = {title}")
         blog.write_title(title)
+        log.append_log("본문을 작성합니다.")
         blog.enter_context_input()
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
@@ -61,21 +71,23 @@ def post_blog(title, contents, category_name):
         blog.click_post_button()
         # 여기서 카테고리 코드 추가
         blog.click_category_listbox()
+        log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
         blog.choose_category(category_name)
         blog.complete_posting()
+        log.append_log("포스팅을 완료하였습니다.")
         blog.exit_iframe()
         blog.exit_tab()
 
+    log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
+    time.sleep(waiting_time)
+
 def write_content_blog(address, company, article, image_path, image_length):
-    print(article)
     # 먼저, 썸네일 이미지부터 생성
     phone = text_data.TextData().get_phone_number()
     image.generate_image(phone, address + " " + company)
     video.generate_video()
     image_index = 0
     video_path = ""
-
-    # 여기서 텍스트는 한 줄로 묶기 (텍스트 -> 텍스트 이렇게 말고, 텍스트는 한번에 입력)
 
     for content in article:
         # 썸네일일 경우
@@ -102,11 +114,13 @@ def write_content_blog(address, company, article, image_path, image_length):
     image.remove_image(THUMBNAIL_PATH)
 
 def post_cafe(title, contents, cafe_list):
+    waiting_time = random.randint(text_data.TextData().get_waiting_min(), text_data.TextData().get_waiting_max())
     for cafe_data in cafe_list:
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):
             # cafe_data[0] = url
             # cafe_data[1] = board_name
+            log.append_log("카페에 진입합니다.")
             cafe.enter_cafe(cafe_data[0])
             cafe.click_posting_button()
 
@@ -114,7 +128,9 @@ def post_cafe(title, contents, cafe_list):
                 cafe.disable_comment()
 
             cafe.click_board_choice()
+            log.append_log(f"카테고리를 선택합니다. 카테고리 = {cafe_data[1]}")
             cafe.choose_board(cafe_data[1])
+            log.append_log(f"제목을 작성합니다. 제목 = {title}")
             cafe.write_title(title)
 
             cafe.enter_content_input()
@@ -130,6 +146,7 @@ def post_cafe(title, contents, cafe_list):
             image_len = contents.get_image_path_length()
             length = image_len if count > image_len else count
 
+            log.append_log("본문을 작성합니다.")
             write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
 
             # # 영상 업로드 확인
@@ -150,6 +167,10 @@ def post_cafe(title, contents, cafe_list):
             # cafe.enter_iframe()
 
             cafe.click_register_button()
+            log.append_log("포스팅을 완료하였습니다.")
+
+    log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
+    time.sleep(waiting_time)
 
 def write_content_cafe(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성

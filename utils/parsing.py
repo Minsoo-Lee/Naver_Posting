@@ -16,9 +16,9 @@ def parse_contents(address, company):
     return content
 
 
-def get_body():
+def get_body(address, company):
     gemini.init_gemini()
-    response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2])
+    response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company)
     response = response.replace("**", "")
     contents = [item.strip() for item in re.split(PATTERN, response)]
     # index = 0

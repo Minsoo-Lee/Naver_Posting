@@ -18,11 +18,12 @@ def init_gemini():
     # model = genai.GenerativeModel('gemini-1.5-flash')
     # model = genai.GenerativeModel('gemini-1.0-pro')
 
-def create_content(contents):
+def create_content(contents, address, company):
     global model
 
     response = model.generate_content(f"""
-            내가 성수동 설비업체와 관련된 글을 쓸건데, 예시 글들을 보여줄게.
+            내가 글을 쓸건데, 키워드는 {address}, {company}야.
+            예시 글들을 보여줄게.
             
             예시 1:
             {contents[0]}
