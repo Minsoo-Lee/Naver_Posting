@@ -372,7 +372,7 @@ class SectionBuilder:
         self.blog_section(down_panel)
         self.cafe_section(down_panel)
 
-        down_sizer.Add(self.left_panel_data.blog_panel, 0, wx.RIGHT | wx.ALIGN_TOP, 30)
+        down_sizer.Add(self.left_panel_data.blog_panel, 0, wx.RIGHT | wx.ALIGN_TOP, 10)
         down_sizer.Add(self.left_panel_data.cafe_panel, 0, wx.ALL | wx.ALIGN_TOP, 5)
         down_panel.SetSizer(down_sizer)
 
