@@ -19,9 +19,6 @@ def start_task():
     download_cache.download_CSV()
     log.append_log("캐시 값을 저장합니다.")
 
-    print(text_data.TextData().get_waiting_min())
-    print(text_data.TextData().get_waiting_max())
-
     text_collection = text_data.TextData()
     parse_collection = parsing_data.ParseData()
 

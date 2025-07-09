@@ -32,7 +32,7 @@ def execute_login(id_val, pw_val):
 
 # 키워드 조합 개수대로 블로그 발행
 def post_blog(title, contents, category_name):
-    waiting_time = random.randint(text_data.TextData().get_waiting_min(), text_data.TextData().get_waiting_max())
+    waiting_time = get_waiting_time()
     keyword_len = contents.get_keywords_length()
     for i in range(keyword_len):
         log.append_log("블로그에 진입합니다.")
@@ -122,7 +122,7 @@ def write_content_blog(address, company, article, image_path, image_length):
     image.remove_image(THUMBNAIL_PATH)
 
 def post_cafe(title, contents, cafe_list):
-    waiting_time = random.randint(text_data.TextData().get_waiting_min(), text_data.TextData().get_waiting_max())
+    waiting_time = get_waiting_time()
     for cafe_data in cafe_list:
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):
@@ -217,3 +217,9 @@ def write_content_cafe(address, company, article, image_path, image_length):
 
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
+
+def get_waiting_time():
+    min_time = int(text_data.TextData().get_waiting_min())
+    max_time = int(text_data.TextData().get_waiting_max())
+    waiting_time = random.randint(min_time, max_time)
+    return waiting_time
