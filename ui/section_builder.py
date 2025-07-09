@@ -318,7 +318,7 @@ class SectionBuilder:
         # blog_button.Enable(True)
 
         blog_list = wx.ListCtrl(blog_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
-        blog_list.InsertColumn(0, "이름", width=120)
+        blog_list.InsertColumn(0, "계정", width=120)
         blog_list.InsertColumn(1, "게시판 이름", width=130)
 
         # blog_button.Bind(
@@ -343,7 +343,7 @@ class SectionBuilder:
         cafe_button.Enable(False)
 
         cafe_list = wx.ListCtrl(cafe_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(250, LIST_BOX_HEIGHT))
-        cafe_list.InsertColumn(0, "이름", width=120)
+        cafe_list.InsertColumn(0, "카페 주소", width=120)
         cafe_list.InsertColumn(1, "게시판 이름", width=130)
         cafe_list.Enable(False)
 
