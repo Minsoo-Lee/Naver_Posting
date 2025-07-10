@@ -20,7 +20,7 @@ def current_ip(event):
 
 # 이벤트 바인딩
 top_button.Bind(wx.EVT_BUTTON, current_ip)
-bottom_button.Bind(wx.EVT_BUTTON, lambda event: ip_trans.toggle_airplane_mode())
+bottom_button.Bind(wx.EVT_BUTTON, lambda event: ip_trans.toggle_mobile_data())
 
 # 수직 정렬
 sizer = wx.BoxSizer(wx.VERTICAL)
