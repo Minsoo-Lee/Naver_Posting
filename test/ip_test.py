@@ -15,7 +15,7 @@ panel = wx.Panel(frame)
 top_button = wx.Button(panel, label="현재 IP 확인")
 bottom_button = wx.Button(panel, label="비행기모드 on/off")
 
-def current_ip():
+def current_ip(event):
     print(ip_trans.get_current_ip())
 
 # 이벤트 바인딩
