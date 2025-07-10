@@ -37,16 +37,20 @@ def get_outer_IP():
 
 # 테더링 상태 확인
 def check_usb_tethering():
+    # subprocess.check_output(["adb", "shell", "settings", "get",  "global", "tether_dun_required"], shell=True).decode('utf-8').strip()
     result = subprocess.check_output(["adb", "shell", "settings", "get",  "global", "tether_dun_required"], shell=True).decode('utf-8').strip()
+    print("result = ", result)
     is_enable = result == '0'
     print(f"테더링 상태: {'활성화' if is_enable else '비활성화'}")
     return is_enable
 
 # 테더링 활성화하기
 def enable_usb_tethering():
-    subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis"], shell=True)
+    result1 = subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis"], shell=True)
+    print(f"result1 : {result1.returncode}")
     time.sleep(5)
-    subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis,mtp"], shell=True)
+    result2 = subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis,mtp"], shell=True)
+    print(f"result2 : {result2.returncode}")
     print("USB 테더링 활성화 완료")
     return True
 
