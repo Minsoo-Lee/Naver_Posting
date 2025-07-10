@@ -1,15 +1,14 @@
 import os
 import random
 
-from web import login, webdriver, blog, cafe, ip
-from ui import log
+from web import login, webdriver, blog, cafe
+from ip import ip
 from media import video, image
-from data import box_data, content_data, text_data, button_data
+from data import box_data, text_data, button_data
 from utils import parsing
 from data.const import *
 import time
 from ui import log
-from web.ip import get_current_ip
 
 
 def init():
