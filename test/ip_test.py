@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import wx
-from ip import ip_trans
+from ip import ip_trans, ip_trans1
 import time
 
 # 앱 초기화
@@ -17,7 +17,7 @@ top_button = wx.Button(panel, label="현재 IP 우회 테스트")
 
 def ip_test(event):
     while True:
-        ip_trans.run_cycle()
+        ip_trans1.trans_ip()
         time.sleep(120)
 
 # 이벤트 바인딩
