@@ -12,21 +12,19 @@ frame = wx.Frame(None, title="IP 우회 테스트", size=(300, 200))
 panel = wx.Panel(frame)
 
 # 버튼 생성
-top_button = wx.Button(panel, label="현재 IP 확인")
-bottom_button = wx.Button(panel, label="비행기모드 on/off")
+top_button = wx.Button(panel, label="현재 IP 우회 테스트")
 
-def current_ip(event):
+def ip_test(event):
     print(ip_trans.get_current_ip())
+    ip_trans.toggle_mobile_data()
 
 # 이벤트 바인딩
-top_button.Bind(wx.EVT_BUTTON, current_ip)
-bottom_button.Bind(wx.EVT_BUTTON, lambda event: ip_trans.toggle_mobile_data())
+top_button.Bind(wx.EVT_BUTTON, ip_test)
 
 # 수직 정렬
 sizer = wx.BoxSizer(wx.VERTICAL)
 sizer.Add(top_button, 0, wx.ALIGN_CENTER | wx.TOP, 30)
 sizer.AddStretchSpacer()
-sizer.Add(bottom_button, 0, wx.ALIGN_CENTER | wx.BOTTOM, 30)
 panel.SetSizer(sizer)
 
 # 창 중앙에 표시
