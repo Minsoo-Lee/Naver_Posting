@@ -2,6 +2,7 @@ import os
 import random
 
 from web import login, webdriver, blog, cafe
+from ip import ip_trans
 from media import video, image
 from data import box_data, text_data, button_data
 from utils import parsing
