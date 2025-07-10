@@ -1,5 +1,5 @@
 import wx
-from ip import ip
+from ip import ip_trans
 
 class MyFrame(wx.Frame):
     def __init__(self):
@@ -12,8 +12,8 @@ class MyFrame(wx.Frame):
         self.bottom_button = wx.Button(panel, label="비행기모드 on/off")
 
         # 이벤트 바인딩
-        self.top_button.Bind(wx.EVT_BUTTON, ip.get_current_ip)
-        self.bottom_button.Bind(wx.EVT_BUTTON, ip.toggle_airplane_mode())
+        self.top_button.Bind(wx.EVT_BUTTON, ip_trans.get_current_ip)
+        self.bottom_button.Bind(wx.EVT_BUTTON, ip_trans.toggle_airplane_mode())
 
         # 수직 정렬을 위한 sizer
         sizer = wx.BoxSizer(wx.VERTICAL)
