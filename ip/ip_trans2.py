@@ -46,11 +46,9 @@ def check_usb_tethering():
 
 # 테더링 활성화하기
 def enable_usb_tethering():
-    result1 = subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis"], shell=True)
-    print(f"result1 : {result1.returncode}")
+    subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis"], shell=True, check=True)
     time.sleep(5)
-    result2 = subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis,mtp"], shell=True)
-    print(f"result2 : {result2.returncode}")
+    subprocess.run(["adb", "shell", "svc", "usb", "setFunctions", "rndis,mtp"], shell=True)
     print("USB 테더링 활성화 완료")
     return True
 
@@ -65,7 +63,7 @@ def enable_airplane_mode():
     subprocess.run(
         ["adb", "shell", "su", "-c", "\'am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true\'"],
         shell=True)
-    print("비행기 모드 OFF")
+    print("비행기 모드 ON")
 
 def trans_ip():
     global transferred_ip
@@ -82,6 +80,7 @@ def trans_ip():
         transferred_ip = {previous_outer_ip}
 
     for i in range(30):
+        print("========================================")
         enable_airplane_mode()
         time.sleep(10)
 
