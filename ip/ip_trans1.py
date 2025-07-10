@@ -12,8 +12,8 @@ def trans_ip():
 
     print(f"Serial Number = {device.serial}")
 
-    req = requests.get("http://ipconfig.kr")
-    print("외부 IP = ", re.search(r'IP Address : (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', req.text)[1])
+    ip = requests.get("htps://api.ipify.org", timeout=5).text
+    print(f"외부 IP = {ip}")
 
     # usb 테더링 제어
     os.system("svc data disable")
@@ -37,5 +37,5 @@ def trans_ip():
 
     time.sleep(5)
 
-    req = requests.get("http://ipconfig.kr")
-    print("외부 IP = ", re.search(r'IP Address : (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', req.text)[1])
+    ip = requests.get("htps://api.ipify.org", timeout=5).text
+    print(f"외부 IP = {ip}")
