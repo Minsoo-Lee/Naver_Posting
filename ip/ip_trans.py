@@ -5,7 +5,7 @@ from utils.decorators import sleep_after
 @sleep_after()
 def get_current_ip():
     try:
-        response = requests.get("https://api.ipify.org", timeout=5)
+        response = requests.get("https://api.ipify.org", timeout=5, headers={"Cache-Control": "no-cache"})
         return response.text
     except Exception as e:
         return f"IP 확인 실패: {e}"
