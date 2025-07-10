@@ -12,7 +12,7 @@ def trans_ip():
 
     print(f"Serial Number = {device.serial}")
 
-    ip = requests.get("htps://api.ipify.org", timeout=5).text
+    ip = requests.get("https://api.ipify.org", timeout=5).text
     print(f"외부 IP = {ip}")
 
     # usb 테더링 제어
@@ -37,5 +37,5 @@ def trans_ip():
 
     time.sleep(5)
 
-    ip = requests.get("htps://api.ipify.org", timeout=5).text
+    ip = requests.get("https://api.ipify.org", timeout=5).text
     print(f"외부 IP = {ip}")
