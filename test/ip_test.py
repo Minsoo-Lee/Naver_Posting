@@ -1,5 +1,6 @@
 import wx
-from ip import ip_trans
+from web import ip_trans
+
 
 class MyFrame(wx.Frame):
     def __init__(self):
