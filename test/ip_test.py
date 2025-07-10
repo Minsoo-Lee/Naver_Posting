@@ -1,3 +1,8 @@
+# 윈도우 git bash에서 실행할 목적으로 추가
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import wx
 from ip import ip_trans
 
