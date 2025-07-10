@@ -17,9 +17,7 @@ top_button = wx.Button(panel, label="현재 IP 우회 테스트")
 
 def ip_test(event):
     while True:
-        print(f"현재 IP = {ip_trans.get_current_ip()}")
-        ip_trans.toggle_mobile_data()
-        print(f"변경 IP = {ip_trans.get_current_ip()}")
+        ip_trans.log_network()
         time.sleep(120)
 
 # 이벤트 바인딩
