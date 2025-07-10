@@ -20,3 +20,12 @@ def toggle_airplane_mode():
     subprocess.run(["adb", "shell", "settings", "put", "global", "airplane_mode_on", "0"])
     subprocess.run(["adb", "shell", "am", "broadcast", "-a", "android.intent.action.AIRPLANE_MODE", "--ez", "state", "false"])
     time.sleep(3)
+
+def toggle_mobile_data():
+    print("모바일 데이터를 끕니다.")
+    subprocess.run(["adb", "shell", "svc", "data", "disable"])
+    time.sleep(3)
+
+    print("모바일 데이터를 켭니다.")
+    subprocess.run(["adb", "shell", "svc", "data", "enable"])
+    time.sleep(3)
