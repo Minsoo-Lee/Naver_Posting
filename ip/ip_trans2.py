@@ -99,7 +99,9 @@ def trans_ip():
         if after_outer_ip not in transferred_ip:
             transferred_ip.add(previous_outer_ip)
             print("새로운 IP에 연결했습니다.")
+            print("========================================")
             break
+        print("========================================")
 
 
 
