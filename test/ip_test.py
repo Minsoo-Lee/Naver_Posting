@@ -17,7 +17,7 @@ top_button = wx.Button(panel, label="현재 IP 우회 테스트")
 
 def ip_test(event):
     while True:
-        ip_trans.log_network()
+        ip_trans.run_cycle()
         time.sleep(120)
 
 # 이벤트 바인딩
