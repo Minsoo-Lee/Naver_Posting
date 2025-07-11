@@ -100,11 +100,11 @@ def post_blog(title, contents, category_name):
         blog.exit_iframe()
         blog.exit_tab()
 
-    if button_data.ButtonData().get_toggle_value() is True:
-        log.append_log("IP를 변경합니다.")
-        ip.toggle_airplane_mode()
-        curren_ip = ip.get_current_ip()
-        log.append_log(f"현재 IP = {curren_ip}")
+    # if button_data.ButtonData().get_toggle_value() is True:
+    #     log.append_log("IP를 변경합니다.")
+    #     ip.toggle_airplane_mode()
+    #     curren_ip = ip.get_current_ip()
+    #     log.append_log(f"현재 IP = {curren_ip}")
 
     log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
     time.sleep(waiting_time)
@@ -212,11 +212,11 @@ def post_cafe(title, contents, cafe_list):
             cafe.click_register_button()
             log.append_log("포스팅을 완료하였습니다.")
 
-    if button_data.ButtonData().get_toggle_value() is True:
-        log.append_log("IP를 변경합니다.")
-        ip.toggle_airplane_mode()
-        curren_ip = ip.get_current_ip()
-        log.append_log(f"현재 IP = {curren_ip}")
+    # if button_data.ButtonData().get_toggle_value() is True:
+    #     log.append_log("IP를 변경합니다.")
+    #     ip.toggle_airplane_mode()
+    #     curren_ip = ip.get_current_ip()
+    #     log.append_log(f"현재 IP = {curren_ip}")
 
     log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
     time.sleep(waiting_time)
