@@ -39,7 +39,6 @@ def get_outer_IP():
 def check_usb_tethering():
     # subprocess.check_output(["adb", "shell", "settings", "get",  "global", "tether_dun_required"], shell=True).decode('utf-8').strip()
     result = subprocess.check_output(["adb", "shell", "settings", "get",  "global", "tether_dun_required"], shell=True).decode('utf-8').strip()
-    print("result = ", result)
     is_enable = result == '0'
     print(f"테더링 상태: {'활성화' if is_enable else '비활성화'}")
     return is_enable
@@ -74,7 +73,7 @@ def trans_ip():
     previous_internal_ip, interface = get_inner_IP()
     previous_outer_ip = get_outer_IP()
     print(f"초기 내부 IP : {previous_internal_ip}")
-    print(f"초기 외부 IP : {previous_outer_ip}")
+    print(f"초기 외부 IP : {previous_outer_ip}\n")
 
     if transferred_ip is None:
         transferred_ip = {previous_outer_ip}
@@ -95,7 +94,7 @@ def trans_ip():
         time.sleep(5)
         after_outer_ip = get_outer_IP()
 
-        print(f"내부 IP : {after_internal_ip}")
+        print(f"\n내부 IP : {after_internal_ip}")
         print(f"인터페이스: {after_interface}")
         print(f"외부 IP : {after_outer_ip}")
 

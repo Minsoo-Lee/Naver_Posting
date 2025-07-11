@@ -1,4 +1,5 @@
 NAVER="https://www.naver.com"
+NAVER_LOGIN="https://nid.naver.com/nidlogin.login"
 CONTENT_EX1="""
 신공간 종합설비"는 건대입구역, 광나루역, 광진구 구의동, 그리고 자양동 지역에서의 누수탐지를 전문적으로 진행하는 업체입니다.  누수가 생기면 걱정이 많아지죠. 누수 문제를 신속하고 정확하게 해결하기 위해 최선을 다해 주십니다.
 

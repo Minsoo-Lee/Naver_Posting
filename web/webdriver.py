@@ -14,10 +14,11 @@ PORT = "9004"
 main_window = None
 main_tab = None
 inp_check = None
+actions = None
 
 @sleep_after()
 def init_chrome():
-    global driver, main_window
+    global driver, main_window, actions
     if driver is None:
         chrome_options = Options()
 
@@ -48,6 +49,7 @@ def init_chrome():
         time.sleep(1)
 
     main_window = driver.current_window_handle
+    actions = ActionChains(driver)
 
 def enter_url(url):
     driver.get(url)
@@ -67,12 +69,21 @@ def get_element_css(css):
 def execute_javascript(js_code, element):
     driver.execute_script(js_code, element)
 
+def find_category(category_name):
+    elements = driver.find_elements(By.CLASS_NAME, "tlink")
+    elements = driver.find_elements(By.XPATH, '//*[starts-with(@class, "tlink")]')
+    print(elements)
+
+    for element in elements:
+        a_tags = element.find_elements(By.TAG_NAME, "a")
+        for a_tag in a_tags:
+            print(a_tag.text)
+
 def click_element_among_classes(class_name, text):
     elements = driver.find_elements(By.CLASS_NAME, class_name)
 
     for element in elements:
         if element.text == text:
-            print("찾음:", element.text)
             element.click()  # 클릭하고 싶으면 이 줄 사용
             break
 
@@ -91,8 +102,13 @@ def exit_tab():
     driver.switch_to.window(main_window)
 
 def send_keys_action(value):
+    global actions
     actions = ActionChains(driver)
     actions.send_keys(value).perform()
+
+def get_actions():
+    global actions
+    return actions
 
 def send_data_by_xpath(xpath, value):
     driver.find_element(By.XPATH, xpath).send_keys(value)

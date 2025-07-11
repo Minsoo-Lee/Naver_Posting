@@ -13,3 +13,4 @@ moviepy~=2.2.1
 protobuf~=5.29.5
 pywin32
 pywin32-ctypes
+clipboard

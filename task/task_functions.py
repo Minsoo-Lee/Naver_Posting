@@ -16,17 +16,18 @@ def init():
 
 def execute_login(id_val, pw_val):
     get_waiting_time()
-    log.append_log("Naver에 접속합니다.")
-    login.enter_naver()
-    log.append_log("로그인 화면에 진입합니다.")
-    login.enter_login_window()
+    log.append_log("Naver 로그인 화면에 접속합니다.")
+    login.enter_naver_login()
+    # log.append_log("로그인 화면에 진입합니다.")
+    # login.enter_login_window()
     log.append_log(f"로그인을 실행합니다. id = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
-    log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")
-    while True:
-        if login.check_capcha_done() is True:
-            break
+    if not login.check_capcha_appear():
+        log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")
+        while True:
+            if login.check_capcha_done() is True:
+                break
     login.click_login_not_save()
     log.append_log("로그인을 완료하였습니다.")
 
@@ -44,6 +45,10 @@ def post_blog(title, contents, category_name):
 
         log.append_log("블로그에 진입합니다.")
         blog.enter_blog()
+
+        # 카테고리가 정말 존재하는 카테고리인지 확인
+        blog.is_category_exist(category_name)
+
         blog.enter_iframe()
         blog.enter_posting_window()
         # blog.enter_iframe()
@@ -81,6 +86,7 @@ def post_blog(title, contents, category_name):
         # 여기서 카테고리 코드 추가
         blog.click_category_listbox()
         log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
+
         blog.choose_category(category_name)
         # 해시태그 추가
         hashtags = contents.get_hashtags()

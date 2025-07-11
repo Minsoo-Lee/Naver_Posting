@@ -1,52 +1,73 @@
-import time
-from operator import truediv
+import time, clipboard
 
-import pyperclip
-from selenium.webdriver import ActionChains, Keys
-
+from selenium.webdriver import Keys
 from utils.decorators import sleep_after
 from web import webdriver
 from data.const import *
 from selenium.webdriver.common.by import By
+import platform
+
+is_secured = False
+
+COMCON = Keys.COMMAND if platform.system() == "Darwin" else Keys.CONTROL
 
 @sleep_after()
-def enter_naver():
-    webdriver.driver.get(NAVER)
+def enter_naver_login():
+    webdriver.driver.get(NAVER_LOGIN)
 
-@sleep_after()
-def enter_login_window():
-    webdriver.driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div/a").click()
-
+# @sleep_after()
+# def enter_login_window():
+#     webdriver.driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div/a").click()
 
 @sleep_after()
 def input_id_pw(id_val, pw_val):
-    # 천천히 입력하여 캡챠 우회 (되는지 확인 필요)
+    actions = webdriver.get_actions()
+
+    time.sleep(3)
+
+    clipboard.copy(id_val)
     id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
+    id_input.click()
+    actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
+
+    time.sleep(3)
+
+    clipboard.copy(pw_val)
     pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
+    pw_input.click()
+    actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
 
-    for ch in id_val:
-        id_input.send_keys(ch)
-        time.sleep(0.2)
-
-    for ch in pw_val:
-        pw_input.send_keys(ch)
-        time.sleep(0.2)
-
-    # 기존 코드
-    # webdriver.driver.find_element(By.XPATH,
-    #                     "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input").send_keys(id_val)
+    # 천천히 입력하여 캡챠 우회 (되는지 확인 필요) -> 안됨
+    # id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
+    # pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
     #
-    # webdriver.driver.find_element(By.XPATH,
-    #                     "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input").send_keys(pw_val)
+    # for ch in id_val:
+    #     id_input.send_keys(ch)
+    #     time.sleep(0.2)
+    #
+    # for ch in pw_val:
+    #     pw_input.send_keys(ch)
+    #     time.sleep(0.2)
 
 @sleep_after()
 def click_ip_secure():
-    webdriver.click_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[2]/div[2]/span")
+    global is_secured
+    if not is_secured:
+        webdriver.click_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[2]/div[2]/span")
+        is_secured = True
 
 @sleep_after()
 def click_login_button():
     # driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[11]/button").click()
     webdriver.driver.find_element(By.ID, "log.login").click()
+
+@sleep_after()
+def check_capcha_appear():
+    try:
+        webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a")
+        return False
+    except:
+        return True
 
 @sleep_after()
 def check_capcha_done():

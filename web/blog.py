@@ -25,6 +25,10 @@ def enter_posting_window():
     # webdriver.enter_url(f"{BLOG}/?Redirect=Write&")
 
 @sleep_after()
+def is_category_exist(category_name):
+    webdriver.find_category(category_name)
+
+@sleep_after()
 def enter_iframe():
     webdriver.switch_frame('mainFrame')
 
