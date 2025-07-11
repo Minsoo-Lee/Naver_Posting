@@ -13,6 +13,13 @@ def enter_cafe(cafe_url):
     print(time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime()))
     webdriver.enter_url(cafe_url)
 
+@sleep_after()
+def is_signed_up():
+    button = webdriver.get_element_xpath("/html/body/div[3]/div/div[5]/div[1]/div[1]/div[1]/div[2]/a")
+    if button.text.strip() is "카페 글쓰기":
+        return True
+    return False
+
 @sleep_after(3)
 def click_posting_button():
     webdriver.click_element_xpath("/html/body/div[3]/div/div[5]/div[1]/div[1]/div[1]/div[2]/a")

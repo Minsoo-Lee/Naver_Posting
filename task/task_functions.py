@@ -158,6 +158,10 @@ def post_cafe(title, contents, cafe_list):
             # cafe_data[1] = board_name
             log.append_log("카페에 진입합니다.")
             cafe.enter_cafe(cafe_data[0])
+            # 가입했는지 여부 확인
+            if not cafe.is_signed_up():
+                log.append_log("가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
+                continue
             cafe.click_posting_button()
 
             if box_data.BoxData().get_cb_value() is False:
