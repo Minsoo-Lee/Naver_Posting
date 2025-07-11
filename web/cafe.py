@@ -16,7 +16,8 @@ def enter_cafe(cafe_url):
 @sleep_after()
 def is_signed_up():
     button = webdriver.get_element_xpath("/html/body/div[3]/div/div[5]/div[1]/div[1]/div[1]/div[2]/a")
-    if button.text.strip() is "카페 글쓰기":
+    print(f"text = {button.text.strip()}")
+    if button.text.strip() == "카페 글쓰기":
         return True
     return False
 

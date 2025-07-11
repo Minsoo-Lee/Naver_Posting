@@ -32,8 +32,7 @@ def execute_login(id_val, pw_val):
     log.append_log("로그인을 완료하였습니다.")
 
 # 키워드 조합 개수대로 블로그 발행
-def post_blog(title, contents, category_name):
-    waiting_time = get_waiting_time()
+def post_blog(title, contents, category_name, only_blog):
     keyword_len = contents.get_keywords_length()
     for i in range(keyword_len):
         address, company = contents.get_address(i), contents.get_company(i)
@@ -106,8 +105,10 @@ def post_blog(title, contents, category_name):
     #     curren_ip = ip.get_current_ip()
     #     log.append_log(f"현재 IP = {curren_ip}")
 
-    log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
-    time.sleep(waiting_time)
+    if not only_blog:
+        total_time, minutes, seconds = get_waiting_time()
+        log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
+        time.sleep(total_time)
 
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
@@ -143,7 +144,7 @@ def write_content_blog(address, company, article, image_path, image_length):
 
 def post_cafe(title, contents, cafe_list):
     waiting_time = get_waiting_time()
-    for cafe_data in cafe_list:
+    for cafe_index in range(len(cafe_list)):
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):
             # 주소, 업체 추출
@@ -156,8 +157,11 @@ def post_cafe(title, contents, cafe_list):
 
             # cafe_data[0] = url
             # cafe_data[1] = board_name
+            url = cafe_list[cafe_index][0]
+            board_name = cafe_list[cafe_index][1]
+
             log.append_log("카페에 진입합니다.")
-            cafe.enter_cafe(cafe_data[0])
+            cafe.enter_cafe(url)
             # 가입했는지 여부 확인
             if not cafe.is_signed_up():
                 log.append_log("가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
@@ -168,8 +172,8 @@ def post_cafe(title, contents, cafe_list):
                 cafe.disable_comment()
 
             cafe.click_board_choice()
-            log.append_log(f"카테고리를 선택합니다. 카테고리 = {cafe_data[1]}")
-            cafe.choose_board(cafe_data[1])
+            log.append_log(f"카테고리를 선택합니다. 카테고리 = {board_name}")
+            cafe.choose_board(board_name)
             log.append_log(f"제목을 작성합니다. 제목 = {title}")
             cafe.write_title(title)
 
@@ -221,9 +225,10 @@ def post_cafe(title, contents, cafe_list):
     #     ip.toggle_airplane_mode()
     #     curren_ip = ip.get_current_ip()
     #     log.append_log(f"현재 IP = {curren_ip}")
-
-    log.append_log(f"다음 작업까지 대기합니다. 대기시간 = {waiting_time}")
-    time.sleep(waiting_time)
+        if cafe_index < len(cafe_list) - 1:
+            total_time, minutes, seconds = get_waiting_time()
+            log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
+            time.sleep(total_time)
 
 def write_content_cafe(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
@@ -262,5 +267,7 @@ def get_waiting_time():
     max_time = text_data.TextData().get_waiting_max()
     print(f"min_time = {min_time}")
     print(f"max_time = {max_time}")
-    waiting_time = random.randint(min_time, max_time)
-    return waiting_time
+    total_time = random.randint(min_time, max_time)
+    minutes = total_time / 60
+    seconds = total_time - minutes * 60
+    return total_time, minutes, seconds

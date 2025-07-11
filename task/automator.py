@@ -57,15 +57,22 @@ def start_task():
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현
         if task_index == 0:
-            post_blog("TITLE", contents, category_name)
+            post_blog("TITLE", contents, category_name, True)
         elif task_index == 1:
             post_cafe("TITLE", contents, cafe_list)
         elif task_index == 2:
-            post_blog("TITLE", contents, category_name)
+            post_blog("TITLE", contents, category_name, False)
             post_cafe("TITLE", contents, cafe_list)
 
         log.append_log(f"{id_val} 계정으로 모든 포스팅을 완료하였습니다.")
+
+        webdriver.enter_url(NAVER)
         login.click_logout()
+
+        # 대기시간 설정
+        total_time, minutes, seconds = get_waiting_time()
+        log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
+        time.sleep(total_time)
 
         # # 테스트 코드
         # if button_data.ButtonData().get_toggle_value() is True:
@@ -74,3 +81,12 @@ def start_task():
         #     curren_ip = ip.get_current_ip()
         #     log.append_log(f"현재 IP = {curren_ip}")
 
+def get_waiting_time():
+    min_time = text_data.TextData().get_waiting_min()
+    max_time = text_data.TextData().get_waiting_max()
+    print(f"min_time = {min_time}")
+    print(f"max_time = {max_time}")
+    total_time = random.randint(min_time, max_time)
+    minutes = total_time / 60
+    seconds = total_time - minutes * 60
+    return total_time, minutes, seconds
