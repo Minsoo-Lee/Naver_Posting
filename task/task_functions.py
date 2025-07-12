@@ -35,6 +35,7 @@ def execute_login(id_val, pw_val):
 def post_blog(title, contents, category_name, only_blog):
     keyword_len = contents.get_keywords_length()
     for i in range(keyword_len):
+        # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
 
         texts = text_data.TextData()
@@ -45,20 +46,27 @@ def post_blog(title, contents, category_name, only_blog):
         log.append_log("블로그에 진입합니다.")
         blog.enter_blog()
 
-        # 카테고리가 정말 존재하는 카테고리인지 확인
-        blog.is_category_exist(category_name)
 
         blog.enter_iframe()
+
+        # 카테고리가 정말 존재하는 카테고리인지 확인 -> iframe 안으로 들어가야 하나?
+        # 하위 메뉴는 동적 생성이라 다른 방법을 찾아봐야 함
+        # 그냥 포스팅 전에 끄는 방법도 있을듯?
+        # or 작성 전에 포스팅 화면에서 발행 버튼 누르고 보는 방법이 나을듯...!
+        blog.is_category_exist(category_name)
+
         blog.enter_posting_window()
         # blog.enter_iframe()
         blog.cancel_continue()
         blog.exit_help()
+
+        # 여기서 발행 버튼 누르고 찾아보기 (존재하는 카테고리인지)
+        # blog.is_category_exist() 수정해서 넣기
+
         log.append_log(f"제목을 작성합니다. 제목 = {title}")
         blog.write_title(title)
         log.append_log("본문을 작성합니다.")
         blog.enter_context_input()
-        # 주소, 업체 추출
-
 
         # 본문 제작
         article = parsing.parse_contents(address, company)
@@ -164,9 +172,12 @@ def post_cafe(title, contents, cafe_list):
             cafe.enter_cafe(url)
             # 가입했는지 여부 확인
             if not cafe.is_signed_up():
+                # 생각해보기
                 log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
                 continue
             cafe.click_posting_button()
+
+            # 여기서 카테고리 찾기 -> 없으면 다음 단계로
 
             if box_data.BoxData().get_cb_value() is False:
                 cafe.disable_comment()
