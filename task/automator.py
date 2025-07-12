@@ -53,7 +53,6 @@ def start_task():
         # 로그인 다중 접속을 위한 테스트
         # 블로그 / 카페 / 둘다
         task_index = box_data.BoxData().get_rb_value()
-        print("task_index: ", task_index)
 
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현

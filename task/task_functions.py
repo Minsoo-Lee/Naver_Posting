@@ -139,7 +139,6 @@ def write_content_blog(address, company, article, image_path, image_length):
     image.remove_image(THUMBNAIL_PATH)
 
 def post_cafe(title, contents, cafe_list):
-    waiting_time = get_waiting_time()
     for cafe_index in range(len(cafe_list)):
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):
