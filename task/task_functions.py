@@ -15,7 +15,6 @@ def init():
     webdriver.init_chrome()
 
 def execute_login(id_val, pw_val):
-    get_waiting_time()
     log.append_log("Naver 로그인 화면에 접속합니다.")
     login.enter_naver_login()
     # log.append_log("로그인 화면에 진입합니다.")
