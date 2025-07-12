@@ -85,7 +85,8 @@ def click_element_among_classes(class_name, text):
     for element in elements:
         if element.text == text:
             element.click()  # 클릭하고 싶으면 이 줄 사용
-            break
+            return True
+    return False
 
 def switch_frame(frame):
     driver.switch_to.frame(frame)

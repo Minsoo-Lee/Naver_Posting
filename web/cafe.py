@@ -37,7 +37,7 @@ def click_board_choice():
 
 @sleep_after()
 def choose_board(board_name):
-    webdriver.click_element_among_classes("option_text", board_name)
+    return webdriver.click_element_among_classes("option_text", board_name)
 
 @sleep_after()
 def write_title(title):

@@ -89,7 +89,7 @@ def click_category_listbox():
 
 @sleep_after()
 def choose_category(category_name):
-    webdriver.click_element_among_classes("text__sraQE", category_name)
+    return webdriver.click_element_among_classes("text__sraQE", category_name)
 
 @sleep_after()
 def click_hashtag():

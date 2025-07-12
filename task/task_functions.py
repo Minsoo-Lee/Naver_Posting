@@ -78,26 +78,17 @@ def post_blog(title, contents, category_name, only_blog):
 
         write_content_blog(address, company, article, contents.get_random_image_path(length), length)
 
-        # blog.write_text(content)
-        #
-        # # 영상 업로드 확인
-        # image.upload_image("/Users/minsoo/Desktop/Logo.jpg")
-        # print("image1 uploaded")
-        # image.upload_image("/Users/minsoo/Desktop/photo1.png")
-        # print("image2 uploaded")
-        # video.upload_video_to_blog("/Users/minsoo/Desktop/video1.mov")
-        # print("video1 uploaded")
-        # # 확인 끝
-
         blog.click_post_button()
-        # 여기서 카테고리 코드 추가
+
         blog.click_category_listbox()
         log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
 
-        blog.choose_category(category_name)
+        if not blog.choose_category(category_name):
+            log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+            get_waiting_time()
+            break
         # 해시태그 추가
         hashtags = contents.get_hashtags()
-        print(hashtags)
         blog.click_hashtag()
         for hashtag in hashtags:
             blog.send_hashtag(hashtag)
@@ -114,9 +105,7 @@ def post_blog(title, contents, category_name, only_blog):
     #     log.append_log(f"현재 IP = {curren_ip}")
 
     if not only_blog:
-        total_time, minutes, seconds = get_waiting_time()
-        log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
-        time.sleep(total_time)
+        get_waiting_time()
 
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
@@ -185,7 +174,10 @@ def post_cafe(title, contents, cafe_list):
 
             cafe.click_board_choice()
             log.append_log(f"카테고리를 선택합니다.\n카테고리 = {board_name}")
-            cafe.choose_board(board_name)
+            if not cafe.choose_board(board_name):
+                log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+                get_waiting_time()
+                break
             log.append_log(f"제목을 작성합니다.\n제목 = {title}")
             cafe.write_title(title)
 
@@ -238,9 +230,8 @@ def post_cafe(title, contents, cafe_list):
     #     curren_ip = ip.get_current_ip()
     #     log.append_log(f"현재 IP = {curren_ip}")
         if cafe_index < len(cafe_list) - 1:
-            total_time, minutes, seconds = get_waiting_time()
-            log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
-            time.sleep(total_time)
+            get_waiting_time()
+
 
 def write_content_cafe(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
@@ -282,4 +273,8 @@ def get_waiting_time():
     total_time = random.randint(min_time, max_time)
     minutes = total_time // 60
     seconds = total_time - minutes * 60
+
+    log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
+    time.sleep(total_time)
+
     return total_time, minutes, seconds
