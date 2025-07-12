@@ -39,6 +39,19 @@ def input_id_pw(id_val, pw_val):
     pw_input.click()
     actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
 
+    # # 천천히 입력하여 캡챠 우회 (되는지 확인 필요) -> 안됨
+    # id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
+    # pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
+    #
+    # for ch in id_val:
+    #     id_input.send_keys(ch)
+    #     time.sleep(0.2)
+    #
+    # for ch in pw_val:
+    #     pw_input.send_keys(ch)
+    #     time.sleep(0.2)
+
+def input_id_pw_capcha_test(id_val, pw_val):
     # 천천히 입력하여 캡챠 우회 (되는지 확인 필요) -> 안됨
     id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
     pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
