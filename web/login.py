@@ -23,21 +23,21 @@ def enter_naver_login():
 
 @sleep_after()
 def input_id_pw(id_val, pw_val):
-    # actions = webdriver.get_actions()
-    #
-    # time.sleep(3)
-    #
-    # clipboard.copy(id_val)
-    # id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
-    # id_input.click()
-    # actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
-    #
-    # time.sleep(3)
-    #
-    # clipboard.copy(pw_val)
-    # pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
-    # pw_input.click()
-    # actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
+    actions = webdriver.get_actions()
+
+    time.sleep(3)
+
+    clipboard.copy(id_val)
+    id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
+    id_input.click()
+    actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
+
+    time.sleep(3)
+
+    clipboard.copy(pw_val)
+    pw_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[2]/input")
+    pw_input.click()
+    actions.key_down(COMCON).send_keys('v').key_up(COMCON).perform()
 
     # 천천히 입력하여 캡챠 우회 (되는지 확인 필요) -> 안됨
     id_input = webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[1]/div/div[1]/input")
@@ -66,7 +66,6 @@ def click_login_button():
 @sleep_after()
 def check_capcha_appear():
     try:
-        # webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a")
         webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[3]/div[1]/div[2]/div[1]")
         return True
     except:
@@ -75,10 +74,10 @@ def check_capcha_appear():
 @sleep_after()
 def check_capcha_done():
     try:
-        webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[3]/div[1]/div[2]/div[1]")
-        return True
-    except:
+        webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[3]/div[1]/div[2]/div[1]")
         return False
+    except:
+        return True
 
 @sleep_after()
 def click_login_not_save():
