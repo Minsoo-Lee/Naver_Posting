@@ -10,9 +10,9 @@ CONTEXT = """
             끝맺음말입니다. 
         """
 
-def get_body():
+def get_body(address, company):
     gemini.init_gemini()
-    response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2])
+    response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company)
     print(response)
     response = response.replace("**", "")
     delimiter_pattern = r'  |\n+'
