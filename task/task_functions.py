@@ -175,6 +175,7 @@ def post_cafe(title, contents, cafe_list):
                 # 생각해보기
                 log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
                 continue
+            log.append_log("가입된 카페입니다. 컨텐츠 작성을 계속합니다.")
             cafe.click_posting_button()
 
             # 여기서 카테고리 찾기 -> 없으면 다음 단계로
@@ -183,9 +184,9 @@ def post_cafe(title, contents, cafe_list):
                 cafe.disable_comment()
 
             cafe.click_board_choice()
-            log.append_log(f"카테고리를 선택합니다. 카테고리 = {board_name}")
+            log.append_log(f"카테고리를 선택합니다.\n카테고리 = {board_name}")
             cafe.choose_board(board_name)
-            log.append_log(f"제목을 작성합니다. 제목 = {title}")
+            log.append_log(f"제목을 작성합니다.\n제목 = {title}")
             cafe.write_title(title)
 
             cafe.enter_content_input()
@@ -279,6 +280,6 @@ def get_waiting_time():
     print(f"min_time = {min_time}")
     print(f"max_time = {max_time}")
     total_time = random.randint(min_time, max_time)
-    minutes = total_time / 60
+    minutes = total_time // 60
     seconds = total_time - minutes * 60
     return total_time, minutes, seconds

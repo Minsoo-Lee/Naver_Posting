@@ -87,6 +87,6 @@ def get_waiting_time():
     print(f"min_time = {min_time}")
     print(f"max_time = {max_time}")
     total_time = random.randint(min_time, max_time)
-    minutes = total_time / 60
+    minutes = total_time // 60
     seconds = total_time - minutes * 60
     return total_time, minutes, seconds
