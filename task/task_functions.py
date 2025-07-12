@@ -23,7 +23,7 @@ def execute_login(id_val, pw_val):
     log.append_log(f"로그인을 실행합니다. id = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
-    if not login.check_capcha_appear():
+    if login.check_capcha_appear():
         log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")
         while True:
             if login.check_capcha_done() is True:
@@ -164,7 +164,7 @@ def post_cafe(title, contents, cafe_list):
             cafe.enter_cafe(url)
             # 가입했는지 여부 확인
             if not cafe.is_signed_up():
-                log.append_log("가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
+                log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
                 continue
             cafe.click_posting_button()
 

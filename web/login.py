@@ -79,7 +79,10 @@ def check_capcha_done():
 
 @sleep_after()
 def click_login_not_save():
-    webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a").click()
+    try:
+        webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a").click()
+    except:
+        pass
 
 @sleep_after()
 def click_logout():
