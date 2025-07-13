@@ -60,6 +60,9 @@ def click_element_xpath(xpath):
 def click_element_css(css):
     driver.find_element(By.CSS_SELECTOR, css).click()
 
+def click_element_link_text(link_text):
+    driver.find_element(By.LINK_TEXT, "글쓰기").click()
+
 def get_element_xpath(xpath):
     return driver.find_element(By.XPATH, xpath)
 

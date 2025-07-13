@@ -20,6 +20,7 @@ def enter_blog():
 @sleep_after(3)
 def enter_posting_window():
     webdriver.click_element_xpath("/html/body/div[6]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div[1]/div/div[2]/div[2]/a[1]")
+    # webdriver.click_element_xpath("/html/body/div[7]/div[1]/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[1]/div/div[2]/div[2]/a[1]")
     time.sleep(3)
     # print(time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime()))
     # webdriver.enter_url(f"{BLOG}/?Redirect=Write&")

@@ -52,12 +52,22 @@ def post_blog(title, contents, category_name, only_blog):
         # 하위 메뉴는 동적 생성이라 다른 방법을 찾아봐야 함
         # 그냥 포스팅 전에 끄는 방법도 있을듯?
         # or 작성 전에 포스팅 화면에서 발행 버튼 누르고 보는 방법이 나을듯...!
-        blog.is_category_exist(category_name)
 
         blog.enter_posting_window()
         # blog.enter_iframe()
         blog.cancel_continue()
         blog.exit_help()
+
+        # 포스팅 전에 카테고리가 있는지 확인
+        blog.click_category_listbox()
+        log.append_log(f"카테고리가 존재하는지 확인합니다.\n카테고리 = {category_name}")
+        if not blog.choose_category(category_name):
+            log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+            get_waiting_time()
+            break
+        else:
+            log.append_log("존재하는 카테고리입니다. 작성을 계속합니다.")
+            blog.click_category_listbox()
 
         # 여기서 발행 버튼 누르고 찾아보기 (존재하는 카테고리인지)
         # blog.is_category_exist() 수정해서 넣기
@@ -79,13 +89,13 @@ def post_blog(title, contents, category_name, only_blog):
 
         blog.click_post_button()
 
-        blog.click_category_listbox()
-        log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
-
-        if not blog.choose_category(category_name):
-            log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
-            get_waiting_time()
-            break
+        # blog.click_category_listbox()
+        # log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
+        #
+        # if not blog.choose_category(category_name):
+        #     log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+        #     get_waiting_time()
+        #     break
         # 해시태그 추가
         hashtags = contents.get_hashtags()
         blog.click_hashtag()
