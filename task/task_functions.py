@@ -58,6 +58,7 @@ def post_blog(title, contents, category_name, only_blog):
         blog.cancel_continue()
         blog.exit_help()
 
+        blog.click_post_button()
         # 포스팅 전에 카테고리가 있는지 확인
         blog.click_category_listbox()
         log.append_log(f"카테고리가 존재하는지 확인합니다.\n카테고리 = {category_name}")
@@ -88,14 +89,10 @@ def post_blog(title, contents, category_name, only_blog):
         write_content_blog(address, company, article, contents.get_random_image_path(length), length)
 
         blog.click_post_button()
-
-        # blog.click_category_listbox()
+        blog.click_category_listbox()
         # log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
-        #
-        # if not blog.choose_category(category_name):
-        #     log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
-        #     get_waiting_time()
-        #     break
+
+        blog.choose_category(category_name)
         # 해시태그 추가
         hashtags = contents.get_hashtags()
         blog.click_hashtag()

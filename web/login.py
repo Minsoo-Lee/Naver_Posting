@@ -95,11 +95,9 @@ def check_capcha_done():
 @sleep_after()
 def click_login_not_save():
     try:
-        log.append_log("1")
         webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a").click()
-        log.append_log("2")
+
     except:
-        log.append_log("3")
         pass
 
 @sleep_after()
