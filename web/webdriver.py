@@ -97,7 +97,7 @@ def switch_frame(frame):
 def switch_frame_to_default():
     driver.switch_to.default_content()
 
-def switch_tab():
+def switch_window():
     tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=tab)
 
@@ -126,3 +126,9 @@ def hide_finder():
     	}, true);
     """)
     time.sleep(3)
+
+def get_active_element():
+    return driver.switch_to.active_element()
+
+def recover_window():
+    driver.switch_to.window(main_window)

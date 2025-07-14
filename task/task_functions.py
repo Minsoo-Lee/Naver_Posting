@@ -19,6 +19,10 @@ def execute_login(id_val, pw_val):
     login.enter_naver_login()
     # log.append_log("로그인 화면에 진입합니다.")
     # login.enter_login_window()
+    input_login_value(id_val, pw_val)
+
+
+def input_login_value(id_val, pw_val):
     log.append_log(f"로그인을 실행합니다.\nid = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
@@ -30,8 +34,10 @@ def execute_login(id_val, pw_val):
     login.click_login_not_save()
     log.append_log("로그인을 완료하였습니다.")
 
+
 # 키워드 조합 개수대로 블로그 발행
-def post_blog(title, contents, category_name, only_blog):
+def post_blog(contents, category_name, id_val, pw_val, only_blog):
+    is_ip_changed = False
     keyword_len = contents.get_keywords_length()
     for i in range(keyword_len):
         # 주소, 업체 추출
@@ -57,6 +63,12 @@ def post_blog(title, contents, category_name, only_blog):
         # or 작성 전에 포스팅 화면에서 발행 버튼 누르고 보는 방법이 나을듯...!
 
         blog.enter_posting_window()
+
+        if is_ip_changed:
+            login.switch_to_popup()
+            input_login_value(id_val, pw_val)
+
+
         # blog.enter_iframe()
         blog.cancel_continue()
         blog.exit_help()
@@ -72,9 +84,6 @@ def post_blog(title, contents, category_name, only_blog):
         else:
             log.append_log("존재하는 카테고리입니다. 작성을 계속합니다.")
             blog.click_category_listbox()
-
-        # 여기서 발행 버튼 누르고 찾아보기 (존재하는 카테고리인지)
-        # blog.is_category_exist() 수정해서 넣기
 
         log.append_log(f"제목을 작성합니다.\n제목 = {title}")
         blog.write_title(title)
@@ -93,7 +102,6 @@ def post_blog(title, contents, category_name, only_blog):
 
         blog.click_post_button()
         blog.click_category_listbox()
-        # log.append_log(f"카테고리를 선택합니다. 카테고리 = {category_name}")
 
         blog.choose_category(category_name)
         # 해시태그 추가
@@ -109,6 +117,7 @@ def post_blog(title, contents, category_name, only_blog):
 
         if button_data.ButtonData().get_toggle_value() is True:
             ip_trans_execute.trans_ip()
+            is_ip_changed = True
 
         if not only_blog:
             get_waiting_time()
@@ -146,7 +155,7 @@ def write_content_blog(address, company, article, image_path, image_length):
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
 
-def post_cafe(title, contents, cafe_list):
+def post_cafe(contents, cafe_list):
     for cafe_index in range(len(cafe_list)):
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):

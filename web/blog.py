@@ -1,10 +1,13 @@
+import clipboard
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from utils.decorators import sleep_after
 from web import webdriver
 import time
+import platform
 
 # 윈도우일 경우 다르게 (혹은 운영체제 감지해서 다르게 작동하게)
-KEY = Keys.COMMAND
+KEY = Keys.COMMAND if platform.system() == 'Darwin' else Keys.CONTROL
 
 @sleep_after()
 def enter_blog(is_initial = False):
@@ -15,7 +18,7 @@ def enter_blog(is_initial = False):
         time.sleep(3)
     webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[1]/a[2]")
     time.sleep(3)
-    webdriver.switch_tab()
+    webdriver.switch_window()
 
 
 @sleep_after(3)
@@ -65,14 +68,8 @@ def enter_context_input():
 
 @sleep_after()
 def write_text(content):
-    # webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
     webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)
-    # title_input = webdriver.driver.find_element(By.XPATH,
-    #                                             "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
-    # title_input.click()
-    # actions = ActionChains(webdriver.driver)
-    # actions.send_keys(content).perform()
 
 @sleep_after()
 def insert_enter():

@@ -59,12 +59,12 @@ def start_task():
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현
         if task_index == 0:
-            post_blog("TITLE", contents, category_name, True)
+            post_blog(contents, category_name, login_list[i][0], login_list[i][1], True)
         elif task_index == 1:
-            post_cafe("TITLE", contents, cafe_list)
+            post_cafe(contents, cafe_list)
         elif task_index == 2:
-            post_blog("TITLE", contents, category_name, False)
-            post_cafe("TITLE", contents, cafe_list)
+            post_blog(contents, category_name, login_list[i][0], login_list[i][1], False)
+            post_cafe(contents, cafe_list)
 
         log.append_log(f"{login_list[i][0]} 계정으로 모든 포스팅을 완료하였습니다.")
 

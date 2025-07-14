@@ -1,3 +1,5 @@
+import clipboard
+import platform
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -7,6 +9,9 @@ from utils.decorators import sleep_after
 from web import webdriver
 from data.const import *
 import time
+
+
+KEY = Keys.COMMAND if platform.system() == 'Darwin' else Keys.CONTROL
 
 @sleep_after(3)
 def enter_cafe(cafe_url):
@@ -25,7 +30,7 @@ def is_signed_up():
 def click_posting_button():
     webdriver.click_element_xpath("/html/body/div[3]/div/div[5]/div[1]/div[1]/div[1]/div[2]/a")
     time.sleep(1)
-    webdriver.switch_tab()
+    webdriver.switch_window()
 
 @sleep_after(3)
 def disable_comment():
@@ -55,10 +60,22 @@ def enter_context_input():
 
 @sleep_after()
 def write_text(content):
-    # webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
-    # time.sleep(1)
-    webdriver.send_keys_action(Keys.RETURN)
-    webdriver.send_keys_action(content)
+    active_element = webdriver.get_active_element()
+    active_element.send_keys(Keys.RETURN)
+    clipboard.copy(content)
+    webdriver.click_element_css('dev.se-canvas-bottom')
+
+    actions = ActionChains(webdriver.driver)
+    time.sleep(1)
+    actions.key_down(KEY).send_keys('v').key_up(KEY).perform()
+    time.sleep(2)
+
+    active_element = webdriver.get_active_element()
+    active_element.send_keys(Keys.RETURN)
+    time.sleep(2)
+    #
+    # webdriver.send_keys_action(Keys.RETURN)
+    # webdriver.send_keys_action(content)
 
 @sleep_after()
 def insert_enter():
