@@ -1,6 +1,8 @@
 from data import text_data, box_data
 from data import list_data
 import json, csv
+import os
+from ui import log
 
 lists = list_data.ListData()
 texts = text_data.TextData()
@@ -19,7 +21,7 @@ def convert_JSON():
     }
 
 def download_JSON():
-    print("downloading JSON...")
+    log.append_log("캐시 파일을 저장합니다.")
     converted_data = convert_JSON()
     print(f"converted data: {converted_data}")
     with open("cache/.cache_text", "w", encoding="utf-8") as f:

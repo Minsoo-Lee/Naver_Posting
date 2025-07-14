@@ -14,6 +14,8 @@ from utils import parsing
 
 def start_task():
     # 캐시 먼저 저장
+    os.makedirs("cache", exist_ok=True)
+
     download_cache.download_JSON()
     download_cache.download_CSV()
     log.append_log("캐시 값을 저장합니다.")
