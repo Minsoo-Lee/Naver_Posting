@@ -190,3 +190,9 @@ def adjust_color_preserving_contrast(fg_color_name, bg_color_name, lightness_shi
 
 def remove_image(image_path):
     os.remove(image_path)
+
+def upload_image_error():
+    try:
+        webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
+    except:
+        pass

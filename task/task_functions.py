@@ -141,6 +141,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.insert_enter()
         else:
             blog.write_text(content)
+        image.upload_image_error()
         time.sleep(1)
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
@@ -263,7 +264,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
             cafe.insert_enter()
         else:
             cafe.write_text(content)
-
+        image.upload_image_error()
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
 
