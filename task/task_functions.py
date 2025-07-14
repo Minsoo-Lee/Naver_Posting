@@ -160,8 +160,10 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.write_text(content)
         image.upload_image_error()
         time.sleep(1)
-    video.remove_video(video_path)
-    image.remove_image(THUMBNAIL_PATH)
+
+    # 테스트 용도로 주석처리
+    # video.remove_video(video_path)
+    # image.remove_image(THUMBNAIL_PATH)
 
 def post_cafe(contents, cafe_list):
     for cafe_index in range(len(cafe_list)):
