@@ -247,10 +247,10 @@ def post_cafe(contents, cafe_list):
             cafe.click_register_button()
             log.append_log("포스팅을 완료하였습니다.")
 
-        if button_data.ButtonData().get_toggle_value() is True:
-            ip_trans_execute.trans_ip()
-        if cafe_index < len(cafe_list) - 1:
-            get_waiting_time()
+            if button_data.ButtonData().get_toggle_value() is True:
+                ip_trans_execute.trans_ip()
+            if cafe_index < len(cafe_list) - 1:
+                get_waiting_time()
 
 
 def write_content_cafe(address, company, article, image_path, image_length):
