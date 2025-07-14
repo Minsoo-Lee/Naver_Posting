@@ -245,7 +245,6 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
 
             cafe.click_register_button()
             if webdriver.switch_to_alert():
-                input_login_value(id_val, pw_val)
                 login.switch_to_popup()
                 input_login_value(id_val, pw_val)
                 login.switch_to_prev_window()
