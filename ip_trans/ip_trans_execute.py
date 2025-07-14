@@ -19,7 +19,7 @@ def check_usb_connection():
 
 # 내부 ip_trans, interface 반환
 def get_inner_IP():
-    results = subprocess.check_output(["adb", "shell", "ip_trans", "addr"], shell=True).decode('utf-8')
+    results = subprocess.check_output(["adb", "shell", "ip", "addr"], shell=True).decode('utf-8')
     for result in results.splitlines():
         if "inet" in result and "inet6" not in result and "rmnet" in result:
             ip = result.split()[1].split('/')[0]
