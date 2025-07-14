@@ -55,14 +55,16 @@ def disable_airplane_mode():
     subprocess.run(["adb", "shell", "su", "-c", "\'settings put global airplane_mode_on 0\'"], shell=True)
     subprocess.run(
         ["adb", "shell", "su", "-c",  "\'am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false\'"], shell=True)
-    log.append_log("비행기 모드를 비활성화합니다.")
+    print("비행기 모드를 비활성화합니다.")
+    # log.append_log("비행기 모드를 비활성화합니다.")
 
 def enable_airplane_mode():
     subprocess.run(["adb", "shell", "su", "-c", "\'settings put global airplane_mode_on 1\'"], shell=True)
     subprocess.run(
         ["adb", "shell", "su", "-c", "\'am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true\'"],
         shell=True)
-    log.append_log("비행기 모드를 활성화합니다.")
+    print("비행기 모드를 활성화합니다.")
+    # log.append_log("비행기 모드를 활성화합니다.")
 
 def trans_ip():
     global transferred_ip
