@@ -38,7 +38,7 @@ def disable_comment():
 
 @sleep_after()
 def click_board_choice():
-    time.sleep(2)
+    time.sleep(5)
     webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[1]/div/div[1]/div[1]/div/div[1]/button")
 
 @sleep_after()
