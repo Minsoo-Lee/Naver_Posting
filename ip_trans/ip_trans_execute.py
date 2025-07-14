@@ -19,15 +19,25 @@ def check_usb_connection():
 
 # 내부 ip_trans, interface 반환
 def get_inner_IP():
-    results = subprocess.check_output(["adb", "shell", "ip", "addr"], shell=True).decode('utf-8')
-    for result in results.splitlines():
-        if "inet" in result and "inet6" not in result and "rmnet" in result:
-            ip = result.split()[1].split('/')[0]
-            interface = result.split()[-1]
-            print(f"inner IP : {ip}")
-            print(f"interface : {interface}")
-            return ip, interface
-    return "no IP", "no interface"
+    def get_inner_IP():
+        results = subprocess.check_output(["adb", "shell", "ip", "addr"], shell=True).decode('utf-8')
+        lines = results.splitlines()
+        interface = None
+
+        for i, line in enumerate(lines):
+            line = line.strip()
+            if line and line[0].isdigit() and ":" in line:
+                # 인터페이스 줄 (ex: "14: wlan0: ...")
+                interface = line.split(":")[1].strip()
+            elif "inet " in line and "inet6" not in line:
+                ip = line.split()[1].split('/')[0]
+                if interface != "lo":  # loopback 제외
+                    log.append_log(f"inner IP : {ip}")
+                    log.append_log(f"interface : {interface}")
+                    return ip, interface
+
+        log.append_log("내부 IP를 찾지 못했습니다.")
+        return "no IP", "no interface"
 
 # 외부 IP 반환
 def get_outer_IP():
