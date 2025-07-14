@@ -282,8 +282,10 @@ def write_content_cafe(address, company, article, image_path, image_length):
         else:
             cafe.write_text(content)
         image.upload_image_error()
-    video.remove_video(video_path)
-    image.remove_image(THUMBNAIL_PATH)
+
+    # 테스트 용도로 주석처리
+    # video.remove_video(video_path)
+    # image.remove_image(THUMBNAIL_PATH)
 
 def get_waiting_time():
     min_time = text_data.TextData().get_waiting_min()
