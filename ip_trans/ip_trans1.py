@@ -1,7 +1,9 @@
 import socket
+from multiprocessing.connection import Client
+
 import requests
 import re
-from ppadb.client import Client as AdbClient
+from ppadb.
 import time
 import os
 
