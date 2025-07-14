@@ -67,6 +67,8 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         if is_ip_changed:
             login.switch_to_popup()
             input_login_value(id_val, pw_val)
+            login.switch_to_original()
+            blog.enter_posting_window()
 
 
         # blog.enter_iframe()
