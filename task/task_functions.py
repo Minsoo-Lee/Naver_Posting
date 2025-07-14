@@ -67,11 +67,11 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         if is_ip_changed:
             login.switch_to_popup()
             input_login_value(id_val, pw_val)
-            login.switch_to_original()
+            login.switch_to_prev_window()
             blog.exit_tab()
             blog.enter_blog()
+            blog.enter_iframe()
             blog.enter_posting_window()
-
 
         # blog.enter_iframe()
         blog.cancel_continue()
@@ -94,15 +94,19 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         log.append_log("본문을 작성합니다.")
         blog.enter_context_input()
 
+        # 테스트 용도로 주석처리
         # 본문 제작
-        article = parsing.parse_contents(address, company)
+        # article = parsing.parse_contents(address, company)
 
+        # 테스트 용도로 주석처리
         # 사진 개수 파악
-        count = sum(1 for text in article if text == PHOTO)
-        image_len = contents.get_image_path_length()
-        length = image_len if count > image_len else count
+        # count = sum(1 for text in article if text == PHOTO)
+        # image_len = contents.get_image_path_length()
+        # length = image_len if count > image_len else count
 
-        write_content_blog(address, company, article, contents.get_random_image_path(length), length)
+        # 테스트
+        write_content_blog(address, company, "테스트", 3, 5)
+        # write_content_blog(address, company, article, contents.get_random_image_path(length), length)
 
         blog.click_post_button()
         blog.click_category_listbox()

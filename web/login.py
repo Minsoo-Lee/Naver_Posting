@@ -107,5 +107,5 @@ def click_logout():
 def switch_to_popup():
     webdriver.switch_window()
 
-def switch_to_original():
-    webdriver.recover_window()
+def switch_to_prev_window():
+    webdriver.switch_window()
