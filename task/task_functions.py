@@ -68,6 +68,8 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
             login.switch_to_popup()
             input_login_value(id_val, pw_val)
             login.switch_to_original()
+            blog.exit_tab()
+            blog.enter_blog()
             blog.enter_posting_window()
 
 
