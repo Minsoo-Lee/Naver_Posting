@@ -72,7 +72,7 @@ def trans_ip():
 
     previous_internal_ip, interface = get_inner_IP()
     previous_outer_ip = get_outer_IP()
-    log.(f"초기 내부 IP : {previous_internal_ip}")
+    log.append_log(f"초기 내부 IP : {previous_internal_ip}")
     print(f"초기 외부 IP : {previous_outer_ip}\n")
 
     if transferred_ip is None:
