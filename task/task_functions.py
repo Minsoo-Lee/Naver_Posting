@@ -250,6 +250,7 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
                 input_login_value(id_val, pw_val)
                 login.switch_to_prev_window()
                 cafe.click_register_button()
+            webdriver.exit_tab()
 
             log.append_log("포스팅을 완료하였습니다.")
 

@@ -97,7 +97,7 @@ def send_hashtag(hashtag):
 def click_register_button():
     webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[1]/div/a")
     time.sleep(1)
-    webdriver.exit_tab()
+
 
 
 
