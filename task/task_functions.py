@@ -43,7 +43,10 @@ def post_blog(title, contents, category_name, only_blog):
         title = texts.get_title()
 
         log.append_log("블로그에 진입합니다.")
-        blog.enter_blog()
+        if i == 0:
+            blog.enter_blog(True)
+        else:
+            blog.enter_blog(False)
 
 
         blog.enter_iframe()
@@ -104,11 +107,11 @@ def post_blog(title, contents, category_name, only_blog):
         blog.exit_iframe()
         blog.exit_tab()
 
-    if button_data.ButtonData().get_toggle_value() is True:
-        ip_trans_execute.trans_ip()
+        if button_data.ButtonData().get_toggle_value() is True:
+            ip_trans_execute.trans_ip()
 
-    if not only_blog:
-        get_waiting_time()
+        if not only_blog:
+            get_waiting_time()
 
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
