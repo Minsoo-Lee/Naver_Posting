@@ -1,7 +1,7 @@
 # print 구문은 전부 log로 바꾸기
 import subprocess
 import time
-
+from ui import log
 import requests
 
 transferred_ip = None
@@ -55,14 +55,14 @@ def disable_airplane_mode():
     subprocess.run(["adb", "shell", "su", "-c", "\'settings put global airplane_mode_on 0\'"], shell=True)
     subprocess.run(
         ["adb", "shell", "su", "-c",  "\'am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false\'"], shell=True)
-    print("비행기 모드 OFF")
+    log.append_log("비행기 모드를 비활성화합니다.")
 
 def enable_airplane_mode():
     subprocess.run(["adb", "shell", "su", "-c", "\'settings put global airplane_mode_on 1\'"], shell=True)
     subprocess.run(
         ["adb", "shell", "su", "-c", "\'am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true\'"],
         shell=True)
-    print("비행기 모드 ON")
+    log.append_log("비행기 모드를 활성화합니다.")
 
 def trans_ip():
     global transferred_ip
@@ -72,7 +72,7 @@ def trans_ip():
 
     previous_internal_ip, interface = get_inner_IP()
     previous_outer_ip = get_outer_IP()
-    print(f"초기 내부 IP : {previous_internal_ip}")
+    log.(f"초기 내부 IP : {previous_internal_ip}")
     print(f"초기 외부 IP : {previous_outer_ip}\n")
 
     if transferred_ip is None:
@@ -80,6 +80,7 @@ def trans_ip():
 
     for i in range(30):
         print("========================================")
+        log.append_log(f"IP를 변경합니다.\n현재 IP = {previous_outer_ip}\n")
         enable_airplane_mode()
         time.sleep(10)
 
@@ -100,7 +101,8 @@ def trans_ip():
 
         if after_outer_ip not in transferred_ip:
             transferred_ip.add(previous_outer_ip)
-            print("새로운 IP에 연결했습니다.")
+            log.append_log("새로운 IP에 연결했습니다.")
+            log.append_log(f"IP = {after_outer_ip}")
             print("========================================")
             break
         print("========================================")

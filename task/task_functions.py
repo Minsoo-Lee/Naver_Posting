@@ -2,7 +2,7 @@ import os
 import random
 
 from web import login, webdriver, blog, cafe
-from ip import ip_trans
+from ip import ip_trans2
 from media import video, image
 from data import box_data, text_data, button_data
 from utils import parsing
@@ -104,11 +104,8 @@ def post_blog(title, contents, category_name, only_blog):
         blog.exit_iframe()
         blog.exit_tab()
 
-    # if button_data.ButtonData().get_toggle_value() is True:
-    #     log.append_log("IP를 변경합니다.")
-    #     ip.toggle_airplane_mode()
-    #     curren_ip = ip.get_current_ip()
-    #     log.append_log(f"현재 IP = {curren_ip}")
+    if button_data.ButtonData().get_toggle_value() is True:
+        ip_trans2.trans_ip()
 
     if not only_blog:
         get_waiting_time()
@@ -229,11 +226,8 @@ def post_cafe(title, contents, cafe_list):
             cafe.click_register_button()
             log.append_log("포스팅을 완료하였습니다.")
 
-    # if button_data.ButtonData().get_toggle_value() is True:
-    #     log.append_log("IP를 변경합니다.")
-    #     ip.toggle_airplane_mode()
-    #     curren_ip = ip.get_current_ip()
-    #     log.append_log(f"현재 IP = {curren_ip}")
+        if button_data.ButtonData().get_toggle_value() is True:
+            ip_trans2.trans_ip()
         if cafe_index < len(cafe_list) - 1:
             get_waiting_time()
 
