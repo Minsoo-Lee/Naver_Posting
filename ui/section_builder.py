@@ -172,6 +172,7 @@ class SectionBuilder:
         ip_sizer = wx.BoxSizer(wx.VERTICAL)
 
         ip_toggle = wx.ToggleButton(ip_panel, wx.ID_ANY, "유동 IP 사용여부")
+        ip_toggle.SetValue(True)
         # ip_toggle.Bind(wx.EVT_TOGGLEBUTTON, on_toggled)
 
         ip_sizer.Add(ip_toggle, 0, wx.TOP | wx.BOTTOM, 8)
