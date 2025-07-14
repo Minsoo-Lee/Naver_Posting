@@ -83,8 +83,8 @@ def start_task():
         # # 테스트 코드
         # if button_data.ButtonData().get_toggle_value() is True:
         #     log.append_log("IP를 변경합니다.")
-        #     ip.toggle_airplane_mode()
-        #     curren_ip = ip.get_current_ip()
+        #     ip_trans.toggle_airplane_mode()
+        #     curren_ip = ip_trans.get_current_ip()
         #     log.append_log(f"현재 IP = {curren_ip}")
 
 def get_waiting_time():

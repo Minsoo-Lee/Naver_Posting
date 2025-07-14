@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import wx
-from ip import ip_trans, ip_trans1, ip_trans2
+from ip_trans import ip_trans, ip_trans1, ip_trans_execute
 import time
 
 # 앱 초기화
