@@ -8,12 +8,12 @@ KEY = Keys.COMMAND
 
 @sleep_after()
 def enter_blog():
-    time.sleep(1)
+    time.sleep(3)
     webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[2]/div/div/ul/li[3]/a")
     # webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[2]/div/div/ul/li[3]/a")
-    time.sleep(1)
+    time.sleep(3)
     webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[1]/a[2]")
-    time.sleep(1)
+    time.sleep(3)
     webdriver.switch_tab()
 
 
