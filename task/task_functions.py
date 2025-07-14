@@ -94,19 +94,16 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         log.append_log("본문을 작성합니다.")
         blog.enter_context_input()
 
-        # 테스트 용도로 주석처리
         # 본문 제작
-        # article = parsing.parse_contents(address, company)
+        article = parsing.parse_contents(address, company)
 
-        # 테스트 용도로 주석처리
         # 사진 개수 파악
-        # count = sum(1 for text in article if text == PHOTO)
-        # image_len = contents.get_image_path_length()
-        # length = image_len if count > image_len else count
+        count = sum(1 for text in article if text == PHOTO)
+        image_len = contents.get_image_path_length()
+        length = image_len if count > image_len else count
 
-        # 테스트
-        write_content_blog(address, company, "테스트", 3, 5)
-        # write_content_blog(address, company, article, contents.get_random_image_path(length), length)
+        # write_content_blog(address, company, "테스트", 3, 5)
+        write_content_blog(address, company, article, contents.get_random_image_path(length), length)
 
         blog.click_post_button()
         blog.click_category_listbox()
@@ -161,9 +158,8 @@ def write_content_blog(address, company, article, image_path, image_length):
         image.upload_image_error()
         time.sleep(1)
 
-    # 테스트 용도로 주석처리
-    # video.remove_video(video_path)
-    # image.remove_image(THUMBNAIL_PATH)
+    video.remove_video(video_path)
+    image.remove_image(THUMBNAIL_PATH)
 
 def post_cafe(contents, cafe_list):
     for cafe_index in range(len(cafe_list)):
@@ -210,16 +206,18 @@ def post_cafe(contents, cafe_list):
 
             # 주소, 업체 추출
 
-            # 본문 제작
-            article = parsing.parse_contents(address, company)
-
-            # 사진 개수 파악
-            count = sum(1 for text in article if text == PHOTO)
-            image_len = contents.get_image_path_length()
-            length = image_len if count > image_len else count
+            # 테스트 용도로 주석처리
+            # # 본문 제작
+            # article = parsing.parse_contents(address, company)
+            #
+            # # 사진 개수 파악
+            # count = sum(1 for text in article if text == PHOTO)
+            # image_len = contents.get_image_path_length()
+            # length = image_len if count > image_len else count
 
             log.append_log("본문을 작성합니다.")
-            write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
+            write_content_cafe(address, company, "테스트", 3, 5)
+            # write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
 
             # 해시태그 추가
             hashtags = contents.get_hashtags()
