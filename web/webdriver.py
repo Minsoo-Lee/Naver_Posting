@@ -132,3 +132,11 @@ def get_active_element():
 
 def recover_window():
     driver.switch_to.window(main_window)
+
+def switch_to_alert():
+    try:
+        alert = driver.switch_to.alert
+        alert.accept()
+        return True
+    except:
+        return False

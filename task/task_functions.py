@@ -161,7 +161,7 @@ def write_content_blog(address, company, article, image_path, image_length):
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
 
-def post_cafe(contents, cafe_list):
+def post_cafe(contents, cafe_list, id_val, pw_val):
     for cafe_index in range(len(cafe_list)):
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):
@@ -189,7 +189,6 @@ def post_cafe(contents, cafe_list):
             cafe.click_posting_button()
 
             # 여기서 카테고리 찾기 -> 없으면 다음 단계로
-
             if box_data.BoxData().get_cb_value() is False:
                 cafe.disable_comment()
 
@@ -245,6 +244,13 @@ def post_cafe(contents, cafe_list):
             # cafe.enter_iframe()
 
             cafe.click_register_button()
+            if webdriver.switch_to_alert():
+                input_login_value(id_val, pw_val)
+                login.switch_to_popup()
+                input_login_value(id_val, pw_val)
+                login.switch_to_prev_window()
+                cafe.click_register_button()
+
             log.append_log("포스팅을 완료하였습니다.")
 
             if button_data.ButtonData().get_toggle_value() is True:

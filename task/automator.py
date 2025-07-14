@@ -61,10 +61,10 @@ def start_task():
         if task_index == 0:
             post_blog(contents, category_name, login_list[i][0], login_list[i][1], True)
         elif task_index == 1:
-            post_cafe(contents, cafe_list)
+            post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
         elif task_index == 2:
             post_blog(contents, category_name, login_list[i][0], login_list[i][1], False)
-            post_cafe(contents, cafe_list)
+            post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
 
         log.append_log(f"{login_list[i][0]} 계정으로 모든 포스팅을 완료하였습니다.")
 
