@@ -46,10 +46,10 @@ def start_task():
     blog_dict = dict(blog_data)
 
     # 로그인 반복
-    for id_val, pw_val in login_list:
-        category_name = blog_dict.get(id_val)
+    for i in range(len(login_list)):
+        category_name = blog_dict.get(login_list[i][0])
         log.append_log(f"카테고리를 탐색합니다.]\n카테고리 = {category_name}")
-        execute_login(id_val, pw_val)
+        execute_login(login_list[i][0], login_list[i][1])
         # 여기서는 키워드 X 키워드대로 글을 생성하여 자동 포스팅 -> 반복문으로 감쌀 것 (for문은 한개만 사용!)
 
         # 로그인 다중 접속을 위한 테스트
@@ -66,15 +66,19 @@ def start_task():
             post_blog("TITLE", contents, category_name, False)
             post_cafe("TITLE", contents, cafe_list)
 
-        log.append_log(f"{id_val} 계정으로 모든 포스팅을 완료하였습니다.")
+        log.append_log(f"{login_list[i][0]} 계정으로 모든 포스팅을 완료하였습니다.")
 
         webdriver.enter_url(NAVER)
         login.click_logout()
 
         # 대기시간 설정
-        total_time, minutes, seconds = get_waiting_time()
-        log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
-        time.sleep(total_time)
+        if i < len(login_list) - 1:
+            total_time, minutes, seconds = get_waiting_time()
+            log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
+            time.sleep(total_time)
+        else:
+            log.append_log("모든 작업을 완료하였습니다.")
+            button_data.ButtonData().execute_button_Enable(True)
 
         # # 테스트 코드
         # if button_data.ButtonData().get_toggle_value() is True:

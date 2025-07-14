@@ -19,7 +19,7 @@ def execute_login(id_val, pw_val):
     login.enter_naver_login()
     # log.append_log("로그인 화면에 진입합니다.")
     # login.enter_login_window()
-    log.append_log(f"로그인을 실행합니다. id = {id_val}")
+    log.append_log(f"로그인을 실행합니다.\nid = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
     if login.check_capcha_appear():
@@ -73,7 +73,7 @@ def post_blog(title, contents, category_name, only_blog):
         # 여기서 발행 버튼 누르고 찾아보기 (존재하는 카테고리인지)
         # blog.is_category_exist() 수정해서 넣기
 
-        log.append_log(f"제목을 작성합니다. 제목 = {title}")
+        log.append_log(f"제목을 작성합니다.\n제목 = {title}")
         blog.write_title(title)
         log.append_log("본문을 작성합니다.")
         blog.enter_context_input()
