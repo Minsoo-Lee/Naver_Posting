@@ -60,22 +60,22 @@ def enter_context_input():
 
 @sleep_after()
 def write_text(content):
-    active_element = webdriver.get_active_element()
-    active_element.send_keys(Keys.RETURN)
-    clipboard.copy(content)
-    webdriver.click_element_css('dev.se-canvas-bottom')
+    webdriver.send_keys_action(Keys.RETURN)
+    webdriver.send_keys_action(content)
 
-    actions = ActionChains(webdriver.driver)
-    time.sleep(1)
-    actions.key_down(KEY).send_keys('v').key_up(KEY).perform()
-    time.sleep(2)
-
-    active_element = webdriver.get_active_element()
-    active_element.send_keys(Keys.RETURN)
-    time.sleep(2)
+    # active_element = webdriver.get_active_element()
+    # active_element.send_keys(Keys.RETURN)
+    # clipboard.copy(content)
+    # webdriver.click_element_css('dev.se-canvas-bottom')
     #
-    # webdriver.send_keys_action(Keys.RETURN)
-    # webdriver.send_keys_action(content)
+    # actions = ActionChains(webdriver.driver)
+    # time.sleep(1)
+    # actions.key_down(KEY).send_keys('v').key_up(KEY).perform()
+    # time.sleep(2)
+    #
+    # active_element = webdriver.get_active_element()
+    # active_element.send_keys(Keys.RETURN)
+    # time.sleep(2)
 
 @sleep_after()
 def insert_enter():
