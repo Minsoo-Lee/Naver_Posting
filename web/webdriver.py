@@ -66,6 +66,9 @@ def click_element_link_text(link_text):
 def get_element_xpath(xpath):
     return driver.find_element(By.XPATH, xpath)
 
+def get_element_class(class_name):
+    return driver.find_element(By.CLASS_NAME, class_name)
+
 def get_element_css(css):
     return driver.find_element(By.CSS_SELECTOR, css)
 

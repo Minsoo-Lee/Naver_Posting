@@ -78,11 +78,14 @@ def click_login_button():
 
 @sleep_after()
 def check_capcha_appear():
-    try:
-        webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[3]/div[1]/div[2]/div[1]")
-        return True
-    except:
-        return False
+    for i in range(5):
+        try:
+            webdriver.get_element_class("captcha_input")
+            webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[3]/div[1]/div[2]/div[1]")
+            return True
+        except:
+            continue
+    return False
 
 @sleep_after()
 def check_capcha_done():
