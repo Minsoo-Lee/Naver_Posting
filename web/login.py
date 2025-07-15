@@ -84,6 +84,8 @@ def check_capcha_appear():
             webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[3]/div[1]/div[2]/div[1]")
             return True
         except:
+            time.sleep(1)
+            log.append_log("캡챠를 찾을 수 없습니다.")
             continue
     return False
 
