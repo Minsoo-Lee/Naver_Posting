@@ -14,4 +14,4 @@ def make_thread_task():
 
 def enable_execute_button():
     buttons = button_data.ButtonData()
-    buttons.execute_button_Enable(False)
+    buttons.set_all_buttons(False)

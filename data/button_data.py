@@ -60,8 +60,18 @@ class ButtonData:
     def execute_button_Enable(self, boolean):
         self.execute_button.Enable(boolean)
 
+    def toggle_button_Enable(self, boolean):
+        self.toggle_button.Enable(boolean)
+
     def stop_button_Enable(self, boolean):
         self.stop_button.Enable(boolean)
 
     def get_toggle_value(self):
         return self.toggle_button.GetValue()
+
+    def set_all_buttons(self, boolean):
+        self.account_button.Enable(boolean)
+        self.keyword_button.Enable(boolean)
+        self.cafe_button.Enable(boolean)
+        self.execute_button.Enable(boolean)
+        self.toggle_button.Enable(boolean)

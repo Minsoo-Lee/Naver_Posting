@@ -86,6 +86,7 @@ def start_task():
         #     ip_trans.toggle_airplane_mode()
         #     curren_ip = ip_trans.get_current_ip()
         #     log.append_log(f"현재 IP = {curren_ip}")
+    button_data.ButtonData().set_all_buttons(True)
 
 def get_waiting_time():
     min_time = text_data.TextData().get_waiting_min()
