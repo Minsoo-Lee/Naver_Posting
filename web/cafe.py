@@ -4,6 +4,7 @@ from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from ui import log
 
 from utils.decorators import sleep_after
 from web import webdriver
@@ -38,8 +39,21 @@ def disable_comment():
 
 @sleep_after()
 def click_board_choice():
-    time.sleep(5)
-    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[1]/div/div[1]/div[1]/div/div[1]/button")
+    # 테스트 용도로 추가
+    seconds = 1
+    while True:
+        try:
+            webdriver.click_element_xpath(
+                "/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[1]/div/div[1]/div[1]/div/div[1]/button")
+            break
+        except:
+            time.sleep(1)
+            log.append_log(f"seconds = {seconds}")
+            continue
+
+    # 테스트를 위해서 주석처리
+    # time.sleep(5)
+    # webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[1]/div/div[1]/div[1]/div/div[1]/button")
 
 @sleep_after()
 def choose_board(board_name):
