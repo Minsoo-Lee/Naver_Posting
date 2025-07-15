@@ -49,7 +49,10 @@ def click_board_choice():
         except:
             time.sleep(1)
             log.append_log(f"seconds = {seconds}")
+            seconds += 1
             continue
+    # 이거 안되면 다음과 같은거 사용
+    # //button[contains(text(), '게시판 선택']
 
     # 테스트를 위해서 주석처리
     # time.sleep(5)
@@ -109,8 +112,18 @@ def send_hashtag(hashtag):
 
 @sleep_after()
 def click_register_button():
-    webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[1]/div/a")
-    time.sleep(1)
+    wait = 1
+    while True:
+        try:
+            webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[1]/div/a")
+            break
+        except:
+            time.sleep(1)
+            log.append_log(f"wait = {wait}")
+            wait += 1
+            continue
+    # webdriver.click_element_xpath("/html/body/div[1]/div/div/section/div/div[1]/div/a")
+    # time.sleep(1)
 
 
 
