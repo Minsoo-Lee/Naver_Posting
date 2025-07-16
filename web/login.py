@@ -85,7 +85,7 @@ def check_capcha_appear():
             return True
         except:
             time.sleep(1)
-            log.append_log("캡챠를 찾을 수 없습니다.")
+            # log.append_log("캡챠를 찾을 수 없습니다.")
             continue
     return False
 
