@@ -55,6 +55,15 @@ def enter_url(url):
     driver.get(url)
 
 def click_element_xpath(xpath):
+    while True:
+        try:
+            driver.find_element(By.XPATH, xpath).click()
+            break
+        except:
+            time.sleep(1)
+            continue
+
+def click_element_xpath_error(xpath):
     driver.find_element(By.XPATH, xpath).click()
 
 def click_element_css(css):

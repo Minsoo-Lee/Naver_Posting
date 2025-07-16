@@ -193,6 +193,6 @@ def remove_image(image_path):
 
 def upload_image_error():
     try:
-        webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
+        webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
     except:
         pass

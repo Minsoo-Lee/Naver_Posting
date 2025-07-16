@@ -23,6 +23,7 @@ def execute_login(id_val, pw_val):
 
 
 def input_login_value(id_val, pw_val):
+    login.click_ID_phone()
     log.append_log(f"로그인을 실행합니다.\nid = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()

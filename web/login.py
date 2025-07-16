@@ -17,6 +17,10 @@ COMCON = Keys.COMMAND if platform.system() == "Darwin" else Keys.CONTROL
 def enter_naver_login():
     webdriver.driver.get(NAVER_LOGIN)
 
+@sleep_after()
+def click_ID_phone():
+    webdriver.click_element_xpath("/html/body/div[1]/div[2]/div/div[1]/ul/li[1]/a")
+
 # @sleep_after()
 # def enter_login_window():
 #     webdriver.driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div/a").click()
