@@ -13,6 +13,6 @@ moviepy~=2.2.1
 protobuf~=5.29.5
 pywin32
 pywin32-ctypes
-clipboard~=0.0.4
+clipboard
 matplotlib~=3.10.3
 ppadb~=0.0.1
