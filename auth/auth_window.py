@@ -1,5 +1,5 @@
 import wx
-from auth_functions import auth
+from .auth_functions import auth
 
 class AuthDialog(wx.Dialog):
     def __init__(self, parent=None):
@@ -9,8 +9,10 @@ class AuthDialog(wx.Dialog):
         panel = wx.Panel(self)
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.username = wx.TextCtrl(panel, style=wx.TE_LEFT, placeholder="아이디")
-        self.password = wx.TextCtrl(panel, style=wx.TE_PASSWORD, placeholder="비밀번호")
+        self.username = wx.TextCtrl(panel, style=wx.TE_LEFT)
+        self.username.SetHint("아이디")
+        self.password = wx.TextCtrl(panel, style=wx.TE_PASSWORD)
+        self.password.SetHint("비밀번호")
 
         sizer.Add(wx.StaticText(panel, label="아이디:"), 0, wx.ALL, 5)
         sizer.Add(self.username, 0, wx.EXPAND | wx.ALL, 5)
