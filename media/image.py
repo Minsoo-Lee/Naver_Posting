@@ -80,7 +80,7 @@ def get_korean_font(size=24):
     except IOError:
         return ImageFont.load_default()
 
-def draw_bold_text(draw, position, text, font, fill, boldness=1.0):
+def draw_bold_text(draw, position, text, font, fill, boldness=1.5):
     x, y = position
     offsets = [(0, 0)]
     i = 0.5
@@ -97,7 +97,7 @@ def draw_border_thumbnail(draw, width, height, thickness=3, color="red"):
             outline=color
         )
 
-def generate_image(phone, company):
+def generate_image(phone, address, company):
     colors = Colors()
     text_color, bg_color = colors.get_random_colors()
     text_revised, bg_revised = adjust_color_preserving_contrast(text_color, bg_color)
@@ -106,21 +106,49 @@ def generate_image(phone, company):
     image = Image.new('RGB', (width, height), bg_revised)
     draw = ImageDraw.Draw(image)
 
-    font_size = 35
-    line_spacing = int(font_size * 1.5)
-    font = get_korean_font(font_size)
-    lines = [phone, company]
+    line_data = [
+        (phone, 40),
+        (address, 80),
+        (company, 80)
+    ]
 
-    # ✅ 수정된 전체 텍스트 높이 계산
-    total_text_height = font_size * len(lines) + line_spacing * (len(lines) - 1)
+    total_text_height = 0
+    line_spacing = 40 # 수정
+    line_heights = []
+
+    for text, font_size in line_data:
+        line_heights.append((font_size, line_spacing))
+        total_text_height += font_size + line_spacing
+
+    total_text_height -= line_heights[-1][1]  # ✅ (수정) 마지막 줄은 spacing 없음
     start_y = (height - total_text_height) // 2
 
-    for line in lines:
-        bbox = draw.textbbox((0, 0), line, font=font)
+    # ✅ (수정) 각 줄의 폰트를 따로 불러와 개별 적용
+    for i, (text, font_size) in enumerate(line_data):
+        font = get_korean_font(font_size)  # ✅ (수정) 줄마다 폰트 크기 적용
+        bbox = draw.textbbox((0, 0), text, font=font)
         text_width = bbox[2] - bbox[0]
         x = (width - text_width) // 2
-        draw_bold_text(draw, (x, start_y), line, font, fill=text_revised, boldness=0.5)
+        draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=2.0)
+
+        _, line_spacing = line_heights[i]
         start_y += font_size + line_spacing
+
+    # font_size = 40
+    # line_spacing = int(font_size * 1.5)
+    # font = get_korean_font(font_size)
+    # lines = [phone, address, company]
+
+    # ✅ 수정된 전체 텍스트 높이 계산
+    # total_text_height = font_size * len(lines) + line_spacing * (len(lines) - 1)
+    # start_y = (height - total_text_height) // 2
+    #
+    # for line in lines:
+    #     bbox = draw.textbbox((0, 0), line, font=font)
+    #     text_width = bbox[2] - bbox[0]
+    #     x = (width - text_width) // 2
+    #     draw_bold_text(draw, (x, start_y), line, font, fill=text_revised, boldness=0.5)
+    #     start_y += font_size + line_spacing
 
     draw_border_thumbnail(draw, width, height, thickness=5, color=text_revised)
     image.save(THUMBNAIL_PATH)
