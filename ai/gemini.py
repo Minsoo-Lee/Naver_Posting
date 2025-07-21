@@ -47,7 +47,7 @@ def create_content(contents, address, company):
         match = re.search(r'quota_id: "(.*?)"', str(e))
         if match:
             quota_id = match.group(1)
-            log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.\nquota_id: {quota_id}")
+            log.append_log(f"[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.\nquota_id: {quota_id}")
             log.append_log("[ERROR] 충분한 시간이 흐른 뒤에 프로그램을 재시작해 주세요.")
         raise
 
