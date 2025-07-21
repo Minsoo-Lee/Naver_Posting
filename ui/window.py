@@ -14,6 +14,8 @@ class MainFrame(wx.Frame):
     def __init__(self):
         super().__init__(None, wx.ID_ANY, "Naver Posting")
 
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+
 
         self.separator_left = None
         self.separator_right = None
@@ -68,6 +70,11 @@ class MainFrame(wx.Frame):
 
         self.SetPosition(wx.Point(x, y))
         self.Show()
+
+    def on_close(self, event):
+        # 리소스 정리 또는 확인 대화창 등을 여기에 넣을 수 있음
+        self.Destroy()  # 프레임 제거
+        wx.GetApp().ExitMainLoop()  # 메인 루프 종료 -> 프로세스 종료
 
 
 
