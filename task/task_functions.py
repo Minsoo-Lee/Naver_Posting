@@ -32,7 +32,6 @@ def input_login_value(id_val, pw_val):
         while True:
             if login.check_login_done() is True:
                 break
-    log.append_log("로그인이 완료된 듯")
     # 캡챠 떴는지 검사
     if login.check_capcha_appear():
         log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")

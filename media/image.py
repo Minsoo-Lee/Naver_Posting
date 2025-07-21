@@ -154,29 +154,41 @@ def generate_image(phone, address, company):
     image.save(THUMBNAIL_PATH)
 
 def draw_border_sample(image_path):
-    random_thickness = random.randint(1, 5)
-    random_color = colors.Colors().get_one_random_color()
-
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
     width, height = image.size
 
-    i = 0
-    while i < random_thickness:
-        draw.rectangle(
-                [i, i, width - i - 1, height - i - 1],
-                outline=random_color
-            )
-        i += 0.5
-    # for i in range(0, random_thickness):
-    #     draw.rectangle(
-    #         [i, i, width - i - 1, height - i - 1],
-    #         outline=random_color
-    #     )
+    # 가장 짧은 변을 기준으로 비례 두께 계산 (5% ~ 10%)
+    min_dimension = min(width, height)
+    thickness_percent = random.uniform(0.05, 0.10)  # 5% ~ 10% 사이 랜덤
+    random_thickness = int(min_dimension * thickness_percent)
 
-    # root_dir = os.path.dirname(os.path.abspath(__file__))
-    # new_image_path = os.path.join(root_dir, "..", "sample", "revised_sample1.jpg")
+    # 테두리 색상 설정
+    random_color = colors.Colors().get_one_random_color()
+
+    # 테두리 그리기
+    for i in range(random_thickness):
+        draw.rectangle(
+            [i, i, width - i - 1, height - i - 1],
+            outline=random_color
+        )
+
     image.save(NEW_IMAGE_PATH)
+    # random_thickness = random.randint(1, 5)
+    # random_color = colors.Colors().get_one_random_color()
+    #
+    # image = Image.open(image_path)
+    # draw = ImageDraw.Draw(image)
+    # width, height = image.size
+    #
+    # i = 0
+    # while i < random_thickness:
+    #     draw.rectangle(
+    #             [i, i, width - i - 1, height - i - 1],
+    #             outline=random_color
+    #         )
+    #     i += 0.5
+    # image.save(NEW_IMAGE_PATH)
 
 def get_luminance(rgb):
     srgb = [c / 255.0 for c in rgb]
