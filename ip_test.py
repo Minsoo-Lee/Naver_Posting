@@ -34,7 +34,7 @@ def test_ip():
             return
 
         previous_outer_ip = itu.get_outer_IP()
-        append_log("========================================")
+        append_log("=================================")
         append_log(f"현재 IP = {previous_outer_ip}\n")
         itu.enable_airplane_mode()
         time.sleep(10)
@@ -51,7 +51,7 @@ def test_ip():
         after_outer_ip = itu.get_outer_IP()
 
         append_log(f"변환 IP = {after_outer_ip}")
-        append_log("========================================")
+        append_log("=================================")
         time.sleep(120)
 
 # 이벤트 바인딩
