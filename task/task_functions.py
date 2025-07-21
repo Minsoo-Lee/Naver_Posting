@@ -20,17 +20,19 @@ def execute_login(id_val, pw_val):
     # log.append_log("로그인 화면에 진입합니다.")
     # login.enter_login_window()
     input_login_value(id_val, pw_val)
-    if not login.check_login():
-        log.append_log("[ERROR] 아이디 또는 비밀번호가 잘못되었습니다.\n로그인을 다시 시도해 주세요.")
-        while True:
-            if login.check_login() is True:
-                break
 
 def input_login_value(id_val, pw_val):
     login.click_ID_phone()
     log.append_log(f"로그인을 실행합니다.\nid = {id_val}")
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
+    # 비밀번호 / 아이디 틀렸는지 검사
+    if not login.check_login():
+        log.append_log("[ERROR] 아이디 또는 비밀번호가 잘못되었습니다.\n로그인을 다시 시도해 주세요.")
+        while True:
+            if login.check_login() is True:
+                break
+    # 캡챠 떴는지 검사
     if login.check_capcha_appear():
         log.append_log("[ERROR] 캡챠가 발생했습니다. 수동으로 해제해주세요.")
         while True:
