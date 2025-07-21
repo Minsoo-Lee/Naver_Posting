@@ -1,6 +1,7 @@
 import wx
 from ui.panel_builder import PanelBuilder
 from cache import upload_cache
+from web import webdriver
 
 MARGIN = 10
 
@@ -74,6 +75,7 @@ class MainFrame(wx.Frame):
     def on_close(self, event):
         # 리소스 정리 또는 확인 대화창 등을 여기에 넣을 수 있음
         self.Destroy()  # 프레임 제거
+        webdriver.driver.quit()
         wx.GetApp().ExitMainLoop()  # 메인 루프 종료 -> 프로세스 종료
 
 
