@@ -50,7 +50,7 @@ def test_ip():
         time.sleep(5)
         after_outer_ip = itu.get_outer_IP()
 
-        append_log(f"새 IP : {after_outer_ip}")
+        append_log(f"변환 IP = {after_outer_ip}")
         append_log("========================================")
         time.sleep(120)
 
@@ -61,7 +61,8 @@ top_button.Bind(wx.EVT_BUTTON, ip_test)
 def append_log(message):
     current_time = time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime())
     # color = wx.WHITE
-    message = current_time + message
+    if "=======" not in message:
+        message = current_time + message
 
     def update_ui():
         log_text_widget.BeginTextColour(wx.BLACK)
