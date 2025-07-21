@@ -27,10 +27,10 @@ def input_login_value(id_val, pw_val):
     login.input_id_pw(id_val, pw_val)
     login.click_login_button()
     # 비밀번호 / 아이디 틀렸는지 검사
-    if not login.check_login():
+    if not login.check_login_error():
         log.append_log("[ERROR] 아이디 또는 비밀번호가 잘못되었습니다.\n로그인을 다시 시도해 주세요.")
         while True:
-            if login.check_login() is True:
+            if login.check_login_done() is True:
                 break
     log.append_log("로그인이 완료된 듯")
     # 캡챠 떴는지 검사

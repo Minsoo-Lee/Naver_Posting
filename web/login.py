@@ -56,8 +56,8 @@ def input_id_pw(id_val, pw_val):
     #     time.sleep(0.2)
 
 @sleep_after()
-def check_login():
-    while True:
+def check_login_error():
+    for i in range(5):
         try:
             webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[10]/div")
             return False
@@ -65,6 +65,16 @@ def check_login():
             time.sleep(5)
             continue
     return True
+
+def check_login_done():
+    while True:
+        try:
+            webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a")
+            return True
+        except:
+            time.sleep(5)
+            continue
+    return False
 
 @sleep_after()
 def retry_login():
@@ -97,6 +107,7 @@ def click_login_button():
 
 @sleep_after()
 def check_capcha_appear():
+    log.append_log("캡챠가 떴는지 확인합니다.")
     for i in range(5):
         try:
             webdriver.get_element_class("captcha_input")
