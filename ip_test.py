@@ -69,6 +69,8 @@ def append_log(message):
         log_text_widget.EndTextColour()
         log_text_widget.ShowPosition(log_text_widget.GetLastPosition())
 
+    wx.CallAfter(update_ui)
+
 # 수직 정렬
 sizer = wx.BoxSizer(wx.VERTICAL)
 sizer.Add(top_button, 0, wx.ALIGN_CENTER | wx.TOP, 30)
