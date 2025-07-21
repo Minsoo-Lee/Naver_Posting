@@ -12,7 +12,7 @@ import time
 
 # 앱 초기화
 app = wx.App(False)
-frame = wx.Frame(None, title="IP 우회 테스트", size=(300, 200))
+frame = wx.Frame(None, title="IP 우회 테스트", size=(300, 600))
 panel = wx.Panel(frame)
 
 # 버튼 생성
@@ -72,7 +72,8 @@ def append_log(message):
 # 수직 정렬
 sizer = wx.BoxSizer(wx.VERTICAL)
 sizer.Add(top_button, 0, wx.ALIGN_CENTER | wx.TOP, 30)
-sizer.AddStretchSpacer()
+sizer.Add(log_text_widget, 1, wx.EXPAND | wx.TOP, 30)
+# sizer.AddStretchSpacer()
 panel.SetSizer(sizer)
 
 
