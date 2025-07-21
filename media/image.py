@@ -160,7 +160,7 @@ def draw_border_sample(image_path):
 
     # 가장 짧은 변을 기준으로 비례 두께 계산 (5% ~ 10%)
     min_dimension = min(width, height)
-    thickness_percent = random.uniform(0.05, 0.10)  # 5% ~ 10% 사이 랜덤
+    thickness_percent = random.uniform(0.01, 0.3)  # 5% ~ 10% 사이 랜덤
     random_thickness = int(min_dimension * thickness_percent)
 
     # 테두리 색상 설정
