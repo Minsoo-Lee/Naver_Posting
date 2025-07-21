@@ -120,10 +120,10 @@ class Binding:
                 list_data.SetItem(index, j, row[j])
 
         if index == 0:
-            list_data.SetColumnWidth(2, 400)
+            list_data.SetColumnWidth(2, 200)
         else:
-            list_data.SetColumnWidth(0, 200)
-            list_data.SetColumnWidth(1, 200)
+            list_data.SetColumnWidth(0, 100)
+            list_data.SetColumnWidth(1, 100)
 
     def upload_account_blog_list(self, index):
         csv_data = self.parse_getter[index]()
@@ -143,8 +143,8 @@ class Binding:
                 list_data.SetColumnWidth(0, 250)
                 list_data.SetColumnWidth(1, 0)
             else:
-                list_data.SetColumnWidth(0, 200)
-                list_data.SetColumnWidth(1, 200)
+                list_data.SetColumnWidth(0, 100)
+                list_data.SetColumnWidth(1, 100)
 
     def on_execute_button_clicked(self, event, content_value):
         self.parsing_data.content_data = content_value
