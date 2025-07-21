@@ -105,10 +105,10 @@ def show_lists():
     lists.account_list.SetColumnWidth(0, 200)
     lists.account_list.SetColumnWidth(1, 0)
 
-    lists.keyword_list.SetColumnWidth(2, 250)
+    lists.keyword_list.SetColumnWidth(2, 200)
 
-    lists.blog_list.SetColumnWidth(0, 120)
-    lists.blog_list.SetColumnWidth(1, 120)
+    lists.blog_list.SetColumnWidth(0, 100)
+    lists.blog_list.SetColumnWidth(1, 100)
 
-    lists.cafe_list.SetColumnWidth(0, 120)
-    lists.cafe_list.SetColumnWidth(1, 120)
+    lists.cafe_list.SetColumnWidth(0, 100)
+    lists.cafe_list.SetColumnWidth(1, 100)
