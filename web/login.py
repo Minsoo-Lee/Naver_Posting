@@ -57,7 +57,6 @@ def input_id_pw(id_val, pw_val):
 
 @sleep_after()
 def check_login():
-    log.append_log("로그인 결과를 검사합니다.")
     while True:
         try:
             webdriver.get_element_xpath("/html/body/div[1]/div[2]/div/div[1]/form/ul/li/div/div[10]/div")
@@ -70,9 +69,6 @@ def check_login():
 @sleep_after()
 def retry_login():
     log.append_log("[ERROR] 아이디 또는 비밀번호가 잘못되었습니다.\n로그인을 다시 시도해 주세요.")
-
-
-
 
 def input_id_pw_capcha_test(id_val, pw_val):
     # 천천히 입력하여 캡챠 우회 (되는지 확인 필요) -> 안됨
