@@ -75,14 +75,17 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
             login.switch_to_popup()
             input_login_value(id_val, pw_val)
             login.switch_to_prev_window()
-            blog.exit_tab()
-            blog.enter_blog()
+            # blog.exit_tab()
+            # blog.enter_blog()
             blog.enter_iframe()
             blog.enter_posting_window()
 
         # blog.enter_iframe()
         blog.cancel_continue()
-        blog.exit_help()
+        log.append_log("이어 작성하기를 취소합니다.")
+        if i == 0:
+            blog.exit_help()
+            log.append_log("도움말 창을 닫습니다.")
 
         blog.click_post_button()
         # 포스팅 전에 카테고리가 있는지 확인
@@ -101,6 +104,7 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         log.append_log("본문을 작성합니다.")
         blog.enter_context_input()
 
+        # 테스트를 위해 주석처리
         # 본문 제작
         article = parsing.parse_contents(address, company)
 
@@ -109,9 +113,9 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         image_len = contents.get_image_path_length()
         length = image_len if count > image_len else count
 
-        # write_content_blog(address, company, "테스트", 3, 5)
         write_content_blog(address, company, article, contents.get_random_image_path(length), length)
-
+        # write_content_blog(address, company, "테스트", 3, 5)
+        
         blog.click_post_button()
         blog.click_category_listbox()
 
@@ -125,7 +129,7 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         blog.complete_posting()
         log.append_log("포스팅을 완료하였습니다.")
         blog.exit_iframe()
-        blog.exit_tab()
+        blog.exit_tab()               
 
         if button_data.ButtonData().get_toggle_value() is True:
             ip_trans_execute.trans_ip()
@@ -195,7 +199,7 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             if not cafe.is_signed_up():
                 # 생각해보기
                 log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
-                continue
+                break
             log.append_log("가입된 카페입니다. 컨텐츠 작성을 계속합니다.")
             cafe.click_posting_button()
 
@@ -225,9 +229,10 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             image_len = contents.get_image_path_length()
             length = image_len if count > image_len else count
 
-            log.append_log("본문을 작성합니다.")
             write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
             # write_content_cafe(address, company, "테스트", 3, 5)
+
+            log.append_log("본문을 작성합니다.")
 
             # 해시태그 추가
             hashtags = contents.get_hashtags()
