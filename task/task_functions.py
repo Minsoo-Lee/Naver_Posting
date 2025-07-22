@@ -137,8 +137,11 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
     phone = text_data.TextData().get_phone_number()
+    log.append_log("썸네일 이미지를 제작합니다.")
     image.generate_image(phone, address, company)
+    log.append_log("썸네일 이미지를 이용한 영상을 제작합니다.")
     video.generate_video()
+    log.append_log("썸네일 이미지와 영상 제작이 완료되었습니다.")
     image_index = 0
     video_path = ""
 
