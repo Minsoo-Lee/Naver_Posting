@@ -50,6 +50,10 @@ def create_content(contents, address, company):
             log.append_log(f"[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.\nquota_id: {quota_id}")
             log.append_log("[ERROR] 충분한 시간이 흐른 뒤에 프로그램을 재시작해 주세요.")
         raise
+    except Exception as e2:
+        log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
+        raise
+
 
 def create_title(address, company, article):
     global model
