@@ -52,6 +52,7 @@ def create_content(contents, address, company):
         raise
     except Exception as e2:
         log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
+        log.append_log(f"[ERROR] 오류 이름: {type(e2).__name__}")
         raise
 
 
