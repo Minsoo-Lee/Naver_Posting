@@ -20,14 +20,4 @@ if __name__ == "__main__":
         app.MainLoop()
     else:
         print("인증 실패. 종료합니다.")
-    # import google.generativeai as genai
-    # import os
-    #
-    # genai.configure(api_key=os.environ.get("API_KEY"))
-    #
-    # print("generateContent를 지원하는 모델 목록:")
-    # for m in genai.list_models():
-    #     if "generateContent" in m.supported_generation_methods:
-    #         print(f"모델 이름: {m.name}")
-
 
