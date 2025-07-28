@@ -107,7 +107,7 @@ def generate_image(phone, address, company):
     draw = ImageDraw.Draw(image)
 
     line_data = [
-        (phone, 45),
+        (phone, 50),
         (address, 80),
         (company, 80)
     ]
