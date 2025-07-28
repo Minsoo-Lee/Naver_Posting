@@ -41,10 +41,7 @@ def enter_iframe():
 
 @sleep_after()
 def cancel_continue():
-    try:
-        webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button[1]")
-    except:
-        pass
+    webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button[1]")
 
 @sleep_after()
 def exit_help():

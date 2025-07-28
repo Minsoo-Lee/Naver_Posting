@@ -64,7 +64,14 @@ def click_element_xpath(xpath):
             continue
 
 def click_element_xpath_error(xpath):
-    driver.find_element(By.XPATH, xpath).click()
+    for i in range(15):
+        try:
+            driver.find_element(By.XPATH, xpath).click()
+            break
+        except:
+            time.sleep(1)
+            continue
+
 
 def click_element_css(css):
     driver.find_element(By.CSS_SELECTOR, css).click()
