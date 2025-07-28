@@ -150,6 +150,8 @@ def write_content_blog(address, company, article, image_path, image_length):
     video_path = ""
 
     for content in article:
+        # 주기적으로 iframe 안으로 들어가게 설정
+        webdriver.switch_frame('mainFrame')
         # 썸네일일 경우
         if THUMBNAIL in content:
             # 이미지 생성 후 해당 이미지 업로드
