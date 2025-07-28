@@ -1,4 +1,5 @@
 import clipboard
+import pyperclip
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from utils.decorators import sleep_after
@@ -68,8 +69,11 @@ def enter_context_input():
 
 @sleep_after()
 def write_text(content):
-    webdriver.send_keys_action(Keys.RETURN)
-    webdriver.send_keys_action(content)
+    # webdriver.send_keys_action(Keys.RETURN)
+    # webdriver.send_keys_action(content)
+    actions = ActionChains(webdriver.driver)
+    pyperclip.copy(content)
+    actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
 @sleep_after()
 def insert_enter():
