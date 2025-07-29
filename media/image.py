@@ -24,7 +24,7 @@ from data.const import *
 COMMAND_CONTROL = Keys.COMMAND if platform.system() == "Darwin" else Keys.CONTROL
 
 # 시각 자료 넣기
-@sleep_after()
+@sleep_after(1)
 def upload_image(image_path):
     actions = ActionChains(webdriver.driver)
     copy_image_to_clipboard(image_path)

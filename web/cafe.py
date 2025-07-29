@@ -76,7 +76,6 @@ def enter_context_input():
     webdriver.click_element_xpath(
         "/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
 
-@sleep_after()
 def write_text(content):
     webdriver.send_keys_action(Keys.RETURN)
     webdriver.send_keys_action(content)
@@ -95,7 +94,6 @@ def write_text(content):
     # active_element.send_keys(Keys.RETURN)
     # time.sleep(2)
 
-@sleep_after()
 def insert_enter():
     # webdriver.click_element_xpath(
 

@@ -64,7 +64,6 @@ def enter_context_input():
     webdriver.click_element_xpath(
         "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
 
-@sleep_after()
 def write_text(content):
     # webdriver.send_keys_action(Keys.RETURN)
     # webdriver.send_keys_action(content)
@@ -72,7 +71,6 @@ def write_text(content):
     pyperclip.copy(content)
     actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
-@sleep_after()
 def insert_enter():
     # webdriver.click_element_xpath(
 

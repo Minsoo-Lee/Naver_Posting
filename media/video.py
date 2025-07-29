@@ -12,7 +12,7 @@ def input_title(xpath, title):
     webdriver.send_data_by_xpath(xpath, title)
 
 
-@sleep_after()
+@sleep_after(1)
 def upload_video_to_blog(video_path, title):
     webdriver.hide_finder()
 

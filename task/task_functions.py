@@ -150,8 +150,6 @@ def write_content_blog(address, company, article, image_path, image_length):
     video_path = ""
 
     for content in article:
-        # 주기적으로 요소 클릭 설정
-        blog.enter_context_input()
         # 썸네일일 경우
         if THUMBNAIL in content:
             # 이미지 생성 후 해당 이미지 업로드
@@ -273,8 +271,6 @@ def write_content_cafe(address, company, article, image_path, image_length):
     video_path = ""
 
     for content in article:
-        # 주기적으로 다시 들어가게 설정
-        cafe.enter_content_input()
         # 썸네일일 경우
         if THUMBNAIL in content:
             # 이미지 생성 후 해당 이미지 업로드
