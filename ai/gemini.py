@@ -24,7 +24,7 @@ def create_content(contents, address, company):
     global model
     try:
         response = model.generate_content(f"""
-                내가 글을 쓸건데, 키워드는 {address}, {company}야.
+                내가 글을 쓸건데, 주소 키워드는 {address}, 업체 키워드는 {company}야.
                 예시 글들을 보여줄게.
                 
                 예시 1:
