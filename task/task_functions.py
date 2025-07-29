@@ -179,7 +179,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.insert_enter()
         else:
             blog.write_text(content)
-        image.upload_image_error()
+        image.blog_upload_image_error()
 
     # 테스트 용도로 주석처리
     video.remove_video(video_path)
@@ -299,7 +299,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
             cafe.insert_enter()
         else:
             cafe.write_text(content)
-        image.upload_image_error()
+        image.cafe_upload_image_error()
 
     # 테스트 용도로 주석처리
     video.remove_video(video_path)
