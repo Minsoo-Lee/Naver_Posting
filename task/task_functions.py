@@ -56,25 +56,23 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         title = texts.get_title()
 
         log.append_log("블로그에 진입합니다.")
-        if i == 0:
-            print(1)
-            blog.enter_blog(True)
-            print(2)
-        else:
-            print(3)
-            blog.enter_blog(False)
-            print(4)
+        # if i == 0:
+        #     print(1)
+        #     blog.enter_blog(True)
+        #     print(2)
+        # else:
+        #     print(3)
+        #     blog.enter_blog(False)
+        #     print(4)
+        blog.enter_blog(True)
 
-        print(5)
         blog.enter_iframe()
 
         # 카테고리가 정말 존재하는 카테고리인지 확인 -> iframe 안으로 들어가야 하나?
         # 하위 메뉴는 동적 생성이라 다른 방법을 찾아봐야 함
         # 그냥 포스팅 전에 끄는 방법도 있을듯?
         # or 작성 전에 포스팅 화면에서 발행 버튼 누르고 보는 방법이 나을듯...!
-        print(6)
         blog.enter_posting_window()
-        print(7)
 
         if is_ip_changed:
             login.switch_to_popup()
@@ -134,7 +132,10 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         blog.complete_posting()
         log.append_log("포스팅을 완료하였습니다.")
         blog.exit_iframe()
-        blog.exit_tab()               
+        blog.exit_tab()
+
+        webdriver.enter_url("https://www.naver.com")
+        time.sleep(3)
 
         if button_data.ButtonData().get_toggle_value() is True:
             ip_trans_execute.trans_ip()

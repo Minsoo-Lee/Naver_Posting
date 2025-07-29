@@ -37,6 +37,7 @@ def start_task():
     contents = content_data.ContentData()
     contents.set_keywords([(row[0], row[1]) for row in keywords])
     contents.combinate_keywords()
+    print(contents.keywords)
     contents.set_image_path([row[2] for row in keywords])
 
     contents.set_hashtags([row[3] for row in keywords])

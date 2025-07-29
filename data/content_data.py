@@ -29,8 +29,20 @@ class ContentData:
         self.keywords = keyword  # 모두 비어있지 않다면 원본 그대로
 
     def combinate_keywords(self):
-        address, company = zip(*self.keywords)
-        self.keywords = [[x, y] for x in address for y in company]
+        # address, company = zip(*self.keywords)
+        # self.keywords = [[x, y] for x in address for y in company]
+
+        result = []
+
+        for i in range(0, len(self.keywords)):
+            if self.keywords[i][0] == "":
+                break
+            for j in range(0, len(self.keywords)):
+                if self.keywords[j][1] == "":
+                    continue
+                result.append([self.keywords[i][0], self.keywords[j][1]])
+
+        self.keywords = result
 
     def get_address(self, row):
         return self.keywords[row][0]
