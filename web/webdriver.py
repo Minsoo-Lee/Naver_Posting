@@ -65,9 +65,8 @@ def click_element_xpath(xpath):
             continue
 
 def click_element_xpath_error(xpath):
-    for i in range(15):
+    for i in range(10):
         try:
-            append_log(f"  {i}  ")
             driver.find_element(By.XPATH, xpath).click()
             break
         except:

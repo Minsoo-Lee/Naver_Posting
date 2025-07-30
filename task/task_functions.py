@@ -177,6 +177,7 @@ def write_content_blog(address, company, article, image_path, image_length):
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
             finally:
                 image_index += 1
+                image.blog_upload_image_error()
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
@@ -185,7 +186,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.insert_enter()
         else:
             blog.write_text(content)
-        image.blog_upload_image_error()
+
 
     # 테스트 용도로 주석처리
     video.remove_video(video_path)
@@ -302,6 +303,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
             finally:
                 image_index += 1
+                image.cafe_upload_image_error()
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
@@ -310,7 +312,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
             cafe.insert_enter()
         else:
             cafe.write_text(content)
-        image.cafe_upload_image_error()
+
 
     # 테스트 용도로 주석처리
     video.remove_video(video_path)
