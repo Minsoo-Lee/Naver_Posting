@@ -29,30 +29,29 @@ def ip_test(event):
     task_thread.start()
 
 def test_ip():
-    while True:
-        if not itu.check_usb_connection():
-            return
+    if not itu.check_usb_connection():
+        return
 
-        previous_outer_ip = itu.get_outer_IP()
-        append_log("=================================")
-        append_log(f"현재 IP = {previous_outer_ip}\n")
-        itu.enable_airplane_mode()
-        time.sleep(10)
+    previous_outer_ip = itu.get_outer_IP()
+    append_log("=================================")
+    append_log(f"현재 IP = {previous_outer_ip}\n")
+    itu.enable_airplane_mode()
+    time.sleep(10)
 
-        itu.disable_airplane_mode()
-        time.sleep(10)
+    itu.disable_airplane_mode()
+    time.sleep(10)
 
-        if not itu.check_usb_tethering():
-            itu.enable_usb_tethering()
-            time.sleep(5)
-
-        after_internal_ip, after_interface = itu.get_inner_IP()
+    if not itu.check_usb_tethering():
+        itu.enable_usb_tethering()
         time.sleep(5)
-        after_outer_ip = itu.get_outer_IP()
 
-        append_log(f"변환 IP = {after_outer_ip}")
-        append_log("=================================")
-        time.sleep(120)
+    after_internal_ip, after_interface = itu.get_inner_IP()
+    time.sleep(5)
+    after_outer_ip = itu.get_outer_IP()
+
+    append_log(f"변환 IP = {after_outer_ip}")
+    append_log("=================================")
+    time.sleep(120)
 
 # 이벤트 바인딩
 top_button.Bind(wx.EVT_BUTTON, ip_test)
