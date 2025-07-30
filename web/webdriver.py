@@ -7,6 +7,7 @@ from data.const import *
 from utils.decorators import sleep_after
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from ui.log import append_log
 
 driver = None
 URL = "https://localhost:"
@@ -66,6 +67,7 @@ def click_element_xpath(xpath):
 def click_element_xpath_error(xpath):
     for i in range(15):
         try:
+            append_log(f"  {i}  ")
             driver.find_element(By.XPATH, xpath).click()
             break
         except:

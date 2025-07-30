@@ -41,19 +41,16 @@ def enter_iframe():
 
 @sleep_after()
 def cancel_continue():
-    for i in range(15):
-        try:
-            webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button[1]")
-            break
-        except:
-            time.sleep(1)
-            pass
+    try:
+        webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button[1]")
+    except:
+        pass
 
 
 @sleep_after()
 def exit_help():
     try:
-        webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/article/div/header/button")
+        webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/article/div/header/button")
     except:
         pass
 
