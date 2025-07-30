@@ -195,10 +195,10 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
     for cafe_index in range(len(cafe_list)):
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):
-            # 테스트 용도
-            if button_data.ButtonData().get_toggle_value() is True:
-                ip_trans_execute.trans_ip()
-                is_ip_changed = True
+            # # 테스트 용도
+            # if button_data.ButtonData().get_toggle_value() is True:
+            #     ip_trans_execute.trans_ip()
+            #     is_ip_changed = True
 
             # 주소, 업체 추출
             address, company = contents.get_address(i), contents.get_company(i)
