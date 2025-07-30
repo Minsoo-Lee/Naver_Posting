@@ -48,6 +48,11 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
     for i in range(keyword_len):
+        # 테스트 용도
+        if button_data.ButtonData().get_toggle_value() is True:
+            ip_trans_execute.trans_ip()
+            is_ip_changed = True
+
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
 
