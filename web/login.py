@@ -131,7 +131,6 @@ def check_capcha_done():
 def click_login_not_save():
     try:
         webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/fieldset/span[2]/a").click()
-
     except:
         pass
 
