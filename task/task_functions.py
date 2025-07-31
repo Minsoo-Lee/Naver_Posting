@@ -52,9 +52,6 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
     keyword_len = contents.get_keywords_length()
 
     for i in range(keyword_len):
-        stop_event = threading.Event()
-        task_thread = threading.Thread(target=check_image_error, args=(stop_event,), daemon=False)
-        task_thread.start()
         # # 테스트 용도
         # if button_data.ButtonData().get_toggle_value() is True:
         #     ip_trans_execute.trans_ip()
@@ -157,9 +154,6 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         if not only_blog:
             get_waiting_time()
 
-        stop_event.set()
-        task_thread.join()
-
 
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
@@ -184,6 +178,7 @@ def write_content_blog(address, company, article, image_path, image_length):
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
                 time.sleep(90)
+                log.append_log("이미지가 업로드 될 때까지 1분 30초 대기합니다.")
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
@@ -311,6 +306,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
                 time.sleep(90)
+                log.append_log("이미지가 업로드 될 때까지 1분 30초 대기합니다.")
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
@@ -343,10 +339,3 @@ def get_waiting_time():
     time.sleep(total_time)
 
     return total_time, minutes, seconds
-
-def check_image_error(stop_event):
-    while not stop_event.is_set():
-        try:
-            webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
-        except:
-            continue
