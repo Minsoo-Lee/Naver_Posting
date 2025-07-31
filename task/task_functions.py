@@ -94,6 +94,7 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
             blog.enter_posting_window()
 
         # blog.enter_iframe()
+        time.sleep(60)
         blog.cancel_continue()
         log.append_log("이어 작성하기를 취소합니다.")
         if i == 0:
