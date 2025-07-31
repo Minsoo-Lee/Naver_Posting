@@ -1,5 +1,8 @@
 import os
 import random
+import threading
+
+from selenium.webdriver.common.by import By
 
 from web import login, webdriver, blog, cafe
 from ip_trans import ip_trans_execute
@@ -47,7 +50,11 @@ def input_login_value(id_val, pw_val):
 def post_blog(contents, category_name, id_val, pw_val, only_blog):
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
+
     for i in range(keyword_len):
+        stop_event = threading.Event()
+        task_thread = threading.Thread(target=check_image_error, args=(stop_event,), daemon=False)
+        task_thread.start()
         # # 테스트 용도
         # if button_data.ButtonData().get_toggle_value() is True:
         #     ip_trans_execute.trans_ip()
@@ -150,6 +157,10 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         if not only_blog:
             get_waiting_time()
 
+        stop_event.set()
+        task_thread.join()
+
+
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
     phone = text_data.TextData().get_phone_number()
@@ -186,6 +197,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.insert_enter()
         else:
             blog.write_text(content)
+
 
     # 테스트 용도로 주석처리
     video.remove_video(video_path)
@@ -329,3 +341,10 @@ def get_waiting_time():
     time.sleep(total_time)
 
     return total_time, minutes, seconds
+
+def check_image_error(stop_event):
+    while not stop_event.is_set():
+        try:
+            webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
+        except:
+            continue
