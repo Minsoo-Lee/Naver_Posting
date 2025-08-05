@@ -1,22 +1,12 @@
 import colorsys
 import random
-
-from media import image
-import os
-from PIL import Image, ImageColor
+from PIL import ImageColor
 import platform
-import subprocess
-import pyautogui
-import time
-import os
-
-from selenium.webdriver import ActionChains, Keys
-
-from utils.decorators import sleep_after
-from web import webdriver
 from PIL import Image, ImageDraw, ImageFont
 from utils.colors import Colors
 from media import image
+
+FONT_SIZE = 60
 
 # 기존 사진에 테두리 입히기
 #   - 테두리 색: 썸네일 이미지 생성 시 사용하는 색 활용 (일단 빨간색으로 테스트)
@@ -124,14 +114,23 @@ def generate_image(phone, address, company):
         thumbnail = Image.new('RGB', (width, height), bg_revised)
         draw = ImageDraw.Draw(thumbnail)
 
+        # 수정
+        company_elements = [c.strip() for c in company.split(" ")]
+
+        print(company_elements)
+
         line_data = [
-            (phone, 45),
-            (address, 80),
-            (company, 80)
+            (phone, 50),
+            (address, FONT_SIZE),
+            (company_elements[0], FONT_SIZE),
         ]
 
+        # 수정
+        if len(company_elements) == 2:
+            line_data.append((company_elements[1], FONT_SIZE))
+
         total_text_height = 0
-        line_spacing = 40  # 수정
+        line_spacing = 20  # 수정
         line_heights = []
 
         for text, font_size in line_data:

@@ -23,6 +23,8 @@ from data.const import *
 
 COMMAND_CONTROL = Keys.COMMAND if platform.system() == "Darwin" else Keys.CONTROL
 
+FONT_SIZE = 60
+
 # 시각 자료 넣기
 @sleep_after(1)
 def upload_image(image_path):
@@ -106,11 +108,18 @@ def generate_image(phone, address, company):
     image = Image.new('RGB', (width, height), bg_revised)
     draw = ImageDraw.Draw(image)
 
+    # 수정
+    company_elements = company.split(" ").strip()
+
     line_data = [
         (phone, 50),
-        (address, 80),
-        (company, 80)
+        (address, FONT_SIZE),
+        (company_elements[0], FONT_SIZE),
     ]
+
+    # 수정
+    if len(company_elements) == 2:
+        line_data.append((company_elements[1], FONT_SIZE))
 
     total_text_height = 0
     line_spacing = 40 # 수정
