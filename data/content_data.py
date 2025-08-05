@@ -1,6 +1,5 @@
 import random
 
-
 class ContentData:
     _instance = None
     _initialized = False  # 여기서 플래그 설정

@@ -16,6 +16,7 @@ class ButtonData:
         self.keyword_button = None
         self.cafe_button = None
         self.blog_button = None
+        self.title_button = None
         self.execute_button = None
         self.stop_button = None
         self.toggle_button = None
@@ -34,6 +35,9 @@ class ButtonData:
 
     def set_blog_button(self, blog_button):
         self.blog_button = blog_button
+
+    def set_title_button(self, title_button):
+        self.title_button = title_button
 
     def set_execute_button(self, execute_button):
         self.execute_button = execute_button
@@ -57,6 +61,9 @@ class ButtonData:
     def blog_button_Enable(self, boolean):
         self.blog_button.Enable(boolean)
 
+    def title_button_Enable(self, boolean):
+        self.title_button.Enable(boolean)
+
     def execute_button_Enable(self, boolean):
         self.execute_button.Enable(boolean)
 
@@ -73,5 +80,6 @@ class ButtonData:
         self.account_button.Enable(boolean)
         self.keyword_button.Enable(boolean)
         self.cafe_button.Enable(boolean)
+        self.title_button.Enable(boolean)
         self.execute_button.Enable(boolean)
         self.toggle_button.Enable(boolean)

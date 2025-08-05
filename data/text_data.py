@@ -57,8 +57,9 @@ class TextData:
     def get_api_number(self):
         return self.api_number.GetValue()
 
-    def divide_title_body(self):
-        self.title, self.body = self.content_input.GetValue().split("[제목]")
+    # 수정
+    # def divide_title_body(self):
+    #     self.title, self.body = self.content_input.GetValue().split("[제목]")
 
     def get_title(self):
         return self.title.strip()

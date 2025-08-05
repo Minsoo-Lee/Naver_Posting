@@ -1,16 +1,9 @@
 from task.task_functions import *
-from data import parsing_data, text_data, content_data, list_data
+from data import parsing_data, text_data, content_data, list_data, title_data
 from cache import download_cache
-from functools import partial
 from ui import log
 
 import os
-from utils import parsing
-
-# def start_task():
-#     t = text_data.TextData()
-#     t.divide_title_body()
-
 
 def start_task():
     # 캐시 먼저 저장

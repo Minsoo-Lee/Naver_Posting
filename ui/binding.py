@@ -19,7 +19,7 @@ class Binding:
         self.parse_setter = []
         self.parse_getter = []
         self.list_collection = []
-        self.LABEL_LIST = ["키워드", "카페", "계정"]
+        self.LABEL_LIST = ["키워드", "카페", "계정", "제목"]
 
     def on_radio_selected(self, event):
         selected = event.GetString()
@@ -61,6 +61,8 @@ class Binding:
         # ListCtrl에 표시
         if index == 2:
             self.upload_account_blog_list(index)
+        elif index == 3:
+            self.upload_title_list(index)
         else:
             self.upload_keyword_cafe_list(index)
 
@@ -69,6 +71,7 @@ class Binding:
             self.parsing_data.set_keyword_data,
             self.parsing_data.set_cafe_data,
             self.parsing_data.set_account_data,
+            self.parsing_data.set_title_data,
             self.parsing_data.set_blog_data
         ]
 
@@ -76,11 +79,12 @@ class Binding:
             self.parsing_data.get_keyword_data,
             self.parsing_data.get_cafe_data,
             self.parsing_data.get_account_data,
+            self.parsing_data.get_title_data,
             self.parsing_data.get_blog_data
         ]
 
         self.list_collection = [
-            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.blog_list
+            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.title_list, self.lists.blog_list
         ]
 
     def upload_data(self, index, panel):
@@ -98,6 +102,7 @@ class Binding:
             except FileNotFoundError as e:
                 print(f"파일을 열 수 업습니다.\n{e}")
 
+    # 카페, 키워드
     def upload_keyword_cafe_list(self, index):
         csv_data = self.parse_getter[index]()
         list_data = self.list_collection[index]
@@ -118,12 +123,37 @@ class Binding:
             index = list_data.InsertItem(list_data.GetItemCount(), row[0])
             for j in range(1, len(row)):
                 list_data.SetItem(index, j, row[j])
+        print(index)
 
         if index == 0:
             list_data.SetColumnWidth(2, 200)
         else:
             list_data.SetColumnWidth(0, 100)
             list_data.SetColumnWidth(1, 100)
+
+        # 제목
+    def upload_title_list(self, index):
+        csv_data = self.parse_getter[index]()
+        list_data = self.list_collection[index]
+        list_data.DeleteAllItems()
+
+        # 유효성 검사 할 것 (데이터 열 개수와 리스트 행 개수가 맞는지)
+        if len(csv_data[0]) != list_data.GetColumnCount():
+            log.append_log("[ERROR] 데이터의 열 개수와 리스트의 열 개수가 맞지 않습니다.파일의 열 개수를 다시 확인해주세요.")
+            return
+
+        # for i in range(len(csv_data)):
+        #     index = list_data.InsertItem(list_data.GetItemCount(), csv_data[i][0])
+        #     for j in range(1, len(csv_data[i])):
+        #         list_data.SetItem(index, j, csv_data[i][j])
+        for row in csv_data[1:]:
+            if not row:  # 빈 줄이면 건너뜀
+                continue
+            index = list_data.InsertItem(list_data.GetItemCount(), row[0])
+            for j in range(1, len(row)):
+                list_data.SetItem(index, j, row[j])
+
+        list_data.SetColumnWidth(0, 380)
 
     def upload_account_blog_list(self, index):
         csv_data = self.parse_getter[index]()

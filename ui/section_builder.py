@@ -382,41 +382,87 @@ class SectionBuilder:
 
 
     # ================================ 중앙 패널 ================================================
+
+    # 키워드 박스
+    def title_section(self, panel):
+        # panel = wx.Panel(panel, wx.ID_ANY)
+        # title_box = wx.StaticBox(panel)
+        # title_sizer = wx.StaticBoxSizer(title_box, wx.VERTICAL)
+
+        # 업체 버튼 설정
+        title_button = wx.Button(panel, wx.ID_ANY, "제목 업로드", size=wx.Size(MIDDLE_WIDTH, BUTTON_HEIGHT))
+        title_button.Enable(True)
+        title_button.Bind(
+            wx.EVT_BUTTON,
+            lambda event: self.binding.on_cafe_keyword_button_clicked(event, panel)
+        )
+        title_button_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        title_button_sizer.Add(title_button, 0, wx.TOP | wx.LEFT | wx.RIGHT, 3)
+
+
+        title_list = wx.ListCtrl(panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN,
+                                   size=wx.Size(MIDDLE_WIDTH, LIST_BOX_HEIGHT))
+        title_list.InsertColumn(0, "제목", width=380)
+        title_list_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        title_list_sizer.Add(title_list, 0, wx.TOP | wx.LEFT | wx.RIGHT, 3)
+
+        self.middle_sizer_data.set_title_button_sizer(title_button_sizer)
+        self.middle_sizer_data.set_title_list_sizer(title_list_sizer)
+        self.list_data.set_title_list(title_list)
+        self.button_data.set_title_button(title_button)
+
     # 안내글 표시
     def inform_section(self, panel):
+#         inform = """
+# [폼 형식 지정 안내글]
+#
+#
+# [제목]을 기준으로 제목과 글이 나뉘어집니다.
+#
+# 글에서는 [본문]을 기준으로 서론, 본문, 결론으로 나뉘어집니다.
+#
+# 본문은 AI로 작성한 1500자 내외의 글이며,
+# 고객님께서 keyword.csv를 통해 업로드한 이미지 중 랜덤으로 5개가 같이 들어갑니다.
+#
+# keyword.csv에서 받아온 정보 중에서
+# %주소% 문자열은 주소 열의 데이터를, %업체% 문자열은 업체 열의 데이터로 치환됩니다.
+#
+# %썸네일% 문자열은 썸네일 사진으로, %영상% 문자열은 썸네일 사진을 바탕으로 제작된 영상으로 치환됩니다.
+#
+# 문자열 치환 예시)
+#
+# %주소%이고, %업체%입니다.
+# %썸네일%
+# [본문]
+# %영상%
+# 감사합니다.
+# =======================
+# 성수동이고, 설비업체입니다.
+# '썸네일 사진'
+# 'AI로 작성한 본문'
+# '썸네일 사진 기반 영상'
+# 감사합니다.
+#
+#
+#         """
+
         inform = """
 [폼 형식 지정 안내글]
-        
-        
+
+
 [제목]을 기준으로 제목과 글이 나뉘어집니다.
-        
+
 글에서는 [본문]을 기준으로 서론, 본문, 결론으로 나뉘어집니다.
 
 본문은 AI로 작성한 1500자 내외의 글이며,
 고객님께서 keyword.csv를 통해 업로드한 이미지 중 랜덤으로 5개가 같이 들어갑니다.
-        
+
 keyword.csv에서 받아온 정보 중에서
 %주소% 문자열은 주소 열의 데이터를, %업체% 문자열은 업체 열의 데이터로 치환됩니다.
-        
+
 %썸네일% 문자열은 썸네일 사진으로, %영상% 문자열은 썸네일 사진을 바탕으로 제작된 영상으로 치환됩니다.
-
-문자열 치환 예시)
-
-%주소%이고, %업체%입니다.
-%썸네일%
-[본문]
-%영상%
-감사합니다.                
-=======================
-성수동이고, 설비업체입니다.
-'썸네일 사진'
-'AI로 작성한 본문'
-'썸네일 사진 기반 영상'
-감사합니다.
-
-
         """
-        form_label = wx.StaticText(panel, wx.ID_ANY, inform, size=wx.Size(MIDDLE_WIDTH, 550))
+        form_label = wx.StaticText(panel, wx.ID_ANY, inform, size=wx.Size(MIDDLE_WIDTH, 300))
         form_label_sizer = wx.BoxSizer(wx.HORIZONTAL)
         form_label_sizer.Add(form_label, 0, wx.ALL, 5)
 

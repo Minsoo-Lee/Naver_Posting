@@ -1,13 +1,9 @@
 import os
 import random
-import threading
-
-from selenium.webdriver.common.by import By
-
 from web import login, webdriver, blog, cafe
 from ip_trans import ip_trans_execute
 from media import video, image
-from data import box_data, text_data, button_data
+from data import box_data, text_data, button_data, title_data
 from utils import parsing
 from data.const import *
 import time
@@ -59,11 +55,13 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
 
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
-
         texts = text_data.TextData()
-        texts.divide_title_body()
+        # texts.divide_title_body()
         texts.replace_title(address, company)
-        title = texts.get_title()
+        # title = texts.get_title()
+        title_instance = title_data.TitleData(address, company)
+        title = title_instance.get_one_title_random()
+
 
         log.append_log("블로그에 진입합니다.")
         # if i == 0:
@@ -213,9 +211,11 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             address, company = contents.get_address(i), contents.get_company(i)
 
             texts = text_data.TextData()
-            texts.divide_title_body()
+            # texts.divide_title_body()
             texts.replace_title(address, company)
-            title = texts.get_title()
+            # title = texts.get_title()
+            title_instance = title_data.TitleData(address, company)
+            title = title_instance.get_one_title_random()
 
             # cafe_data[0] = url
             # cafe_data[1] = board_name

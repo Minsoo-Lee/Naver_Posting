@@ -74,8 +74,8 @@ def upload_CSV(file_name):
 
 
 def show_lists():
-    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list]
-    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe"]
+    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list, lists.title_list]
+    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe", ".cache_title"]
 
     for idx in range(len(csv_names)):
         data = upload_CSV(csv_names[idx])

@@ -16,6 +16,7 @@ class ParseData:
         self.account_data = []
         self.blog_data = []
         self.cafe_data = []
+        self.title_data = []
         self.content_data = ""
 
         ParseData._initialized = True  # 이제 초기화 완료
@@ -32,6 +33,9 @@ class ParseData:
     def set_cafe_data(self, cafe_data):
         self.cafe_data = cafe_data
 
+    def set_title_data(self, title_data):
+        self.title_data = title_data
+
     def set_content_data(self, content_data):
         self.content_data = content_data
 
@@ -46,6 +50,9 @@ class ParseData:
 
     def get_cafe_data(self):
         return self.cafe_data
+
+    def get_title_data(self):
+        return self.title_data
 
     def get_content_data(self):
         return self.content_data

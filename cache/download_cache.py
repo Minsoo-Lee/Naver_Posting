@@ -28,10 +28,10 @@ def download_JSON():
         json.dump(converted_data, f, indent=4, ensure_ascii=False)
 
 def download_CSV():
-    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list]
-    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe"]
+    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list, lists.title_list]
+    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe", ".cache_title"]
 
-    for i in range(4):
+    for i in range(len(csv_names)):
         row_count = list_ctrl_list[i].GetItemCount()
         col_count = list_ctrl_list[i].GetColumnCount()
 
