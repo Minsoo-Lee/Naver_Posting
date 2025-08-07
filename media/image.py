@@ -112,7 +112,7 @@ def generate_image(phone, address, company):
     company_elements = company.split(" ").strip()
 
     line_data = [
-        (phone, 50),
+        (phone, 45),
         (address, FONT_SIZE),
         (company_elements[0], FONT_SIZE),
     ]
@@ -138,7 +138,10 @@ def generate_image(phone, address, company):
         bbox = draw.textbbox((0, 0), text, font=font)
         text_width = bbox[2] - bbox[0]
         x = (width - text_width) // 2
-        draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=2.0)
+        if i == 0:
+            draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=3.0)
+        else:
+            draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=2.0)
 
         _, line_spacing = line_heights[i]
         start_y += font_size + line_spacing

@@ -1,7 +1,7 @@
 import os
 import time
-from moviepy.video.VideoClip import ImageClip
-
+# from moviepy.video.VideoClip import ImageClip
+from moviepy import ImageClip, ColorClip, CompositeVideoClip
 
 from data.const import *
 from utils.decorators import sleep_after
@@ -57,18 +57,35 @@ def complete_upload(xpath):
 
 @sleep_after()
 def generate_video():
+    video_width, video_height = 800, 400
+
+    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
 
     # 1. 이미지 파일을 불러옴
     image_clip = ImageClip(THUMBNAIL_PATH)
 
-    # 2. 클립의 지속 시간을 설정 (예: 10초)
-    image_clip.duration = 10
+    # 4. 이미지 위치 중앙 정렬
+    image_clip = image_clip.with_position(("center", "center"))
 
-    # 3. 출력 영상 크기 (선택사항)
-    # image_clip = image_clip.resized(width=500, height=300)
+    # 5. 합성
+    final_clip = CompositeVideoClip([background, image_clip])
 
-    # 4. 영상으로 저장
-    image_clip.write_videofile(VIDEO_PATH, fps=24)
+    # 6. 영상으로 저장
+    final_clip.write_videofile(VIDEO_PATH, fps=24)
+
+    # ==========================================================================================
+
+    # # 1. 이미지 파일을 불러옴
+    # image_clip = ImageClip(THUMBNAIL_PATH)
+    #
+    # # 2. 클립의 지속 시간을 설정 (예: 10초)
+    # image_clip.duration = 10
+    #
+    # # 3. 출력 영상 크기 (선택사항)
+    # image_clip = image_clip.resized(width=800, height=400)
+    #
+    # # 4. 영상으로 저장
+    # image_clip.write_videofile(VIDEO_PATH, fps=24)
 
 @sleep_after()
 def remove_video(video_path):

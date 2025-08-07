@@ -1,12 +1,16 @@
 import colorsys
 import random
+import time
+
 from PIL import ImageColor
 import platform
 from PIL import Image, ImageDraw, ImageFont
+from moviepy import ImageClip, ColorClip, CompositeVideoClip
+
 from utils.colors import Colors
 from media import image
 
-FONT_SIZE = 60
+FONT_SIZE = 50
 
 # 기존 사진에 테두리 입히기
 #   - 테두리 색: 썸네일 이미지 생성 시 사용하는 색 활용 (일단 빨간색으로 테스트)
@@ -120,7 +124,7 @@ def generate_image(phone, address, company):
         print(company_elements)
 
         line_data = [
-            (phone, 50),
+            (phone, 45),
             (address, FONT_SIZE),
             (company_elements[0], FONT_SIZE),
         ]
@@ -146,7 +150,10 @@ def generate_image(phone, address, company):
             bbox = draw.textbbox((0, 0), text, font=font)
             text_width = bbox[2] - bbox[0]
             x = (width - text_width) // 2
-            draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=3.0)
+            if i == 0:
+                draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=3.0)
+            else:
+                draw_bold_text(draw, (x, start_y), text, font, fill=text_revised, boldness=2.0)
 
             _, line_spacing = line_heights[i]
             start_y += font_size + line_spacing
@@ -180,5 +187,24 @@ def generate_image_for_video(phone, company):
     draw_border_thumbnail(draw, width, height, thickness=3, color=text_color)
     thumbnail.save("thumbnail.png")
 
+def generate_video():
+    video_width, video_height = 800, 400
+
+    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
+
+    # 1. 이미지 파일을 불러옴
+    image_clip = ImageClip(f"../thumbnail/thumbnail0.png")
+
+    # 4. 이미지 위치 중앙 정렬
+    image_clip = image_clip.with_position(("center", "center"))
+
+    # 5. 합성
+    final_clip = CompositeVideoClip([background, image_clip])
+
+    # 6. 영상으로 저장
+    final_clip.write_videofile("output.mov", fps=24)
+
 # generate_image_for_video("010-9872-1349", "성수동 설비업체")
-generate_image("010-9872-1349", "성수동", "설비업체")
+generate_image("010-4119-2101", "성수동", "설비업체")
+time.sleep(10)
+generate_video()
