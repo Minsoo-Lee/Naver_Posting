@@ -1,6 +1,8 @@
 import os
 import random
 
+from selenium.webdriver import Keys
+
 from ai import gemini
 from web import login, webdriver, blog, cafe
 from ip_trans import ip_trans_execute
@@ -276,10 +278,13 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             image_len = contents.get_image_path_length()
             length = image_len if count > image_len else count
 
+            log.append_log("본문을 작성합니다.")
+
             write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
             # write_content_cafe(address, company, "테스트", 3, 5)
 
-            log.append_log("본문을 작성합니다.")
+            # 장소 삽입
+
 
             # 해시태그 추가
             hashtags = contents.get_hashtags()
@@ -386,4 +391,21 @@ def get_titles(address, company, is_blog=True):
 
     response = gemini.create_title(titles, address, company)
     return response
+
+def insert_place(place):
+    # 장소 삽입 버튼 누르기
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/header/div[1]/ul/li[7]/button")
+    # 넣으려는 장소 검색하기
+    webdriver.send_data_by_xpath_loop("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div[2]/div[1]/div[2]/div/input", place)
+    # 환경마다 다르므로 수정 필요
+    time.sleep(5)
+    # 엔터 누르기 -> 검색 결과 뜰 것
+    webdriver.send_keys_action(Keys.RETURN)
+    # 환경마다 다르므로 수정 필요
+    time.sleep(5)
+    # 검색 결과 뜨면 하나 클릭
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div[2]/div[2]/div[1]/ul/li/a")
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div[2]/div[2]/div[1]/ul/li/button")
+    # 확인 버튼이 활성화되면 클릭
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/footer/div/button")
 

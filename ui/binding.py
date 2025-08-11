@@ -71,20 +71,20 @@ class Binding:
             self.parsing_data.set_keyword_data,
             self.parsing_data.set_cafe_data,
             self.parsing_data.set_account_data,
-            self.parsing_data.set_title_data,
-            self.parsing_data.set_blog_data
+            self.parsing_data.set_blog_data,
+            self.parsing_data.set_title_data
         ]
 
         self.parse_getter = [
             self.parsing_data.get_keyword_data,
             self.parsing_data.get_cafe_data,
             self.parsing_data.get_account_data,
-            self.parsing_data.get_title_data,
-            self.parsing_data.get_blog_data
+            self.parsing_data.get_blog_data,
+            self.parsing_data.get_title_data
         ]
 
         self.list_collection = [
-            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.title_list, self.lists.blog_list
+            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.blog_list, self.lists.title_list,
         ]
 
     def upload_data(self, index, panel):
@@ -108,6 +108,10 @@ class Binding:
         list_data = self.list_collection[index]
         list_data.DeleteAllItems()
 
+
+        print(index)
+        print("컬럼 개수:", list_data.GetColumnCount())
+
         # 유효성 검사 할 것 (데이터 열 개수와 리스트 행 개수가 맞는지)
         if len(csv_data[0]) != list_data.GetColumnCount():
             log.append_log("[ERROR] 데이터의 열 개수와 리스트의 열 개수가 맞지 않습니다.파일의 열 개수를 다시 확인해주세요.")
@@ -123,7 +127,6 @@ class Binding:
             index = list_data.InsertItem(list_data.GetItemCount(), row[0])
             for j in range(1, len(row)):
                 list_data.SetItem(index, j, row[j])
-        print(index)
 
         if index == 0:
             list_data.SetColumnWidth(2, 200)
@@ -161,13 +164,19 @@ class Binding:
             list_data = self.list_collection[i]
             list_data.DeleteAllItems()
 
-            new_csv_data = [[row[0], row[i - 1]] for row in csv_data]
+            print(index)
+            print("컬럼 개수:", list_data.GetColumnCount())
+
+            if i == 2:
+                new_csv_data = [[row[0], row[1], row[3]] for row in csv_data]
+            else:
+                new_csv_data = [[row[0], row[2]] for row in csv_data]
             for row in new_csv_data[1:]:
                 if not row:  # 빈 줄이면 건너뜀
                     continue
-                index = list_data.InsertItem(list_data.GetItemCount(), row[0])
+                idx = list_data.InsertItem(list_data.GetItemCount(), row[0])
                 for j in range(1, len(row)):
-                    list_data.SetItem(index, j, row[j])
+                    list_data.SetItem(idx, j, row[j])
 
             if i == 2:
                 list_data.SetColumnWidth(0, 120)

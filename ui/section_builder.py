@@ -230,7 +230,7 @@ class SectionBuilder:
         account_list.InsertColumn(0, "계정명", width=120)
         account_list.InsertColumn(1, "비밀번호")
         account_list.SetColumnWidth(1, 0)
-        account_list.InsertColumn(2, "비밀번호", width=120)
+        account_list.InsertColumn(2, "장소", width=120)
 
         account_sizer.Add(account_button, 0, wx.ALL, border=3)
         account_sizer.Add(account_list, 0, wx.BOTTOM, border=10)
