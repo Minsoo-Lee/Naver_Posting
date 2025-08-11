@@ -1,5 +1,7 @@
 import os
 import random
+
+from ai import gemini
 from web import login, webdriver, blog, cafe
 from ip_trans import ip_trans_execute
 from media import video, image
@@ -9,6 +11,7 @@ from data.const import *
 import time
 from ui import log
 
+WAIT = 10
 
 def init():
     webdriver.init_chrome()
@@ -58,9 +61,14 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         texts = text_data.TextData()
         # texts.divide_title_body()
         texts.replace_title(address, company)
+
+        # 수정 1
         # title = texts.get_title()
-        title_instance = title_data.TitleData(address, company)
-        title = title_instance.get_one_title_random()
+        # 수정 2
+        # title_instance = title_data.TitleData(address, company)
+        # title = title_instance.get_one_title_random()
+        # 수정 3
+        title = get_titles(address, company)
 
 
         log.append_log("블로그에 진입합니다.")
@@ -132,10 +140,15 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
         blog.click_category_listbox()
 
         blog.choose_category(category_name)
+
         # 해시태그 추가
         hashtags = contents.get_hashtags()
+
         blog.click_hashtag()
+        # 해시태그 키워드 치환도 함께
         for hashtag in hashtags:
+            hashtag = hashtag.replace("%주소%", address)
+            hashtag = hashtag.replace("%업체%", company)
             blog.send_hashtag(hashtag)
             blog.insert_enter()
         blog.complete_posting()
@@ -213,9 +226,14 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             texts = text_data.TextData()
             # texts.divide_title_body()
             texts.replace_title(address, company)
+
+            # 수정 1
             # title = texts.get_title()
-            title_instance = title_data.TitleData(address, company)
-            title = title_instance.get_one_title_random()
+            # 수정2
+            # title_instance = title_data.TitleData(address, company)
+            # title = title_instance.get_one_title_random()
+            # 수정3
+            title = get_titles(address, company, False)
 
             # cafe_data[0] = url
             # cafe_data[1] = board_name
@@ -268,6 +286,8 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             print(hashtags)
             cafe.click_hashtag()
             for hashtag in hashtags:
+                hashtag = hashtag.replace("%주소%", address)
+                hashtag = hashtag.replace("%업체%", company)
                 cafe.send_hashtag(hashtag)
                 cafe.insert_enter()
 
@@ -340,3 +360,30 @@ def get_waiting_time():
     time.sleep(total_time)
 
     return total_time, minutes, seconds
+
+def get_titles(address, company, is_blog=True):
+
+    # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
+    time.sleep(1)
+    webdriver.enter_url(NAVER)
+
+    webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/div/input",
+                                      f"{address} {company}")
+
+    webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
+
+    if is_blog:
+        webdriver.click_element_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/a")
+    else:
+        webdriver.click_element_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[3]/a")
+    time.sleep(WAIT)
+
+    titles = webdriver.get_text_from_css_selector("a.title_link")
+
+    time.sleep(WAIT)
+
+    gemini.init_gemini()
+
+    response = gemini.create_title(titles, address, company)
+    return response
+

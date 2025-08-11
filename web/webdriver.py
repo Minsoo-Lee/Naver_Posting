@@ -136,6 +136,15 @@ def get_actions():
 def send_data_by_xpath(xpath, value):
     driver.find_element(By.XPATH, xpath).send_keys(value)
 
+def send_data_by_xpath_loop(xpath, value):
+    while True:
+        try:
+            driver.find_element(By.XPATH, xpath).send_keys(value)
+            break
+        except:
+            time.sleep(1)
+            continue
+
 def hide_finder():
     driver.execute_script("""
     	document.addEventListener('click', function(event) {
@@ -160,3 +169,10 @@ def switch_to_alert():
         return True
     except:
         return False
+
+def get_text_from_css_selector(value):
+    text_elements = driver.find_elements(By.CSS_SELECTOR, value)
+    result = []
+    for text_element in text_elements:
+        result.append(text_element.text)
+    return result

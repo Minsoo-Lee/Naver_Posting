@@ -170,8 +170,9 @@ class Binding:
                     list_data.SetItem(index, j, row[j])
 
             if i == 2:
-                list_data.SetColumnWidth(0, 250)
+                list_data.SetColumnWidth(0, 120)
                 list_data.SetColumnWidth(1, 0)
+                list_data.SetColumnWidth(2, 120)
             else:
                 list_data.SetColumnWidth(0, 100)
                 list_data.SetColumnWidth(1, 100)
