@@ -48,7 +48,7 @@ def input_login_value(id_val, pw_val):
 
 
 # 키워드 조합 개수대로 블로그 발행
-def post_blog(contents, category_name, id_val, pw_val, only_blog):
+def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
 
@@ -60,9 +60,9 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
 
         # 주소, 업체 추출
         address, company = contents.get_address(i), contents.get_company(i)
-        texts = text_data.TextData()
+        # texts = text_data.TextData()
         # texts.divide_title_body()
-        texts.replace_title(address, company)
+        # texts.replace_title(address, company)
 
         # 수정 1
         # title = texts.get_title()
@@ -137,6 +137,7 @@ def post_blog(contents, category_name, id_val, pw_val, only_blog):
 
         write_content_blog(address, company, article, contents.get_random_image_path(length), length)
         # write_content_blog(address, company, "테스트", 3, 5)
+        insert_place(place)
         
         blog.click_post_button()
         blog.click_category_listbox()
@@ -181,12 +182,15 @@ def write_content_blog(address, company, article, image_path, image_length):
     video_path = ""
 
     for content in article:
+        print(f"[content] = {content}")
         # 썸네일일 경우
         if THUMBNAIL in content:
+            print("{THUMBNAIL}")
             # 이미지 생성 후 해당 이미지 업로드
             # 이미지 삭제는 글 작성을 완료한 후에 수행
             image.upload_image(THUMBNAIL_PATH)
         elif PHOTO in content and image_index < image_length:
+            print("{PHOTO}")
             # 고객이 넣은 이미지를 테두리 입혀서 작성
             try:
                 image.draw_border_sample(image_path[image_index])
@@ -200,13 +204,17 @@ def write_content_blog(address, company, article, image_path, image_length):
                 image_index += 1
                 image.blog_upload_image_error()
         elif VIDEO in content:
+            print("{VIDEO}")
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
             video.upload_video_to_blog(video_path, f"{address} {company}")
         elif ENTER is content:
+            print("{ENTER}")
             blog.insert_enter()
         else:
+            print("{WRITE CONTENT")
             blog.write_text(content)
+            blog.insert_enter()
 
 
     # 테스트 용도로 주석처리
@@ -225,9 +233,9 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             # 주소, 업체 추출
             address, company = contents.get_address(i), contents.get_company(i)
 
-            texts = text_data.TextData()
+            # texts = text_data.TextData()
             # texts.divide_title_body()
-            texts.replace_title(address, company)
+            # texts.replace_title(address, company)
 
             # 수정 1
             # title = texts.get_title()
@@ -347,6 +355,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
             cafe.insert_enter()
         else:
             cafe.write_text(content)
+            blog.insert_enter()
 
     # 테스트 용도로 주석처리
     video.remove_video(video_path)
@@ -390,6 +399,7 @@ def get_titles(address, company, is_blog=True):
     gemini.init_gemini()
 
     response = gemini.create_title(titles, address, company)
+    webdriver.enter_url(NAVER)
     return response
 
 def insert_place(place):

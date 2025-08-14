@@ -1,9 +1,9 @@
 {
-    "waiting_max": "2",
-    "waiting_min": "1",
+    "waiting_max": "120",
+    "waiting_min": "90",
     "phone_number": "010-9872-1349",
     "api_number": "AIzaSyDjTR8G2RpGYH58e3dtAD4cuUYn2JzWkdU",
-    "content_input": "안녕하세요, %주소% %업체% 입니다.\n\n[제목]\n\n안녕하세요, %주소% %업체%입니다.\n\n%썸네일%\n\n[본문]\n\n%영상%\n\n끝까지 읽어주셔서 감사합니다.\n",
+    "content_input": "안녕하세요, %주소% %업체%입니다.\n\n%썸네일%\n\n[본문]\n\n%영상%\n\n끝까지 읽어주셔서 감사합니다.\n",
     "status_rb": 2,
     "comment_cb": true
 }

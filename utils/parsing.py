@@ -15,7 +15,7 @@ def parse_contents(address, company):
     content.extend(header)
     content.extend(body)
     content.extend(footer)
-    print(content)
+    # print(content)
     return content
 
 
@@ -40,23 +40,24 @@ def parse_boilerplate():
         boilerplate[i] = [item.strip() for item in re.split(PATTERN, boilerplate[i])]
     return boilerplate[0], boilerplate[1]
 
-def get_boilerplate():
-    text = text_data.TextData().get_body()
-    return re.split(r"\[본문\]", text)
-
 # def get_boilerplate():
-#     text = text_data.TextData().get_content_input()
+#     text = text_data.TextData().get_body()
+#     print(text)
 #     return re.split(r"\[본문\]", text)
+
+def get_boilerplate():
+    text = text_data.TextData().get_content_input()
+    return re.split(r"\[본문\]", text)
 
 def parse_header(headers, address, company):
     result = []
-    print(f"[headers] = {headers}")
+    # print(f"[headers] = {headers}")
     for header in headers:
-        print(f"[header] = {header}")
+        # print(f"[header] = {header}")
         if "%주소%" in header:
             header = header.replace("%주소%", address)
         if "%업체%" in header:
             header = header.replace("%업체%", company)
         result.append(header)
-        print(f"[result] = {result}")
+        # print(f"[result] = {result}")
     return result

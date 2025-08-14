@@ -109,7 +109,7 @@ def generate_image(phone, address, company):
     draw = ImageDraw.Draw(image)
 
     # 수정
-    company_elements = company.split(" ").strip()
+    company_elements = [c.strip() for c in company.split(" ")]
 
     line_data = [
         (phone, 45),

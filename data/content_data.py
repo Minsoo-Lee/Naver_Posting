@@ -60,7 +60,7 @@ class ContentData:
         self.image_path = path  # 모두 비어있지 않다면 원본 그대로
 
     def get_random_image_path(self, num):
-        print(self.image_path)
+        # print(self.image_path)
         return random.sample(self.image_path, num)
 
     def get_image_path_length(self):

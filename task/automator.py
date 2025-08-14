@@ -30,7 +30,7 @@ def start_task():
     contents = content_data.ContentData()
     contents.set_keywords([(row[0], row[1]) for row in keywords])
     contents.combinate_keywords()
-    print(contents.keywords)
+    # print(contents.keywords)
     contents.set_image_path([row[2] for row in keywords])
 
     contents.set_hashtags([row[3] for row in keywords])
@@ -53,11 +53,11 @@ def start_task():
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현
         if task_index == 0:
-            post_blog(contents, category_name, login_list[i][0], login_list[i][1], True)
+            post_blog(contents, category_name, login_list[i][0], login_list[i][1], login_list[i][2], True)
         elif task_index == 1:
             post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
         elif task_index == 2:
-            post_blog(contents, category_name, login_list[i][0], login_list[i][1], False)
+            post_blog(contents, category_name, login_list[i][0], login_list[i][1], login_list[i][2], False)
             post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
 
         log.append_log(f"{login_list[i][0]} 계정으로 모든 포스팅을 완료하였습니다.")
