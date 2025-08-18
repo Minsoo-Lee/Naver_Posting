@@ -102,7 +102,7 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
             blog.enter_posting_window()
 
         # blog.enter_iframe()
-        time.sleep(60)
+        time.sleep(10)
         blog.cancel_continue()
         log.append_log("이어 작성하기를 취소합니다.")
         if i == 0:
@@ -197,8 +197,8 @@ def write_content_blog(address, company, article, image_path, image_length):
             try:
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                log.append_log("이미지가 업로드 될 때까지 2분 대기합니다.")
-                time.sleep(120)
+                log.append_log("이미지가 업로드 될 때까지 10초간 대기합니다.")
+                time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
@@ -341,8 +341,8 @@ def write_content_cafe(address, company, article, image_path, image_length):
             try:
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                log.append_log("이미지가 업로드 될 때까지 2분 대기합니다.")
-                time.sleep(90)
+                log.append_log("이미지가 업로드 될 때까지 10초간 대기합니다.")
+                time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
