@@ -112,7 +112,7 @@ def send_hashtag(hashtag):
 def complete_posting():
     print("before complete_posting", flush=True)
     log.append_log("before complete_posting")
-    webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button")
+    webdriver.click_element_xpath_error("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button")
     print("after complete_posting", flush=True)
     log.append_log("after complete_posting")
     # webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button").click()
