@@ -108,7 +108,9 @@ def send_hashtag(hashtag):
 
 @sleep_after()
 def complete_posting():
+    print("before complete_posting")
     webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button")
+    print("after complete_posting")
     # webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button").click()
 
 @sleep_after()
