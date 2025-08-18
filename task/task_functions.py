@@ -216,7 +216,7 @@ def write_content_blog(address, company, article, image_path, image_length):
         else:
             print("{WRITE CONTENT}")
             blog.write_text(content)
-            blog.insert_enter()
+            # blog.insert_enter()
 
 
     # 테스트 용도로 주석처리
