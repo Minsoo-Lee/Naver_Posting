@@ -57,16 +57,12 @@ def enter_url(url):
     driver.get(url)
 
 def click_element_xpath(xpath):
-    i = 0
     while True:
         try:
-            print(f"i = {i}", flush=True)
-            log.append_log(f"i = {i}")
             driver.find_element(By.XPATH, xpath).click()
             break
         except:
             time.sleep(1)
-            i += 1
             continue
 
 def click_element_xpath_error(xpath):
