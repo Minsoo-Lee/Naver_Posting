@@ -2,6 +2,8 @@ import clipboard
 import pyperclip
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
+
+from ui import log
 from utils.decorators import sleep_after
 from web import webdriver
 import time
@@ -108,9 +110,11 @@ def send_hashtag(hashtag):
 
 @sleep_after()
 def complete_posting():
-    print("before complete_posting")
+    print("before complete_posting", flush=True)
+    log.append_log("before complete_posting")
     webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button")
-    print("after complete_posting")
+    print("after complete_posting", flush=True)
+    log.append_log("after complete_posting")
     # webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button").click()
 
 @sleep_after()

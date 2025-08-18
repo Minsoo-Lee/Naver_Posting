@@ -4,6 +4,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from data.const import *
+from ui import log
 from utils.decorators import sleep_after
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -59,7 +60,8 @@ def click_element_xpath(xpath):
     i = 0
     while True:
         try:
-            print(f"i = {i}")
+            print(f"i = {i}", flush=True)
+            log.append_log(f"i = {i}")
             driver.find_element(By.XPATH, xpath).click()
             break
         except:
