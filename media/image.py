@@ -58,13 +58,17 @@ def copy_image_to_clipboard(image_path):
         data = output.getvalue()[14:]  # BMP 헤더 14바이트 제거
         output.close()
 
-        # 클립보드에 복사
-        win32clipboard.OpenClipboard()
-        win32clipboard.EmptyClipboard()
-        win32clipboard.SetClipboardData(win32con.CF_DIB, data)
-        win32clipboard.CloseClipboard()
-
-        print("Clipboard updated.")
+        for _ in range(10):
+            try:
+                # 클립보드에 복사
+                win32clipboard.OpenClipboard()
+                win32clipboard.EmptyClipboard()
+                win32clipboard.SetClipboardData(win32con.CF_DIB, data)
+                win32clipboard.CloseClipboard()
+                print("Clipboard updated.")
+                return
+            except Exception:
+                time.sleep(1)
         time.sleep(1)
     else:
         raise NotImplementedError("Unsupported OS")
