@@ -28,6 +28,7 @@ def init_chrome():
         chrome_options.add_argument('--disable-dev-shm-usage')  # 메모리 사용 제한 해제
         chrome_options.add_argument('--disable-gpu')  # GPU 비활성화 (가끔 필요)
         chrome_options.add_argument('--window-size=1920x1080')  # 뷰포트 설정
+        chrome_options.add_argument('--enable-unsafe-swiftshader')
 
         # 선택 옵션
         chrome_options.add_experimental_option("prefs", {

@@ -146,6 +146,7 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
 
         # 해시태그 추가
         hashtags = contents.get_hashtags()
+        log.append_log("해시태그를 추가합니다.")
 
         blog.click_hashtag()
         # 해시태그 키워드 치환도 함께
@@ -154,6 +155,7 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
             hashtag = hashtag.replace("%업체%", company)
             blog.send_hashtag(hashtag)
             blog.insert_enter()
+        log.append_log("해시태그 추가를 완료하였습니다.")
         blog.complete_posting()
         log.append_log("포스팅을 완료하였습니다.")
         blog.exit_iframe()
@@ -212,7 +214,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             print("{ENTER}")
             blog.insert_enter()
         else:
-            print("{WRITE CONTENT")
+            print("{WRITE CONTENT}")
             blog.write_text(content)
             blog.insert_enter()
 
