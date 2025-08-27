@@ -408,7 +408,7 @@ def insert_place(place):
     if place == "":
         return
     # 장소 삽입 버튼 누르기
-    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/header/div[1]/ul/li[7]/button")
+    webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/header/div[1]/ul/li[14]/button")
     # 넣으려는 장소 검색하기
     webdriver.send_data_by_xpath_loop("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div[2]/div[1]/div[2]/div/input", place)
     # 환경마다 다르므로 수정 필요
