@@ -60,19 +60,26 @@ def generate_video():
     video_width, video_height = 800, 400
 
     background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
+    print(0)
 
     # 1. 이미지 파일을 불러옴
     image_clip = ImageClip(THUMBNAIL_PATH)
+    print(1)
 
     # 4. 이미지 위치 중앙 정렬
     image_clip = image_clip.with_position(("center", "center"))
+    print(2)
 
     # 5. 합성
     final_clip = CompositeVideoClip([background, image_clip])
+    print(3)
+
     final_clip.duration = 15
+    print(4)
 
     # 6. 영상으로 저장
     final_clip.write_videofile(VIDEO_PATH, fps=24)
+    print(5)
 
     # ==========================================================================================
 
