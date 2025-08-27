@@ -6,17 +6,17 @@ from google.api_core.exceptions import ResourceExhausted
 
 from data import text_data
 
-gemini_key = "AIzaSyDo6wlM9Q6SFKS-rpHoS_sJQabVt9OEDnI"
+# gemini_key = "AIzaSyDo6wlM9Q6SFKS-rpHoS_sJQabVt9OEDnI"
 model = None
 
 
 def init_gemini():
     global model
     # 테스트 용도로 주석처리
-    # api_key = text_data.TextData().get_api_number()
-    # genai.configure(api_key=api_key)
+    api_key = text_data.TextData().get_api_number()
+    genai.configure(api_key=api_key)
 
-    genai.configure(api_key=gemini_key)
+    # genai.configure(api_key=gemini_key)
 
     model = genai.GenerativeModel('gemini-1.5-flash')
     # dotenv.load_dotenv()
