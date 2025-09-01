@@ -178,3 +178,17 @@ def get_text_from_css_selector(value):
     for text_element in text_elements:
         result.append(text_element.text)
     return result
+
+def push_search_blog_cafe_button(platform):
+    boxes = driver.find_elements(By.CLASS_NAME, "flick_bx")
+    for box in boxes:
+        try:
+            a_tag = box.find_element(By.TAG_NAME, "a")
+            text = a_tag.get_attribute("textContent").strip()
+            print(text)
+            if text == platform:
+                box.click()
+                break
+            time.sleep(1)
+        except:
+            continue

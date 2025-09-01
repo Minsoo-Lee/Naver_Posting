@@ -70,7 +70,7 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
         # title_instance = title_data.TitleData(address, company)
         # title = title_instance.get_one_title_random()
         # 수정 3
-        title = get_titles(address, company)
+        title = get_titles(address, company, "블로그")
 
 
         log.append_log("블로그에 진입합니다.")
@@ -245,7 +245,7 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
             # title_instance = title_data.TitleData(address, company)
             # title = title_instance.get_one_title_random()
             # 수정3
-            title = get_titles(address, company, False)
+            title = get_titles(address, company, "카페")
 
             # cafe_data[0] = url
             # cafe_data[1] = board_name
@@ -377,7 +377,7 @@ def get_waiting_time():
 
     return total_time, minutes, seconds
 
-def get_titles(address, company, is_blog=True):
+def get_titles(address, company, button_name):
 
     # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
     time.sleep(1)
@@ -388,11 +388,15 @@ def get_titles(address, company, is_blog=True):
 
     webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
 
-    if is_blog:
-        webdriver.click_element_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/a")
-    else:
-        webdriver.click_element_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[3]/a")
-    time.sleep(WAIT)
+    webdriver.push_search_blog_cafe_button(button_name)
+
+    ###
+    # if is_blog:
+    #     webdriver.click_element_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[1]/a")
+    # else:
+    #     webdriver.click_element_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[3]/a")
+    # time.sleep(WAIT)
+    ###
 
     titles = webdriver.get_text_from_css_selector("a.title_link")
 
