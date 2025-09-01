@@ -65,6 +65,12 @@ def click_element_xpath(xpath):
             time.sleep(1)
             continue
 
+def click_element_class_name(class_name):
+    try:
+        driver.find_element(By.CLASS_NAME, class_name).click()
+    except:
+        time.sleep(2)
+
 def click_element_xpath_error(xpath):
     for i in range(15):
         try:
@@ -76,7 +82,10 @@ def click_element_xpath_error(xpath):
 
 
 def click_element_css(css):
-    driver.find_element(By.CSS_SELECTOR, css).click()
+    try:
+        driver.find_element(By.CSS_SELECTOR, css).click()
+    except:
+        time.sleep(1)
 
 def click_element_link_text(link_text):
     driver.find_element(By.LINK_TEXT, link_text).click()

@@ -86,6 +86,9 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
 
         blog.enter_iframe()
 
+        # 이벤트 창 뜨는거 끄기
+        webdriver.click_element_css("button.btn_close._btn_close")
+
         # 카테고리가 정말 존재하는 카테고리인지 확인 -> iframe 안으로 들어가야 하나?
         # 하위 메뉴는 동적 생성이라 다른 방법을 찾아봐야 함
         # 그냥 포스팅 전에 끄는 방법도 있을듯?
@@ -158,6 +161,12 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
         log.append_log("해시태그 추가를 완료하였습니다.")
         blog.complete_posting()
         log.append_log("포스팅을 완료하였습니다.")
+
+
+        time.sleep(1)
+        # webdriver.click_element_xpath("/html/body/div[6]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div/div[4]/div/div[2]/div/div[2]/button")
+
+
         blog.exit_iframe()
         blog.exit_tab()
 
