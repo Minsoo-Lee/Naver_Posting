@@ -263,12 +263,15 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
 
             log.append_log("카페에 진입합니다.")
             cafe.enter_cafe(url)
+            IS_SINED = False
+
             # 가입했는지 여부 확인
             if not cafe.is_signed_up():
                 # 생각해보기
-                log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
+                # 이 로그가 사용자로 하여금 헷갈리게 만들 수 있어 생략
+                # log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
                 break
-            log.append_log("가입된 카페입니다. 컨텐츠 작성을 계속합니다.")
+            log.append_log("카페를 찾았습니다. 컨텐츠 작성을 계속합니다.")
             cafe.click_posting_button()
 
             # 여기서 카테고리 찾기 -> 없으면 다음 단계로
