@@ -10,7 +10,7 @@ from moviepy import ImageClip, ColorClip, CompositeVideoClip
 from utils.colors import Colors
 from media import image
 
-FONT_SIZE = 50
+FONT_SIZE = 60
 
 # 기존 사진에 테두리 입히기
 #   - 테두리 색: 썸네일 이미지 생성 시 사용하는 색 활용 (일단 빨간색으로 테스트)
@@ -203,6 +203,7 @@ def generate_video():
 
     # 6. 영상으로 저장
     final_clip.write_videofile("output.mov", fps=24)
+    final_clip.duration = 10
 
 # generate_image_for_video("010-9872-1349", "성수동 설비업체")
 generate_image("010-4119-2101", "성수동", "설비업체")
