@@ -59,7 +59,9 @@ def complete_upload(xpath):
 def generate_video():
     video_width, video_height = 800, 400
 
-    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
+    # 수정
+    # background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
+    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255))
     print(0)
 
     # 1. 이미지 파일을 불러옴
