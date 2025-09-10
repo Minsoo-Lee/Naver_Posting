@@ -71,15 +71,12 @@ def generate_video():
     print(2)
 
     # 5. 합성
-    final_clip = CompositeVideoClip([background, image_clip])
+    final_clip = CompositeVideoClip([background, image_clip]).with_duration(20)
     print(3)
-
-    final_clip.duration = 15
-    print(4)
 
     # 6. 영상으로 저장
     final_clip.write_videofile(VIDEO_PATH, fps=24)
-    print(5)
+    print(4)
 
     # ==========================================================================================
 
