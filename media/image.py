@@ -116,7 +116,7 @@ def generate_image(phone, address, company):
 	company_elements = [c.strip() for c in company.split(" ")]
 
 	line_data = [
-		(phone, 45),
+		(phone, 50),
 		(address, FONT_SIZE),
 		(company_elements[0], FONT_SIZE),
 	]
