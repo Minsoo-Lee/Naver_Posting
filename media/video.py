@@ -7,6 +7,8 @@ from data.const import *
 from utils.decorators import sleep_after
 from web import webdriver
 
+DURATION = 10
+
 @sleep_after()
 def input_title(xpath, title):
     webdriver.send_data_by_xpath(xpath, title)
@@ -61,11 +63,11 @@ def generate_video():
 
     # 수정
     # background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
-    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255), duration=10)
+    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(DURATION)
     print(0)
 
     # 1. 이미지 파일을 불러옴
-    image_clip = ImageClip(THUMBNAIL_PATH)
+    image_clip = ImageClip(THUMBNAIL_PATH, duration=10).with_duration(DURATION)
     print(1)
 
     # 4. 이미지 위치 중앙 정렬
@@ -73,7 +75,7 @@ def generate_video():
     print(2)
 
     # 5. 합성
-    final_clip = CompositeVideoClip([background, image_clip])
+    final_clip = CompositeVideoClip([background, image_clip]).with_duration(DURATION)
     print(3)
 
     # 6. 영상으로 저장
