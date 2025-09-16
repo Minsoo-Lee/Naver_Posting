@@ -3,11 +3,9 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from data.const import *
-from ui import log
 from utils.decorators import sleep_after
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 driver = None
 URL = "https://localhost:"
@@ -21,6 +19,8 @@ actions = None
 def init_chrome():
     global driver, main_window, actions
     if driver is None:
+        service = Service(ChromeDriverManager().install())
+
         chrome_options = Options()
 
         # ✅ 필수: Headless 서버 환경에서 필요한 옵션
@@ -37,7 +37,7 @@ def init_chrome():
         })
         chrome_options.add_experimental_option("detach", True)
 
-        driver = webdriver.Chrome(options=chrome_options)
+        driver = webdriver.Chrome(options=chrome_options, service=service)
 
         # webdriver 속성 제거
         driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
