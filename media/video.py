@@ -61,7 +61,7 @@ def generate_video():
 
     # 수정
     # background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
-    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255))
+    background = ColorClip(size=(video_width, video_height), color=(255, 255, 255), duration=10)
     print(0)
 
     # 1. 이미지 파일을 불러옴
@@ -73,7 +73,7 @@ def generate_video():
     print(2)
 
     # 5. 합성
-    final_clip = CompositeVideoClip([background, image_clip]).with_duration(20)
+    final_clip = CompositeVideoClip([background, image_clip])
     print(3)
 
     # 6. 영상으로 저장
