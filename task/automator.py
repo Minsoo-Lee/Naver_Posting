@@ -42,7 +42,7 @@ def start_task():
     # 로그인 반복
     for i in range(len(login_list)):
         category_name = blog_dict.get(login_list[i][0])
-        log.append_log(f"카테고리를 탐색합니다.]\n카테고리 = {category_name}")
+        log.append_log(f"카테고리를 탐색합니다.\n카테고리 = {category_name}")
         execute_login(login_list[i][0], login_list[i][1])
         # 여기서는 키워드 X 키워드대로 글을 생성하여 자동 포스팅 -> 반복문으로 감쌀 것 (for문은 한개만 사용!)
 

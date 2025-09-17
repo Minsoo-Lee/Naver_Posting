@@ -74,14 +74,6 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
 
 
         log.append_log("블로그에 진입합니다.")
-        # if i == 0:
-        #     print(1)
-        #     blog.enter_blog(True)
-        #     print(2)
-        # else:
-        #     print(3)
-        #     blog.enter_blog(False)
-        #     print(4)
         blog.enter_blog(True)
 
         blog.enter_iframe()
@@ -112,10 +104,10 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
             blog.exit_help()
             log.append_log("도움말 창을 닫습니다.")
 
-        blog.click_post_button()
-        # 포스팅 전에 카테고리가 있는지 확인
-        blog.click_category_listbox()
         log.append_log(f"카테고리가 존재하는지 확인합니다.\n카테고리 = {category_name}")
+        # 포스팅 전에 카테고리가 있는지 확인
+        blog.click_post_button()
+        blog.click_category_listbox()
         if not blog.choose_category(category_name):
             log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
             get_waiting_time()
@@ -193,15 +185,12 @@ def write_content_blog(address, company, article, image_path, image_length):
     video_path = ""
 
     for content in article:
-        print(f"[content] = {content}")
         # 썸네일일 경우
         if THUMBNAIL in content:
-            print("{THUMBNAIL}")
             # 이미지 생성 후 해당 이미지 업로드
             # 이미지 삭제는 글 작성을 완료한 후에 수행
             image.upload_image(THUMBNAIL_PATH)
         elif PHOTO in content and image_index < image_length:
-            print("{PHOTO}")
             # 고객이 넣은 이미지를 테두리 입혀서 작성
             try:
                 image.draw_border_sample(image_path[image_index])
@@ -215,15 +204,12 @@ def write_content_blog(address, company, article, image_path, image_length):
                 image_index += 1
                 image.blog_upload_image_error()
         elif VIDEO in content:
-            print("{VIDEO}")
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
             video.upload_video_to_blog(video_path, f"{address} {company}")
         elif ENTER is content:
-            print("{ENTER}")
             blog.insert_enter()
         else:
-            print("{WRITE CONTENT}")
             blog.write_text(content)
             # blog.insert_enter()
 
@@ -310,7 +296,6 @@ def post_cafe(contents, cafe_list, id_val, pw_val):
 
             # 해시태그 추가
             hashtags = contents.get_hashtags()
-            print(hashtags)
             cafe.click_hashtag()
             for hashtag in hashtags:
                 hashtag = hashtag.replace("%주소%", address)
@@ -378,8 +363,6 @@ def write_content_cafe(address, company, article, image_path, image_length):
 def get_waiting_time():
     min_time = text_data.TextData().get_waiting_min()
     max_time = text_data.TextData().get_waiting_max()
-    print(f"min_time = {min_time}")
-    print(f"max_time = {max_time}")
     total_time = random.randint(min_time, max_time)
     minutes = total_time // 60
     seconds = total_time - minutes * 60

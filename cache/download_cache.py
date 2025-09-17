@@ -23,7 +23,7 @@ def convert_JSON():
 def download_JSON():
     log.append_log("캐시 파일을 저장합니다.")
     converted_data = convert_JSON()
-    print(f"converted data: {converted_data}")
+    # print(f"converted data: {converted_data}")
     with open("cache/.cache_text", "w", encoding="utf-8") as f:
         json.dump(converted_data, f, indent=4, ensure_ascii=False)
 
@@ -50,4 +50,4 @@ def download_CSV():
                     row_data.append(item.GetText())
                 writer.writerow(row_data)
 
-        print(f"✅ 저장 완료: {csv_names[i]}")
+        # print(f"✅ 저장 완료: {csv_names[i]}")

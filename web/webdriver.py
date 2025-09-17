@@ -107,9 +107,8 @@ def execute_javascript(js_code, element):
     driver.execute_script(js_code, element)
 
 def find_category(category_name):
-    elements = driver.find_elements(By.CLASS_NAME, "tlink")
+    # elements = driver.find_elements(By.CLASS_NAME, "tlink")
     elements = driver.find_elements(By.XPATH, '//*[starts-with(@class, "tlink")]')
-    print(elements)
 
     for element in elements:
         a_tags = element.find_elements(By.TAG_NAME, "a")
