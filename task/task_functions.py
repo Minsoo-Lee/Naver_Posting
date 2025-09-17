@@ -100,9 +100,9 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
         time.sleep(10)
         blog.cancel_continue()
         log.append_log("이어 작성하기를 취소합니다.")
-        if i == 0:
-            blog.exit_help()
-            log.append_log("도움말 창을 닫습니다.")
+        # if i == 0:
+        blog.exit_help()
+        log.append_log("도움말 창을 닫습니다.")
 
         log.append_log(f"카테고리가 존재하는지 확인합니다.\n카테고리 = {category_name}")
         # 포스팅 전에 카테고리가 있는지 확인
