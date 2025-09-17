@@ -172,6 +172,8 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
         if not only_blog:
             get_waiting_time()
 
+    log.append_log("블로그 포스팅을 완료하였습니다.")
+
 
 def write_content_blog(address, company, article, image_path, image_length):
     # 먼저, 썸네일 이미지부터 생성
