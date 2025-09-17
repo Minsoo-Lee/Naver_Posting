@@ -29,13 +29,17 @@ def init_chrome():
         chrome_options.add_argument('--disable-dev-shm-usage')  # 메모리 사용 제한 해제
         chrome_options.add_argument('--disable-gpu')  # GPU 비활성화 (가끔 필요)
         chrome_options.add_argument('--window-size=1920x1080')  # 뷰포트 설정
-        chrome_options.add_argument('--enable-unsafe-swiftshader')
+
+        # 주석 - 일반적으로 WebGL 테스트용 (충돌 발생 가능)
+        # chrome_options.add_argument('--enable-unsafe-swiftshader')
 
         # 선택 옵션
         chrome_options.add_experimental_option("prefs", {
             "profile.default_content_setting_values.notifications": 1
         })
-        chrome_options.add_experimental_option("detach", True)
+
+        # 주석 처리 - 세션 관리가 꼬여 연결 해제 가능
+        # chrome_options.add_experimental_option("detach", True)
 
         driver = webdriver.Chrome(options=chrome_options, service=service)
 
