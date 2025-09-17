@@ -110,6 +110,11 @@ def post_blog(contents, category_name, id_val, pw_val, place, only_blog):
         blog.click_category_listbox()
         if not blog.choose_category(category_name):
             log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+            # 블로그에서 나간 후,
+            blog.exit_iframe()
+            blog.exit_tab()
+            # 다시 네이버로 복귀
+            webdriver.enter_url("https://www.naver.com")
             get_waiting_time()
             break
         else:
