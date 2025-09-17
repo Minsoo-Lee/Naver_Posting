@@ -53,6 +53,7 @@ def cancel_continue():
 @sleep_after()
 def exit_help():
     try:
+        time.sleep(3)
         webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/article/div/header/button")
     except:
         pass
@@ -88,6 +89,7 @@ def insert_enter():
 
 @sleep_after()
 def click_post_button():
+    time.sleep(3)
     webdriver.click_element_xpath("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/button")
     # webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div[2]/button").click()
 
