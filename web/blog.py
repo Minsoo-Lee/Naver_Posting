@@ -54,7 +54,7 @@ def cancel_continue():
 def exit_help():
     try:
         time.sleep(3)
-        webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/article/div/header/button")
+        webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/article/div/header/button")
     except:
         pass
 
