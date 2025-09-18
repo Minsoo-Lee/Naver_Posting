@@ -79,7 +79,7 @@ def generate_video():
     print(3)
 
     # 6. 영상으로 저장
-    final_clip.write_videofile(VIDEO_PATH, fps=24)
+    final_clip.write_videofile(VIDEO_PATH, fps=24, logger=None)
     print(4)
 
     # ==========================================================================================

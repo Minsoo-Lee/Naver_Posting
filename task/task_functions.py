@@ -225,7 +225,7 @@ def write_content_blog(address, company, article, image_path, image_length):
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
 
-def post_cafe(contents, cafe_list, id_val, pw_val):
+def  post_cafe(contents, cafe_list, id_val, pw_val):
     for cafe_index in range(len(cafe_list)):
         keyword_len = contents.get_keywords_length()
         for i in range(keyword_len):

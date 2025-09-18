@@ -65,12 +65,12 @@ def start_task():
         webdriver.enter_url(NAVER)
         login.click_logout()
 
-        # 대기시간 설정
-        if i < len(login_list) - 1:
-            total_time, minutes, seconds = get_waiting_time()
-            log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
-            time.sleep(total_time)
-        else:
+        # 대기시간 설정(안 해도 될듯)
+        # if i < len(login_list) - 1:
+        #     total_time, minutes, seconds = get_waiting_time()
+        #     log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
+        #     time.sleep(total_time)
+        if i == len(login_list) - 1:
             log.append_log("모든 작업을 완료하였습니다.")
             button_data.ButtonData().execute_button_Enable(True)
 
