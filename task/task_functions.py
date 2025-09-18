@@ -202,11 +202,11 @@ def write_content_blog(address, company, article, image_path, image_length):
             try:
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                log.append_log("이미지가 업로드 될 때까지 10초간 대기합니다.")
+                log.append_log("이미지를 업로드합니다.")
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
-                log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
+                log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다.\n다음 작업으로 넘어갑니다.")
             finally:
                 image_index += 1
                 image.blog_upload_image_error()
@@ -346,11 +346,11 @@ def write_content_cafe(address, company, article, image_path, image_length):
             try:
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                log.append_log("이미지가 업로드 될 때까지 10초간 대기합니다.")
+                log.append_log("이미지를 업로드합니다.")
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
-                log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다. 다음 작업으로 넘어갑니다.")
+                log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다.\n다음 작업으로 넘어갑니다.")
             finally:
                 image_index += 1
                 image.cafe_upload_image_error()
