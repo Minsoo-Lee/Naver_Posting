@@ -202,7 +202,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             try:
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                log.append_log("이미지를 업로드합니다.")
+                log.append_log(f"이미지를 업로드합니다.\n파일명: {split_image_path(image_path[image_index])}")
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
@@ -346,7 +346,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
             try:
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                log.append_log("이미지를 업로드합니다.")
+                log.append_log(f"이미지를 업로드합니다.\n파일명: {split_image_path(image_path[image_index])}")
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
@@ -430,3 +430,6 @@ def insert_place(place):
     # 확인 버튼이 활성화되면 클릭
     webdriver.click_element_xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/footer/div/button")
 
+def split_image_path(image_path):
+    split_path = image_path.split("/")
+    return split_path[:-1]
