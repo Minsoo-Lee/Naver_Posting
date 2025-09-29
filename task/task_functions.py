@@ -59,116 +59,111 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
     place = login_info[2]
 
     keyword_idx = 0
-    print(f"[id] {login_info[0]} / [pw] {login_info[1]} / [place] {login_info[2]}")
 
     for i in range(cycle_num):
         keyword_idx = cycle_num * cycle_cnt + i
         if keyword_idx >= keyword_len:
             return keyword_idx
-        print(f"[keyword_idx] {keyword_idx}")
 
-    # 테스트를 위한 주석처리
-    # 여기부터
-    #     # 주소, 업체 추출
-    #     address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
-    #     # 제목 생성
-    #     title = get_titles(address, company, "블로그")
-    #
-    #
-    #     log.append_log("블로그에 진입합니다.")
-    #     blog.enter_blog(True)
-    #
-    #     blog.enter_iframe()
-    #
-    #     # 이벤트 창 뜨는거 끄기
-    #     webdriver.click_element_css("button.btn_close._btn_close")
-    #
-    #     blog.enter_posting_window()
-    #
-    #     if is_ip_changed:
-    #         login.switch_to_popup()
-    #         input_login_value(id_val, pw_val)
-    #         login.switch_to_prev_window()
-    #         blog.enter_iframe()
-    #         blog.enter_posting_window()
-    #
-    #     time.sleep(10)
-    #     blog.cancel_continue()
-    #     log.append_log("이어 작성하기를 취소합니다.")
-    #     blog.exit_help()
-    #     log.append_log("도움말 창을 닫습니다.")
-    #
-    #     # 포스팅 전에 카테고리가 있는지 확인
-    #     log.append_log(f"카테고리가 존재하는지 확인합니다.\n카테고리 = {category_name}")
-    #     blog.click_post_button()
-    #     blog.click_category_listbox()
-    #     if not blog.choose_category(category_name):
-    #         log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
-    #         # 블로그에서 나간 후,
-    #         blog.exit_iframe()
-    #         blog.exit_tab()
-    #         # 다시 네이버로 복귀
-    #         webdriver.enter_url("https://www.naver.com")
-    #         get_waiting_time()
-    #         break
-    #     else:
-    #         log.append_log("존재하는 카테고리입니다. 작성을 계속합니다.")
-    #         blog.click_category_listbox()
-    #
-    #     log.append_log(f"제목을 작성합니다.\n제목 = {title}")
-    #     blog.write_title(title)
-    #     log.append_log("본문을 작성합니다.")
-    #     blog.enter_context_input()
-    #
-    #     # 테스트를 위해 주석처리
-    #     # 본문 제작
-    #     article = parsing.parse_contents(address, company)
-    #
-    #     # 사진 개수 파악
-    #     count = sum(1 for text in article if text == PHOTO)
-    #     image_len = contents.get_image_path_length()
-    #     length = image_len if count > image_len else count
-    #
-    #     write_content_blog(address, company, article, contents.get_random_image_path(length), length)
-    #     insert_place(place)
-    #
-    #     blog.click_post_button()
-    #     blog.click_category_listbox()
-    #
-    #     blog.choose_category(category_name)
-    #
-    #     # 해시태그 추가
-    #     hashtags = contents.get_hashtags()
-    #     log.append_log("해시태그를 추가합니다.")
-    #
-    #     blog.click_hashtag()
-    #     # 해시태그 키워드 치환도 함께
-    #     for hashtag in hashtags:
-    #         hashtag = hashtag.replace("%주소%", address)
-    #         hashtag = hashtag.replace("%업체%", company)
-    #         blog.send_hashtag(hashtag)
-    #         blog.insert_enter()
-    #     log.append_log("해시태그 추가를 완료하였습니다.")
-    #     blog.complete_posting()
-    #     log.append_log("포스팅을 완료하였습니다.")
-    #
-    #     time.sleep(1)
-    #
-    #     blog.exit_iframe()
-    #     blog.exit_tab()
-    #
-    #     webdriver.enter_url("https://www.naver.com")
-    #     time.sleep(3)
-    #
-    #     if button_data.ButtonData().get_toggle_value() is True:
-    #         ip_trans_execute.trans_ip()
-    #         is_ip_changed = True
-    #
-    #     if not only_blog:
-    #         get_waiting_time()
-    #
-    # log.append_log("블로그 포스팅을 완료하였습니다.")
-    # 여기까지
+        # 주소, 업체 추출
+        address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
+        # 제목 생성
+        title = get_titles(address, company, "블로그")
+
+
+        log.append_log("블로그에 진입합니다.")
+        blog.enter_blog(True)
+
+        blog.enter_iframe()
+
+        # 이벤트 창 뜨는거 끄기
+        webdriver.click_element_css("button.btn_close._btn_close")
+
+        blog.enter_posting_window()
+
+        if is_ip_changed:
+            login.switch_to_popup()
+            input_login_value(id_val, pw_val)
+            login.switch_to_prev_window()
+            blog.enter_iframe()
+            blog.enter_posting_window()
+
+        time.sleep(10)
+        blog.cancel_continue()
+        log.append_log("이어 작성하기를 취소합니다.")
+        blog.exit_help()
+        log.append_log("도움말 창을 닫습니다.")
+
+        # 포스팅 전에 카테고리가 있는지 확인
+        log.append_log(f"카테고리가 존재하는지 확인합니다.\n카테고리 = {category_name}")
+        blog.click_post_button()
+        blog.click_category_listbox()
+        if not blog.choose_category(category_name):
+            log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+            # 블로그에서 나간 후,
+            blog.exit_iframe()
+            blog.exit_tab()
+            # 다시 네이버로 복귀
+            webdriver.enter_url("https://www.naver.com")
+            get_waiting_time()
+            break
+        else:
+            log.append_log("존재하는 카테고리입니다. 작성을 계속합니다.")
+            blog.click_category_listbox()
+
+        log.append_log(f"제목을 작성합니다.\n제목 = {title}")
+        blog.write_title(title)
+        log.append_log("본문을 작성합니다.")
+        blog.enter_context_input()
+
+        # 테스트를 위해 주석처리
+        # 본문 제작
+        article = parsing.parse_contents(address, company)
+
+        # 사진 개수 파악
+        count = sum(1 for text in article if text == PHOTO)
+        image_len = contents.get_image_path_length()
+        length = image_len if count > image_len else count
+
+        write_content_blog(address, company, article, contents.get_random_image_path(length), length)
+        insert_place(place)
+
+        blog.click_post_button()
+        blog.click_category_listbox()
+
+        blog.choose_category(category_name)
+
+        # 해시태그 추가
+        hashtags = contents.get_hashtags()
+        log.append_log("해시태그를 추가합니다.")
+
+        blog.click_hashtag()
+        # 해시태그 키워드 치환도 함께
+        for hashtag in hashtags:
+            hashtag = hashtag.replace("%주소%", address)
+            hashtag = hashtag.replace("%업체%", company)
+            blog.send_hashtag(hashtag)
+            blog.insert_enter()
+        log.append_log("해시태그 추가를 완료하였습니다.")
+        blog.complete_posting()
+        log.append_log("포스팅을 완료하였습니다.")
+
+        time.sleep(1)
+
+        blog.exit_iframe()
+        blog.exit_tab()
+
+        webdriver.enter_url("https://www.naver.com")
+        time.sleep(3)
+
+        if button_data.ButtonData().get_toggle_value() is True:
+            ip_trans_execute.trans_ip()
+            is_ip_changed = True
+
+        if not only_blog:
+            get_waiting_time()
+
+    log.append_log("블로그 포스팅을 완료하였습니다.")
 
     return keyword_idx
 
@@ -234,78 +229,75 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
                 if cafe_index == len(cafe_list) - 1:
                     return keyword_idx
                 break
-            print(f"[keyword_idx] {keyword_idx}")
-            # 테스트를 위한 주석처리
-            # 여기부터
-            # # 주소, 업체 추출
-            # address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
-            # # 제목 생성
-            # title = get_titles(address, company, "카페")
-            #
-            # url = cafe_list[cafe_index][0]
-            # board_name = cafe_list[cafe_index][1]
-            #
-            # cafe.enter_cafe(url)
-            #
-            # # 가입했는지 여부 확인
-            # if not cafe.is_signed_up():
-            #     # log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
-            #     # 이 로그가 사용자로 하여금 헷갈리게 만들 수 있어 생략
-            #     break
-            # log.append_log("카페에 진입합니다.")
-            # cafe.click_posting_button()
-            #
-            # # 여기서 카테고리 찾기 -> 없으면 다음 단계로
-            # if box_data.BoxData().get_cb_value() is False:
-            #     cafe.disable_comment()
-            #
-            # cafe.click_board_choice()
-            # log.append_log(f"카테고리를 선택합니다.\n카테고리 = {board_name}")
-            # if not cafe.choose_board(board_name):
-            #     log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
-            #     get_waiting_time()
-            #     break
-            # log.append_log(f"제목을 작성합니다.\n제목 = {title}")
-            # cafe.write_title(title)
-            #
-            # cafe.enter_content_input()
-            #
-            # # 본문 제작
-            # article = parsing.parse_contents(address, company)
-            #
-            # # 사진 개수 파악
-            # count = sum(1 for text in article if text == PHOTO)
-            # image_len = contents.get_image_path_length()
-            # length = image_len if count > image_len else count
-            #
-            # log.append_log("본문을 작성합니다.")
-            #
-            # write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
-            #
-            # # 해시태그 추가
-            # hashtags = contents.get_hashtags()
-            # cafe.click_hashtag()
-            # for hashtag in hashtags:
-            #     hashtag = hashtag.replace("%주소%", address)
-            #     hashtag = hashtag.replace("%업체%", company)
-            #     cafe.send_hashtag(hashtag)
-            #     cafe.insert_enter()
-            #
-            # cafe.click_register_button()
-            # if webdriver.switch_to_alert():
-            #     login.switch_to_popup()
-            #     input_login_value(id_val, pw_val)
-            #     login.switch_to_prev_window()
-            #     cafe.click_register_button()
-            # webdriver.exit_tab()
-            #
-            # log.append_log("포스팅을 완료하였습니다.")
-            #
-            # if button_data.ButtonData().get_toggle_value() is True:
-            #     ip_trans_execute.trans_ip()
-            # if cafe_index < len(cafe_list) - 1:
-            #     get_waiting_time()
-            # 여기까지
+            # 주소, 업체 추출
+            address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
+            # 제목 생성
+            title = get_titles(address, company, "카페")
+
+            url = cafe_list[cafe_index][0]
+            board_name = cafe_list[cafe_index][1]
+
+            cafe.enter_cafe(url)
+
+            # 가입했는지 여부 확인
+            if not cafe.is_signed_up():
+                # log.append_log("[ERROR] 가입하지 않은 카페입니다. 다음 카페로 넘어갑니다.")
+                # 이 로그가 사용자로 하여금 헷갈리게 만들 수 있어 생략
+                break
+            log.append_log("카페에 진입합니다.")
+            cafe.click_posting_button()
+
+            # 여기서 카테고리 찾기 -> 없으면 다음 단계로
+            if box_data.BoxData().get_cb_value() is False:
+                cafe.disable_comment()
+
+            cafe.click_board_choice()
+            log.append_log(f"카테고리를 선택합니다.\n카테고리 = {board_name}")
+            if not cafe.choose_board(board_name):
+                log.append_log(f"[ERROR] 카테고리가 존재하지 않습니다. 다음 작업으로 넘어갑니다.")
+                get_waiting_time()
+                break
+            log.append_log(f"제목을 작성합니다.\n제목 = {title}")
+            cafe.write_title(title)
+
+            cafe.enter_content_input()
+
+            # 본문 제작
+            article = parsing.parse_contents(address, company)
+
+            # 사진 개수 파악
+            count = sum(1 for text in article if text == PHOTO)
+            image_len = contents.get_image_path_length()
+            length = image_len if count > image_len else count
+
+            log.append_log("본문을 작성합니다.")
+
+            write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
+
+            # 해시태그 추가
+            hashtags = contents.get_hashtags()
+            cafe.click_hashtag()
+            for hashtag in hashtags:
+                hashtag = hashtag.replace("%주소%", address)
+                hashtag = hashtag.replace("%업체%", company)
+                cafe.send_hashtag(hashtag)
+                cafe.insert_enter()
+
+            cafe.click_register_button()
+            if webdriver.switch_to_alert():
+                login.switch_to_popup()
+                input_login_value(id_val, pw_val)
+                login.switch_to_prev_window()
+                cafe.click_register_button()
+            webdriver.exit_tab()
+
+            log.append_log("포스팅을 완료하였습니다.")
+
+            if button_data.ButtonData().get_toggle_value() is True:
+                ip_trans_execute.trans_ip()
+            if cafe_index < len(cafe_list) - 1:
+                get_waiting_time()
+
     return keyword_idx
 
 def write_content_cafe(address, company, article, image_path, image_length):

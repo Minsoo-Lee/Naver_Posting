@@ -49,14 +49,11 @@ def start_task():
 
     while keyword_idx < contents.get_keywords_length() or login_idx < login_len:
         login_idx = login_idx % login_len
-        print("======================= before task =======================")
-        print(f"[login_idx] {login_idx}")
-        print(f"[cycle_cnt] {cycle_cnt}")
 
         category_name = blog_dict.get(login_list[login_idx][0])
         log.append_log(f"카테고리를 탐색합니다.\n카테고리 = {category_name}")
-        # 테스트를 위한 주석처리
-        # execute_login(login_list[login_idx][0], login_list[login_idx][1])
+
+        execute_login(login_list[login_idx][0], login_list[login_idx][1])
 
         # 로그인 다중 접속을 위한 테스트
         # 블로그 / 카페 / 둘다
@@ -75,56 +72,16 @@ def start_task():
             keyword_idx = post_blog(contents, category_name, login_info, False, cycle_cnt, cycle_num)
             keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num)
 
-        print("======================= after task =======================")
-        print(f"[keyword_idx] {keyword_idx}")
-
-        # 테스트를 위한 주석처리
-        # webdriver.enter_url(NAVER)
-        # login.click_logout()
+        webdriver.enter_url(NAVER)
+        login.click_logout()
 
         # added
         login_idx += 1
         if login_idx == login_len:
             cycle_cnt += 1
-        print(f"[login_idx] {login_idx}")
-        print(f"[cycle_cnt] {cycle_cnt}")
-        print()
 
     log.append_log("모든 작업을 완료하였습니다.")
     button_data.ButtonData().execute_button_Enable(True)
-    print("[모든 작업 완료]")
-
-    # 로그인 반복
-    # for i in range(len(login_list)):
-    #     category_name = blog_dict.get(login_list[i][0])
-    #     log.append_log(f"카테고리를 탐색합니다.\n카테고리 = {category_name}")
-    #     execute_login(login_list[i][0], login_list[i][1])
-    #     # 여기서는 키워드 X 키워드대로 글을 생성하여 자동 포스팅 -> 반복문으로 감쌀 것 (for문은 한개만 사용!)
-    #
-    #     # 로그인 다중 접속을 위한 테스트
-    #     # 블로그 / 카페 / 둘다
-    #     task_index = box_data.BoxData().get_rb_value()
-    #
-    #     # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
-    #     # 성능 최적화를 위해서 if문으로 단순하게 구현
-    #     if task_index == 0:
-    #         post_blog(contents, category_name, login_list[i][0], login_list[i][1], login_list[i][2], True)
-    #     elif task_index == 1:
-    #         post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
-    #     elif task_index == 2:
-    #         post_blog(contents, category_name, login_list[i][0], login_list[i][1], login_list[i][2], False)
-    #         post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
-    #
-    #     log.append_log(f"{login_list[i][0]} 계정으로 모든 포스팅을 완료하였습니다.")
-    #
-    #     webdriver.enter_url(NAVER)
-    #     login.click_logout()
-    #
-    #     if i == len(login_list) - 1:
-    #         log.append_log("모든 작업을 완료하였습니다.")
-    #         button_data.ButtonData().execute_button_Enable(True)
-    #
-    # button_data.ButtonData().set_all_buttons(True)
 
 def get_waiting_time():
     min_time = text_data.TextData().get_waiting_min()
