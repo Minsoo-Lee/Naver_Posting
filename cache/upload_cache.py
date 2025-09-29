@@ -27,10 +27,10 @@ def upload_JSON():
 def show_text():
     text_json = upload_JSON()
     text_list = [
-        texts.waiting_max, texts.waiting_min, texts.api_number, texts.phone_number, texts.content_input
+        texts.waiting_max, texts.waiting_min, texts.api_number, texts.phone_number, texts.content_input, texts.cycle_num
     ]
     text_keys = [
-        "waiting_max", "waiting_min", "api_number", "phone_number", "content_input"
+        "waiting_max", "waiting_min", "api_number", "phone_number", "content_input", "cycle_num"
     ]
     for text_input, key in zip(text_list, text_keys):
         text_input.SetValue(text_json.get(key, ""))

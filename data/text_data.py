@@ -18,6 +18,9 @@ class TextData:
         self.api_number = None
         self.content_input = None
 
+        # 추가
+        self.cycle_num = None
+
         self.title = None
         self.body = None
 
@@ -41,6 +44,9 @@ class TextData:
     def set_content_input(self, content_input):
         self.content_input = content_input
 
+    def set_cycle_num(self, cycle_num):
+        self.cycle_num = cycle_num
+
     # 데이터로 변환
     def get_content_input(self):
         return self.content_input.GetValue()
@@ -56,6 +62,9 @@ class TextData:
 
     def get_api_number(self):
         return self.api_number.GetValue()
+
+    def get_cycle_num(self):
+        return int(self.cycle_num.GetValue())
 
     # 수정
     # def divide_title_body(self):

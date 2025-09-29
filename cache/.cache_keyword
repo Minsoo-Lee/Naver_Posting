@@ -1,11 +1,26 @@
 주소,업체,파일 경로,해시태그
-성수동,설비업체,/Users/minsoo/coding/Naver_Posting/sample/sample1.jpg,%주소% %업체% 1
-송파동,,/Users/minsoo/coding/Naver_Posting/sample/sample2.jpg,%주소% %업체% 2
-맥금동,,/Users/minsoo/coding/Naver_Posting/sample/sample3.jpg,%주소% %업체% 3
-시험동,,/Users/minsoo/coding/Naver_Posting/sample/sample4.jpg,%주소% %업체% 4
-문현동,,/Users/minsoo/coding/Naver_Posting/sample/sample5.jpg,%주소% %업체% 5
-,,/Users/minsoo/coding/Naver_Posting/sample/sample6.jpeg,
-,,/Users/minsoo/coding/Naver_Posting/sample/sample7.jpg,
-,,/Users/minsoo/coding/Naver_Posting/sample/sample8.jpg,
-,,/Users/minsoo/coding/Naver_Posting/sample/sample9.jpg,
-,,/Users/minsoo/coding/Naver_Posting/sample/sample10.jpg,
+address1,설비업체,/Users/minsoo/coding/Naver_Posting/sample/sample1.jpg,%주소% %업체% 1
+address2,,/Users/minsoo/coding/Naver_Posting/sample/sample2.jpg,%주소% %업체% 2
+address3,,/Users/minsoo/coding/Naver_Posting/sample/sample3.jpg,%주소% %업체% 3
+address4,,/Users/minsoo/coding/Naver_Posting/sample/sample4.jpg,%주소% %업체% 4
+address5,,/Users/minsoo/coding/Naver_Posting/sample/sample5.jpg,%주소% %업체% 5
+address6,,/Users/minsoo/coding/Naver_Posting/sample/sample6.jpeg,
+address7,,/Users/minsoo/coding/Naver_Posting/sample/sample7.jpg,
+address8,,/Users/minsoo/coding/Naver_Posting/sample/sample8.jpg,
+address9,,/Users/minsoo/coding/Naver_Posting/sample/sample9.jpg,
+address10,,/Users/minsoo/coding/Naver_Posting/sample/sample10.jpg,
+address11,,,
+address12,,,
+address13,,,
+address14,,,
+address15,,,
+address16,,,
+address17,,,
+address18,,,
+address19,,,
+address20,,,
+address21,,,
+address22,,,
+address23,,,
+address24,,,
+address25,,,
