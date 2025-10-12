@@ -308,10 +308,12 @@ class SectionBuilder:
         keyword_button.Enable(True)
 
         keyword_list = wx.ListCtrl(keyword_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(550, LIST_BOX_HEIGHT))
-        keyword_list.InsertColumn(0, "주소", width=120)
-        keyword_list.InsertColumn(1, "업체", width=120)
-        keyword_list.InsertColumn(2, "파일 경로", width=120)
-        keyword_list.InsertColumn(3, "해시태그", width=120)
+        keyword_list.InsertColumn(0, "주소", width=60)
+        keyword_list.InsertColumn(1, "업체", width=60)
+        keyword_list.InsertColumn(2, "파일 경로", width=60)
+        keyword_list.InsertColumn(3, "해시태그", width=60)
+        keyword_list.InsertColumn(4, "AI 개입(상세)", width=60)
+        keyword_list.InsertColumn(5, "AI 개입(공통)", width=60)
 
         keyword_button.Bind(
             wx.EVT_BUTTON,

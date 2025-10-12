@@ -17,8 +17,27 @@ class ContentData:
         self.image_path = None
         self.keywords_concat = None
         self.hashtags = None
+        self.ai_detail = None
+        self.ai_common = None
+
 
         ContentData._initialized = True
+
+    def set_ai_detail(self, ai_list):
+        result = {}
+        for i in range(len(ai_list)):
+            if ai_list[i][0] == '' or ai_list[i][1] == '':
+                continue
+            result[ai_list[i][0]] = ai_list[i][1]
+        self.ai_detail = result
+
+    def set_ai_common(self, ai_common):
+        result = []
+        for i in range(len(ai_common)):
+            if ai_common[i] == '':
+                break
+            result.append(ai_common[i])
+        self.ai_common = result
 
     def set_keywords(self, keyword):
         for i, row in enumerate(keyword):
@@ -78,3 +97,12 @@ class ContentData:
 
     def get_hashtags(self):
         return self.hashtags
+
+    def get_ai_detail(self, category):
+        return self.ai_detail[category]
+
+    def get_ai_detail_all(self):
+        return self.ai_detail
+
+    def get_ai_common(self):
+        return self.ai_common

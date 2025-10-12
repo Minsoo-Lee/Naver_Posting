@@ -96,7 +96,8 @@ class Binding:
 
             path = dialog.GetPath()
             try:
-                with open(path, newline='', encoding='cp949') as csvfile:
+                # with open(path, newline='', encoding='cp949') as csvfile:
+                with open(path, newline='', encoding='utf-8') as csvfile:
                     reader = csv.reader(csvfile)
                     self.parse_setter[index](list(reader))
             except FileNotFoundError as e:
@@ -109,8 +110,8 @@ class Binding:
         list_data.DeleteAllItems()
 
 
-        print(index)
-        print("컬럼 개수:", list_data.GetColumnCount())
+        # print(index)
+        # print("컬럼 개수:", list_data.GetColumnCount())
 
         # 유효성 검사 할 것 (데이터 열 개수와 리스트 행 개수가 맞는지)
         if len(csv_data[0]) != list_data.GetColumnCount():

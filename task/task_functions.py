@@ -49,7 +49,6 @@ def input_login_value(id_val, pw_val):
 
 # 키워드 조합 개수대로 블로그 발행
 def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_num):
-    print("[BLOG START]")
 
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
@@ -156,6 +155,8 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         webdriver.enter_url("https://www.naver.com")
         time.sleep(3)
 
+        print(button_data.ButtonData().get_toggle_value())
+
         if button_data.ButtonData().get_toggle_value() is True:
             ip_trans_execute.trans_ip()
             is_ip_changed = True
@@ -216,8 +217,6 @@ def write_content_blog(address, company, article, image_path, image_length):
 def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
     id_val = login_info[0]
     pw_val = login_info[1]
-    print("[CAFE START]")
-    print(f"[id] {login_info[0]} / [pw] {login_info[1]} / [place] {login_info[2]}")
 
     keyword_len = contents.get_keywords_length()
     keyword_idx = 0

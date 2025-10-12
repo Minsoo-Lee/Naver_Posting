@@ -32,14 +32,14 @@ def start_task():
     contents.combinate_keywords()
     # print(contents.keywords)
     contents.set_image_path([row[2] for row in keywords])
-
     contents.set_hashtags([row[3] for row in keywords])
+    contents.set_ai_detail([(row[1], row[4]) for row in keywords])
+    contents.set_ai_common([row[5] for row in keywords])
 
     cafe_list = list_data.get_list_data(list_data.ListData().cafe_list)
     blog_data = list_data.get_list_data(list_data.ListData().blog_list)
     blog_dict = dict(blog_data)
 
-    #
     keyword_idx = 0
     login_idx = 0
     login_len = len(login_list)

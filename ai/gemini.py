@@ -5,6 +5,7 @@ import google.generativeai as genai
 from google.api_core.exceptions import ResourceExhausted
 
 from data import text_data
+from data import content_data
 
 # gemini_key = "AIzaSyDo6wlM9Q6SFKS-rpHoS_sJQabVt9OEDnI"
 model = None
@@ -18,7 +19,7 @@ def init_gemini():
 
     # genai.configure(api_key=gemini_key)
 
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-2.0-flash')
     # dotenv.load_dotenv()
     # genai.configure(api_key=os.getenv("API_KEY"))
     # model = genai.GenerativeModel('gemini-1.5-flash')
@@ -26,6 +27,7 @@ def init_gemini():
 
 def create_title(titles, address, company):
     global model
+    contents = content_data.ContentData()
     titles_str = "\n".join(titles)
     try:
         response = model.generate_content(f"""
@@ -34,6 +36,13 @@ def create_title(titles, address, company):
                     내가 수집한 제목 리스트를 보여줄게. 이 리스트들은 상위 노출된 10개 글의 제목들이야.
                     
                     {titles_str}
+                    
+                    그리고 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
+                    
+                    {contents.get_ai_detail(company)}
+                    {contents.get_ai_common()}
+                    
+                    너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 피하라는 내용은 꼭 피해줘.
                     
                     내가 쓰는 글도 상위 노출이 될 수 있게끔 저 리스트들을 참고해서 제목을 하나 작성해 줘.
                     대신에 주소, 업체 키워드가 꼭 들어가야 해.
@@ -57,6 +66,7 @@ def create_title(titles, address, company):
 
 def create_content(contents, address, company):
     global model
+    content_ai = content_data.ContentData()
     try:
         response = model.generate_content(f"""
                 내가 글을 쓸건데, 주소 키워드는 {address}, 업체 키워드는 {company}야.
@@ -76,6 +86,13 @@ def create_content(contents, address, company):
                 연락처, 주소, 홈페이지 같은 정보는 적지 않아도 돼
                 또한, 인사말과 끝맺음말은 내가 직접 적을 거니까 그건 빼줘.
                 그리고 **과 같은 마크다운 언어는 쓰지 마.
+                
+                그리고 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
+                    
+                {content_ai.get_ai_detail(company)}
+                {content_ai.get_ai_common()}
+                
+                너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 하지 말라는 내용은 반드시 빼 줘. 
                 .""")
 
         return response.text

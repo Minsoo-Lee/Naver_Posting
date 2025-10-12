@@ -17,7 +17,6 @@ is_exist = False
 def upload_JSON():
     file_path = os.path.join(os.getcwd(), "cache", ".cache_text")
     if os.path.isfile(file_path):
-        print("✅ .cache_text 파일이 존재합니다.")
         with open("cache/.cache_text", "r", encoding="utf-8") as f:
             return json.load(f)
     else:
@@ -65,7 +64,6 @@ def set_rb_index_utils(boolean, is_each=True):
 def upload_CSV(file_name):
     file_path = os.path.join(os.getcwd(), "cache", file_name)
     if os.path.isfile(file_path):
-        print("✅ .cache_text 파일이 존재합니다.")
         with open(file_path, "r", encoding="utf-8") as f:
             reader = csv.reader(f)
             return [row for row in reader]
@@ -106,7 +104,7 @@ def show_lists():
     lists.account_list.SetColumnWidth(1, 0)
     lists.account_list.SetColumnWidth(2, 120)
 
-    lists.keyword_list.SetColumnWidth(2, 200)
+    # lists.keyword_list.SetColumnWidth(2, 200)
 
     lists.blog_list.SetColumnWidth(0, 100)
     lists.blog_list.SetColumnWidth(1, 100)
