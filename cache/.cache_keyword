@@ -1,5 +1,6 @@
 주소,업체,파일 경로,해시태그,AI 개입(상세),AI 개입(공통)
-성수동,설비업체,,태그1,"<들어가야 하는 내용>
+성수동,설비업체,"/Users/minsoo/coding/Naver_Posting/sample/sample1.jpg
+",태그1,"<들어가야 하는 내용>
 
 |종합보수설비
 [전문건설업 난방시공업 제1종 면허보유]
@@ -32,16 +33,12 @@
 6. 제목이 됐든 내용이 됐든 10년 누수걱정 끝. 과 같은 내용을 기재해 10년간 하자보증해 주는 것으로 혼동되게 하는 멘트는 안해야 함
 7. 출장비없이, 무료로, 무료상담받으세요.등등 출장비없다는 말과 무료상담받으라는 멘트금지
 8. 씽크대수리는 씽크대업자가 함 우리가 안함"
-송파동,방수업체,,태그2,"<들어가야 하는 내용>
-|방수공사
-[방수기능사 국가기술자격증보유]
-1.실내-화장실,샤워장,식당주방 등등
-2.실외-옥상방수 및 주차장방수
-3.건물외벽 발수(방수)공사
-4.샤시외부실리콘코킹작업
-5.아스팔트싱글누수보수공사, 베란다천장방수공사",
-영등포동,,,태그3,,
-반포동,,,태그4,,
-개포동,,,,,
-행신동,,,,,
-화정동,,,,,
+송파동,,/Users/minsoo/coding/Naver_Posting/sample/sample2.jpg,태그2,,
+영등포동,,/Users/minsoo/coding/Naver_Posting/sample/sample3.jpg,태그3,,
+반포동,,/Users/minsoo/coding/Naver_Posting/sample/sample4.jpg,태그4,,
+개포동,,/Users/minsoo/coding/Naver_Posting/sample/sample5.jpg,,,
+행신동,,/Users/minsoo/coding/Naver_Posting/sample/sample6.jpeg,,,
+화정동,,/Users/minsoo/coding/Naver_Posting/sample/sample7.jpg,,,
+,,/Users/minsoo/coding/Naver_Posting/sample/sample8.jpg,,,
+,,/Users/minsoo/coding/Naver_Posting/sample/sample9.jpg,,,
+,,/Users/minsoo/coding/Naver_Posting/sample/sample10.jpg,,,

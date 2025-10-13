@@ -155,14 +155,14 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         webdriver.enter_url("https://www.naver.com")
         time.sleep(3)
 
-        print(button_data.ButtonData().get_toggle_value())
+        # if button_data.ButtonData().get_toggle_value() is True:
+        #     ip_trans_execute.trans_ip()
+        #     is_ip_changed = True
 
-        if button_data.ButtonData().get_toggle_value() is True:
-            ip_trans_execute.trans_ip()
-            is_ip_changed = True
+        # if not only_blog:
+        #     get_waiting_time()
 
-        if not only_blog:
-            get_waiting_time()
+        get_waiting_time()
 
     log.append_log("블로그 포스팅을 완료하였습니다.")
 
@@ -179,6 +179,8 @@ def write_content_blog(address, company, article, image_path, image_length):
     log.append_log("썸네일 이미지와 영상 제작이 완료되었습니다.")
     image_index = 0
     video_path = ""
+
+    print(article)
 
     for content in article:
         # 썸네일일 경우
@@ -207,7 +209,7 @@ def write_content_blog(address, company, article, image_path, image_length):
             blog.insert_enter()
         else:
             blog.write_text(content)
-            # blog.insert_enter()
+            blog.insert_enter()
 
 
     # 테스트 용도로 주석처리
