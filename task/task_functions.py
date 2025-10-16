@@ -67,7 +67,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         # 주소, 업체 추출
         address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
         # 제목 생성
-        title = get_titles(address, company, "블로그")
+        title = get_titles(address, company, "블로그", place)
 
 
         log.append_log("블로그에 진입합니다.")
@@ -117,7 +117,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
 
         # 테스트를 위해 주석처리
         # 본문 제작
-        article = parsing.parse_contents(address, company)
+        article = parsing.parse_contents(address, company, place)
 
         # 사진 개수 파악
         count = sum(1 for text in article if text == PHOTO)
@@ -219,6 +219,7 @@ def write_content_blog(address, company, article, image_path, image_length):
 def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
     id_val = login_info[0]
     pw_val = login_info[1]
+    place = login_info[2]
 
     keyword_len = contents.get_keywords_length()
     keyword_idx = 0
@@ -233,7 +234,7 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
             # 주소, 업체 추출
             address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
             # 제목 생성
-            title = get_titles(address, company, "카페")
+            title = get_titles(address, company, "카페", place)
 
             url = cafe_list[cafe_index][0]
             board_name = cafe_list[cafe_index][1]
@@ -264,7 +265,7 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
             cafe.enter_content_input()
 
             # 본문 제작
-            article = parsing.parse_contents(address, company)
+            article = parsing.parse_contents(address, company, place)
 
             # 사진 개수 파악
             count = sum(1 for text in article if text == PHOTO)
