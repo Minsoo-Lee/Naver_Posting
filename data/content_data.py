@@ -69,7 +69,14 @@ class ContentData:
         return self.keywords[row][1]
 
     def get_keywords_length(self):
-        return len(self.keywords)
+        # return len(self.keywords)
+        try:
+            result = len(self.keywords)
+            print(f"[DEBUG] get_keywords_length() -> {result}")
+            return result
+        except Exception as e:
+            print(f"[DEBUG] get_keywords_length() EXCEPTION: {e}")
+            return None
 
     def set_image_path(self, path):
         for i, row in enumerate(path):

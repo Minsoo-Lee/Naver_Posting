@@ -354,7 +354,7 @@ def get_waiting_time():
 
     return total_time, minutes, seconds
 
-def get_titles(address, company, button_name):
+def get_titles(address, company, button_name, place):
 
     # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
     time.sleep(1)
@@ -381,7 +381,7 @@ def get_titles(address, company, button_name):
 
     gemini.init_gemini()
 
-    response = gemini.create_title(titles, address, company)
+    response = gemini.create_title(titles, address, company, place)
     webdriver.enter_url(NAVER)
     return response
 

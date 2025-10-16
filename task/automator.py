@@ -48,6 +48,7 @@ def start_task():
     cycle_num = text_data.TextData().get_cycle_num()
 
     while keyword_idx < contents.get_keywords_length() or login_idx < login_len:
+        print("WHY?")
         login_idx = login_idx % login_len
 
         category_name = blog_dict.get(login_list[login_idx][0])

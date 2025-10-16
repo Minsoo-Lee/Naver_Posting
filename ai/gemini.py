@@ -25,31 +25,39 @@ def init_gemini():
     # model = genai.GenerativeModel('gemini-1.5-flash')
     # model = genai.GenerativeModel('gemini-1.0-pro')
 
-def create_title(titles, address, company):
+def create_title(titles, address, company, place):
     global model
     contents = content_data.ContentData()
     titles_str = "\n".join(titles)
+    if place == "":
+        place = "신공간 설비업체"
     try:
         response = model.generate_content(f"""
-                    내가 제목을 작성을 할 거야. 주소 키워드는 {address}, 업체 키워드는 {company}야.
-                    한 마디로, 나는 {address} 지역에서 {company}를 운영하는데, "홍보 글의 제목"을 작성하고 싶어.
+                    내가 제목을 작성을 할 거야. 주소 키워드는 {address}, 업종 키워드는 {company}야.
+                    한 마디로, 나는 {address} 지역에서 {place}라는 회사를 운영하는데, "홍보 글의 제목"을 작성하고 싶어.
                     내가 수집한 제목 리스트를 보여줄게. 이 리스트들은 상위 노출된 10개 글의 제목들이야.
                     
                     {titles_str}
-                    
-                    그리고 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
+                    내가 쓰는 글도 상위 노출이 될 수 있게끔 저 리스트들을 참고해서 제목을 하나 작성해 줘.
+                
+                    그리고 다음 사항들은 반드시 지켜줘. 하나라도 빼먹으면 안 돼.
+
+                    1. 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
                     
                     {contents.get_ai_detail(company)}
                     {contents.get_ai_common()}
                     
-                    너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 피하라는 내용은 꼭 피해줘.
+                    너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 하지 말라는 내용은 반드시 빼 줘.
                     
-                    내가 쓰는 글도 상위 노출이 될 수 있게끔 저 리스트들을 참고해서 제목을 하나 작성해 줘.
-                    대신에 주소, 업체 키워드가 꼭 들어가야 해.
-                    그리고 **과 같은 마크다운 언어는 쓰지 마.
-                    그리고 너가 준 제목으로 바로 포스팅을 할거야. 다른 제목 옵션 주지 말고 그냥 제목 딱 한줄만 넘겨줘.
+                    2. ** 또는 ##와 같은 마크다운 언어는 쓰지 마.
+                    제발. 마크다운 언어는 절대 포함하지 마. 어차피 적용 안돼
+                    
+                    3. 그리고 너가 준 제목으로 바로 포스팅을 할거야. 다른 제목 옵션 주지 말고 그냥 제목 딱 한줄만 넘겨줘.
                     이게 중요해. 다른 제목 옵션 주지 말고 제목 딱 한줄만 넘겨줘 제발.
                     그래야 글이 꼬이지 않아.
+                    
+                    지금까지 얘기한 3가지 요구사항들은 꼭 지켜줘. 하나도 빠짐없이 3개 다 지켜줘야 해.
+                    만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
                     .""")
 
         return response.text
@@ -65,12 +73,13 @@ def create_title(titles, address, company):
         log.append_log(f"[ERROR] 오류 이름: {type(e2).__name__}")
         raise
 
-def create_content(contents, address, company):
+def create_content(contents, address, company, place):
     global model
     content_ai = content_data.ContentData()
     try:
         response = model.generate_content(f"""
                 내가 글을 쓸건데, 주소 키워드는 {address}, 업종 키워드는 {company}야.
+                그리고 '{place}'라는 회사를 운영하고 있어.
                 예시 글들을 보여줄게.
                 
                 예시 1:
@@ -81,7 +90,7 @@ def create_content(contents, address, company):
                 
                 그리고 다음 사항들은 반드시 지켜줘. 하나라도 빼먹으면 안 돼.
     
-                1. 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
+                1. 우리 업체에 관한 내용과 본문에 넣지 말아야 하는 내용은 다음과 같아.
                     
                 {content_ai.get_ai_detail(company)}
                 {content_ai.get_ai_common()}
