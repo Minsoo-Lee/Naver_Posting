@@ -124,7 +124,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         image_len = contents.get_image_path_length()
         length = image_len if count > image_len else count
 
-        write_content_blog(address, company, article, contents.get_random_image_path(length), length)
+        write_content_blog(address, company, article, contents.get_random_image_path(length), length, title)
         insert_place(place)
 
         blog.click_post_button()
@@ -169,7 +169,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
     return keyword_idx
 
 
-def write_content_blog(address, company, article, image_path, image_length):
+def write_content_blog(address, company, article, image_path, image_length, title):
     # 먼저, 썸네일 이미지부터 생성
     phone = text_data.TextData().get_phone_number()
     log.append_log("썸네일 이미지를 제작합니다.")
@@ -204,7 +204,7 @@ def write_content_blog(address, company, article, image_path, image_length):
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
-            video.upload_video_to_blog(video_path, f"{address} {company}")
+            video.upload_video_to_blog(video_path, f"{address} {company}", title)
         elif ENTER is content:
             blog.insert_enter()
         else:
@@ -274,7 +274,7 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
 
             log.append_log("본문을 작성합니다.")
 
-            write_content_cafe(address, company, article, contents.get_random_image_path(length), length)
+            write_content_cafe(address, company, article, contents.get_random_image_path(length), length, title)
 
             # 해시태그 추가
             hashtags = contents.get_hashtags()
@@ -302,7 +302,7 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
 
     return keyword_idx
 
-def write_content_cafe(address, company, article, image_path, image_length):
+def write_content_cafe(address, company, article, image_path, image_length, title):
     # 먼저, 썸네일 이미지부터 생성
     phone = text_data.TextData().get_phone_number()
     image.generate_image(phone, address, company)
@@ -332,7 +332,7 @@ def write_content_cafe(address, company, article, image_path, image_length):
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
             video_path = os.path.abspath(VIDEO_PATH)
-            video.upload_video_to_cafe(video_path, f"{address} {company}")
+            video.upload_video_to_cafe(video_path, f"{address} {company}", title)
         elif ENTER is content:
             cafe.insert_enter()
         else:
