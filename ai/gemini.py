@@ -31,6 +31,7 @@ def create_title(titles, address, company, place):
     titles_str = "\n".join(titles)
     if place == "":
         place = "신공간 설비업체"
+    print("place = " + place)
     try:
         response = model.generate_content(f"""
                     내가 제목을 작성을 할 거야. 주소 키워드는 {address}, 업종 키워드는 {company}야.
@@ -78,6 +79,9 @@ def create_title(titles, address, company, place):
 def create_content(contents, address, company, place):
     global model
     content_ai = content_data.ContentData()
+    if place == "":
+        place = "신공간 설비업체"
+    print("place = " + place)
     try:
         response = model.generate_content(f"""
                 내가 글을 쓸건데, 주소 키워드는 {address}, 업종 키워드는 {company}야.
