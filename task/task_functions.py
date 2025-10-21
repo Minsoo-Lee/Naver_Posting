@@ -384,7 +384,7 @@ def get_titles(address, company, button_name, place):
 
     gemini.init_gemini()
     response = gemini.create_title(titles, address, company, place)
-    response = "캡션 테스트"
+    # response = "캡션 테스트"
 
     webdriver.enter_url(NAVER)
     return response
