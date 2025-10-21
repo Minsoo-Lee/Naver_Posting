@@ -2,7 +2,7 @@ import re
 
 from ui import log
 import google.generativeai as genai
-from google.api_core.exceptions import ResourceExhausted\
+from google.api_core.exceptions import ResourceExhausted
 from data import text_data
 from data import content_data
 from collections import deque
