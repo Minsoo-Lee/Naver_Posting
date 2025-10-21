@@ -38,7 +38,7 @@ def insert_caption(caption):
 	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
 
 	js_command = """
-	    arguments[0].focus();
+	    arguments[0].click();
 	"""
 
 	# JavaScript 명령 실행
