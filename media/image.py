@@ -37,23 +37,14 @@ def insert_caption(caption):
 	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
 
 	js_command = """
-	    // 1. 요소에 포커스 (클릭 대신 focus() 사용)
 	    arguments[0].focus();
-
-	    // 2. 텍스트 삽입 (가장 안정적인 방법)
-	    arguments[0].textContent = arguments[1];
-
-	    // 3. 'input' 이벤트 강제 발생 (콘텐츠가 변경되었음을 알림)
-	    // contenteditable 요소에 필수적입니다.
-	    arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-
-	    // 4. 'blur' 이벤트 강제 발생 (입력 완료 및 저장 확정 유도)
-	    // 이 단계가 없으면 포커스가 다른 곳으로 옮겨갈 때 텍스트가 사라집니다.
-	    arguments[0].dispatchEvent(new Event('blur'));
 	"""
 
 	# JavaScript 명령 실행
 	webdriver.driver.execute_script(js_command, element, caption)
+
+	actions = webdriver.get_actions()
+	actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
 # 시각 자료 넣기
 @sleep_after(1)
