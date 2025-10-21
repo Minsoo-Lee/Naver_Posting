@@ -53,7 +53,7 @@ def insert_caption(caption):
 	el.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Enter', code: 'Enter' }));
 
 	// focus는 유지하되, blur는 절대 호출하지 않음 (사라지는 원인)
-	""", placeholder_element, caption)
+	""", element, caption)
 
 # 시각 자료 넣기
 @sleep_after(1)
