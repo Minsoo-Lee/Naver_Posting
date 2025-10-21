@@ -29,26 +29,32 @@ FONT_SIZE = 60
 
 @sleep_after()
 def insert_caption(caption):
-	# 이미지 클릭
 	img_element = webdriver.get_elements_css("img")[-1]
 	img_element.click()
+	time.sleep(1)  # 캡션 영역이 나타날 때까지 대기
 
-	# 캡션 입력
+	# 캡션 입력할 요소
 	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
-	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
 
-	js_command = """
-	    arguments[0].click();
-	"""
-
-	# JavaScript 명령 실행
-	webdriver.driver.execute_script(js_command, element, caption)
-
+	# ActionChains 초기화
 	actions = webdriver.get_actions()
-	clipboard.copy(caption)
-	actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
-	actions.send_keys(Keys.TAB).perform()
+	# 1. 클립보드에 텍스트 복사 (시스템 클립보드 사용)
+	clipboard.copy(caption)
+
+	# 2. ActionChains 명령 큐 작성
+	actions.move_to_element(element).click()  # 요소 클릭 (포커스 잡기)
+
+	# 3. 붙여넣기 명령 실행 (Ctrl+V)
+	actions.key_down(Keys.CONTROL)
+	actions.send_keys('v')
+	actions.key_up(Keys.CONTROL)
+
+	# 4. 입력 확정 및 포커스 해제 (Keys.TAB)
+	actions.send_keys(Keys.TAB)
+
+	# 5. 모든 동작을 한 번에 실행 (Perform)
+	actions.perform()
 
 # 시각 자료 넣기
 @sleep_after(1)
