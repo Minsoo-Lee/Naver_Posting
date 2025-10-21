@@ -36,25 +36,9 @@ def insert_caption(caption):
 	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
 	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
 
-	webdriver.driver.execute_script("""
-	const el = arguments[0];
-	const text = arguments[1];
+	webdriver.driver.execute_script("arguments[0].click();", element)
 
-	// placeholder가 가리는 문제 방지
-	el.focus();
-
-	// 클립보드 이벤트 흉내내기 (React/Draft.js에서 실제 입력으로 인식됨)
-	const clipboardEvent = new ClipboardEvent('paste', {
-	    bubbles: true,
-	    cancelable: true,
-	    dataType: 'text/plain',
-	    data: text
-	});
-	el.dispatchEvent(clipboardEvent);
-
-	// paste 후 입력 이벤트 한번 더 던져줌
-	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
-	""", element, caption)
+	webdriver.driver.execute_script("arguments[0].textContent = arguments[1];", element, caption)
 
 # 시각 자료 넣기
 @sleep_after(1)
