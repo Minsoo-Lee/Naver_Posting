@@ -5,6 +5,7 @@ import subprocess
 import time
 import io
 
+import clipboard
 from selenium.webdriver import ActionChains, Keys
 import colorsys
 import random
@@ -44,6 +45,7 @@ def insert_caption(caption):
 	webdriver.driver.execute_script(js_command, element, caption)
 
 	actions = webdriver.get_actions()
+	clipboard.copy(caption)
 	actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
 # 시각 자료 넣기
