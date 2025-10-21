@@ -38,7 +38,6 @@ def insert_caption(caption):
 	webdriver.driver.execute_script("""
 	arguments[0].innerText = arguments[1];
 	arguments[0].focus();
-	arguments[0].blur();
 	""", placeholder_element, caption)
 
 	# webdriver.driver.execute_script("arguments[0].style.display = 'none';", placeholder_element)
