@@ -36,23 +36,32 @@ def insert_caption(caption):
 	# 캡션 입력할 요소
 	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
 
-	# ActionChains 초기화
-	actions = webdriver.get_actions()
+	# === 1단계: JavaScript로 이미지 클릭 강제 실행 ===
+	print("1단계: JavaScript로 이미지 클릭 강제 실행...")
+	webdriver.driver.execute_script("arguments[0].click();", img_element)
+	time.sleep(1)
 
-	# 1. 요소 클릭 (포커스 잡기)
-	actions.move_to_element(element).click()
+	# === 2단계: JavaScript로 캡션 텍스트 삽입 및 이벤트 강제 발생 ===
+	print("2단계: JavaScript로 캡션 입력 및 이벤트 강제 실행...")
+	js_caption_command = f"""
+	        var element = arguments[0];
+	        var text = arguments[1];
 
-	# 2. 기존 내용 삭제 (플레이스홀더 포함)
-	actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
+	        // 1. 요소에 포커스를 줍니다.
+	        element.focus();
 
-	# 3. 텍스트를 ActionChains의 send_keys로 직접 입력 (클립보드 사용 안 함)
-	actions.send_keys(caption)
+	        // 2. 텍스트를 DOM에 직접 삽입합니다. (textContent = caption)
+	        element.textContent = text;
 
-	# 4. 입력 확정 및 포커스 해제
-	actions.send_keys(Keys.TAB)
+	        // 3. 'input' 이벤트를 강제 발생시켜 에디터 시스템이 텍스트 변경을 인식하도록 합니다.
+	        element.dispatchEvent(new Event('input', {{ bubbles: true }}));
 
-	# 5. 모든 동작을 한 번에 실행
-	actions.perform()
+	        // 4. 'blur' 이벤트를 강제 발생시켜 입력을 확정하고 데이터가 저장되도록 합니다.
+	        element.dispatchEvent(new Event('blur'));
+	    """
+
+	webdriver.driver.execute_script(js_caption_command, element, caption)
+	print("캡션 입력 완료.")
 
 # 시각 자료 넣기
 @sleep_after(1)
