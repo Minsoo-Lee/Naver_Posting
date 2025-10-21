@@ -36,32 +36,11 @@ def insert_caption(caption):
 	# 캡션 입력할 요소
 	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
 
-	# === 1단계: JavaScript로 이미지 클릭 강제 실행 ===
-	print("1단계: JavaScript로 이미지 클릭 강제 실행...")
-	webdriver.driver.execute_script("arguments[0].click();", img_element)
-	time.sleep(1)
-
-	# === 2단계: JavaScript로 캡션 텍스트 삽입 및 이벤트 강제 발생 ===
-	print("2단계: JavaScript로 캡션 입력 및 이벤트 강제 실행...")
-	js_caption_command = f"""
-	        var element = arguments[0];
-	        var text = arguments[1];
-
-	        // 1. 요소에 포커스를 줍니다.
-	        element.focus();
-
-	        // 2. 텍스트를 DOM에 직접 삽입합니다. (textContent = caption)
-	        element.textContent = text;
-
-	        // 3. 'input' 이벤트를 강제 발생시켜 에디터 시스템이 텍스트 변경을 인식하도록 합니다.
-	        element.dispatchEvent(new Event('input', {{ bubbles: true }}));
-
-	        // 4. 'blur' 이벤트를 강제 발생시켜 입력을 확정하고 데이터가 저장되도록 합니다.
-	        element.dispatchEvent(new Event('blur'));
-	    """
-
-	webdriver.driver.execute_script(js_caption_command, element, caption)
-	print("캡션 입력 완료.")
+	try:
+		element.click()
+		element.send_keys(caption)
+	except:
+		print("error")
 
 # 시각 자료 넣기
 @sleep_after(1)
