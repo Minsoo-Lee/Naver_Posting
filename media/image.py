@@ -38,6 +38,7 @@ def insert_caption(caption):
 
 	webdriver.driver.execute_script("arguments[0].click();", element)
 
+	time.sleep(1)
 	webdriver.driver.execute_script("arguments[0].textContent = arguments[1];", element, caption)
 
 # 시각 자료 넣기
