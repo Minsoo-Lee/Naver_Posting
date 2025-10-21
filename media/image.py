@@ -34,13 +34,13 @@ def insert_caption(caption):
 
 	# 캡션 입력
 	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
-	# placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
+	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
 	webdriver.driver.execute_script("""
 	arguments[0].innerText = arguments[1];
-	arguments[0].focus();
 	""", element, caption)
+	# arguments[0].focus();
 
-	# webdriver.driver.execute_script("arguments[0].style.display = 'none';", placeholder_element)
+	webdriver.driver.execute_script("arguments[0].style.display = 'none';", placeholder_element)
 	# element.click()
 
 # 시각 자료 넣기
