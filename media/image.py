@@ -48,6 +48,8 @@ def insert_caption(caption):
 	clipboard.copy(caption)
 	actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
+	actions.send_keys(Keys.TAB).perform()
+
 # 시각 자료 넣기
 @sleep_after(1)
 def upload_image(image_path):
