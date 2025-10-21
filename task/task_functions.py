@@ -326,6 +326,7 @@ def write_content_cafe(address, company, article, image_path, image_length, titl
                 image.insert_caption(title)
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
+                blog.insert_enter()
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다.\n다음 작업으로 넘어갑니다.")
             finally:
