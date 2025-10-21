@@ -35,13 +35,21 @@ def insert_caption(caption):
 	# 캡션 입력
 	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
 	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
-	webdriver.driver.execute_script("""
-	arguments[0].innerText = arguments[1];
-	""", element, caption)
-	# arguments[0].focus();
 
-	webdriver.driver.execute_script("arguments[0].style.display = 'none';", placeholder_element)
-	# element.click()
+	webdriver.driver.execute_script("""
+	const el = arguments[0];
+	const text = arguments[1];
+	el.focus();
+
+	const pasteEvent = new ClipboardEvent('paste', {
+	  bubbles: true,
+	  cancelable: true,
+	  dataType: 'text/plain',
+	  data: text
+	});
+
+	el.dispatchEvent(pasteEvent);
+	""", element, caption)
 
 # 시각 자료 넣기
 @sleep_after(1)
