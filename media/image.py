@@ -39,21 +39,19 @@ def insert_caption(caption):
 	# ActionChains 초기화
 	actions = webdriver.get_actions()
 
-	# 1. 클립보드에 텍스트 복사 (시스템 클립보드 사용)
-	clipboard.copy(caption)
+	# 1. 요소 클릭 (포커스 잡기)
+	actions.move_to_element(element).click()
 
-	# 2. ActionChains 명령 큐 작성
-	actions.move_to_element(element).click()  # 요소 클릭 (포커스 잡기)
+	# 2. 기존 내용 삭제 (플레이스홀더 포함)
+	actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.DELETE)
 
-	# 3. 붙여넣기 명령 실행 (Ctrl+V)
-	actions.key_down(Keys.CONTROL)
-	actions.send_keys('v')
-	actions.key_up(Keys.CONTROL)
+	# 3. 텍스트를 ActionChains의 send_keys로 직접 입력 (클립보드 사용 안 함)
+	actions.send_keys(caption)
 
-	# 4. 입력 확정 및 포커스 해제 (Keys.TAB)
+	# 4. 입력 확정 및 포커스 해제
 	actions.send_keys(Keys.TAB)
 
-	# 5. 모든 동작을 한 번에 실행 (Perform)
+	# 5. 모든 동작을 한 번에 실행
 	actions.perform()
 
 # 시각 자료 넣기
