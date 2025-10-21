@@ -8,6 +8,7 @@ import io
 from selenium.webdriver import ActionChains, Keys
 import colorsys
 import random
+import pyperclip
 
 if platform.system() == "Windows":
 	import win32clipboard
@@ -24,6 +25,24 @@ from data.const import *
 COMMAND_CONTROL = Keys.COMMAND if platform.system() == "Darwin" else Keys.CONTROL
 
 FONT_SIZE = 60
+
+@sleep_after()
+def insert_caption(caption):
+	# 이미지 클릭
+	img_element = webdriver.get_elements_css("img")[-1]
+	img_element.click()
+
+	# 캡션 입력
+	element = webdriver.get_elements_css("span.se-ff-nanumgothic.se-fs13.__se-node")[-1]
+	placeholder_element = webdriver.get_elements_css("span.se-placeholder.__se_placeholder.se-ff-nanumgothic.se-fs13")[-1]
+	webdriver.driver.execute_script("""
+	arguments[0].innerText = arguments[1];
+	arguments[0].focus();
+	arguments[0].blur();
+	""", element, caption)
+
+	webdriver.driver.execute_script("arguments[0].style.display = 'none';", placeholder_element)
+	# element.click()
 
 # 시각 자료 넣기
 @sleep_after(1)

@@ -103,6 +103,9 @@ def get_element_class(class_name):
 def get_element_css(css):
     return driver.find_element(By.CSS_SELECTOR, css)
 
+def get_elements_css(css):
+    return driver.find_elements(By.CSS_SELECTOR, css)
+
 def execute_javascript(js_code, element):
     driver.execute_script(js_code, element)
 
