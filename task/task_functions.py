@@ -191,7 +191,7 @@ def write_content_blog(address, company, article, image_path, image_length, titl
         elif PHOTO in content and image_index < image_length:
             # 고객이 넣은 이미지를 테두리 입혀서 작성
             try:
-                log.append_log(f"이미지를 업로드합니다.\n파일명: {split_image_path(image_path[image_index])}")
+                log.append_log(f"이미지를 업로드합니다.")
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
                 image.insert_caption(title)
@@ -320,7 +320,7 @@ def write_content_cafe(address, company, article, image_path, image_length, titl
         elif PHOTO in content and image_index < image_length:
             # 고객이 넣은 이미지를 테두리 입혀서 작성
             try:
-                log.append_log(f"이미지를 업로드합니다.\n파일명: {split_image_path(image_path[image_index])}")
+                log.append_log(f"이미지를 업로드합니다.")
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
                 image.insert_caption(title)
