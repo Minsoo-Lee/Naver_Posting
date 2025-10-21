@@ -39,17 +39,21 @@ def insert_caption(caption):
 	webdriver.driver.execute_script("""
 	const el = arguments[0];
 	const text = arguments[1];
-	el.focus();
 
-	const pasteEvent = new ClipboardEvent('paste', {
-	  bubbles: true,
-	  cancelable: true,
-	  dataType: 'text/plain',
-	  data: text
-	});
+	// 실제 텍스트 넣기
+	el.innerText = text;
 
-	el.dispatchEvent(pasteEvent);
-	""", element, caption)
+	// 에디터가 '유저가 글을 쳤다'고 인식하게 이벤트를 강제로 발생시킴
+	el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: true }));
+	el.dispatchEvent(new Event('change', { bubbles: true }));
+
+	// 입력 확정용 (React/Draft.js 계열)
+	el.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+	el.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Enter', code: 'Enter' }));
+	el.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Enter', code: 'Enter' }));
+
+	// focus는 유지하되, blur는 절대 호출하지 않음 (사라지는 원인)
+	""", placeholder_element, caption)
 
 # 시각 자료 넣기
 @sleep_after(1)
