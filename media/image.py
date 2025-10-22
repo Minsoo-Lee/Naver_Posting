@@ -45,6 +45,7 @@ def insert_caption(caption):
 # 시각 자료 넣기
 @sleep_after()
 def upload_image_alt(image_path, caption):
+	# # case 1
 	# actions = ActionChains(webdriver.driver)
 	# copy_image_to_clipboard(image_path)
 	# time.sleep(1)
@@ -60,17 +61,30 @@ def upload_image_alt(image_path, caption):
 	# 	if (imgs.length) imgs[imgs.length - 1].alt = arguments[0];
 	# """, caption)
 
-	with open(image_path, "rb") as f:
-		encoded = base64.b64encode(f.read()).decode('utf-8')
+	# # case
+	# with open(image_path, "rb") as f:
+	# 	encoded = base64.b64encode(f.read()).decode('utf-8')
+	#
+	# webdriver.driver.execute_script("""
+	#   const editor = document.querySelector('[contenteditable="true"]');
+	#   const img = document.createElement('img');
+	#   img.src = "data:image/png;base64," + arguments[0];
+	#   img.alt = arguments[1];
+	#   img.style.maxWidth = '100%';
+	#   editor.appendChild(img);
+	# """, encoded, caption)
 
+	# case 3
 	webdriver.driver.execute_script("""
-	  const editor = document.querySelector('[contenteditable="true"]');
-	  const img = document.createElement('img');
-	  img.src = "data:image/png;base64," + arguments[0];
-	  img.alt = arguments[1];
-	  img.style.maxWidth = '100%';
-	  editor.appendChild(img);
-	""", encoded, caption)
+	  const imgs = document.querySelectorAll('img.se-image-resource');
+	  if (imgs.length > 0) {
+	    const lastImg = imgs[imgs.length - 1];
+	    lastImg.alt = arguments[0];
+	    console.log("ALT 속성 수정 완료:", lastImg);
+	  } else {
+	    console.log("이미지를 찾을 수 없습니다.");
+	  }
+	""", caption)
 
 
 @sleep_after(1)
