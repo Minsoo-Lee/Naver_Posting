@@ -43,6 +43,24 @@ def insert_caption(caption):
 		print("error")
 
 # 시각 자료 넣기
+@sleep_after()
+def upload_sub_image(image_path, caption):
+	actions = ActionChains(webdriver.driver)
+	copy_image_to_clipboard(image_path)
+	time.sleep(1)
+	# 윈도우면 Keys.CONTROL
+	actions.key_down(COMMAND_CONTROL).send_keys('v').key_up(COMMAND_CONTROL).perform()
+
+	# 이미지가 DOM에 삽입될 때까지 잠시 대기
+	time.sleep(2)
+
+	# JS로 마지막 <img>의 alt 속성 지정
+	webdriver.driver.execute_script("""
+		const imgs = document.querySelectorAll('img');
+		if (imgs.length) imgs[imgs.length - 1].alt = arguments[0];
+	""", caption)
+
+
 @sleep_after(1)
 def upload_image(image_path):
 	actions = ActionChains(webdriver.driver)
