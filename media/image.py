@@ -44,7 +44,7 @@ def insert_caption(caption):
 
 # 시각 자료 넣기
 @sleep_after()
-def upload_sub_image(image_path, caption):
+def upload_image_alt(image_path, caption):
 	actions = ActionChains(webdriver.driver)
 	copy_image_to_clipboard(image_path)
 	time.sleep(1)
