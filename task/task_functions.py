@@ -193,7 +193,7 @@ def write_content_blog(address, company, article, image_path, image_length, titl
             try:
                 log.append_log(f"이미지를 업로드합니다.")
                 image.draw_border_sample(image_path[image_index])
-                image.upload_image_alt(NEW_IMAGE_PATH, title)
+                image.upload_image(NEW_IMAGE_PATH)
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
@@ -321,7 +321,7 @@ def write_content_cafe(address, company, article, image_path, image_length, titl
             try:
                 log.append_log(f"이미지를 업로드합니다.")
                 image.draw_border_sample(image_path[image_index])
-                image.upload_image_alt(NEW_IMAGE_PATH, title)
+                image.upload_image(NEW_IMAGE_PATH)
                 time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
