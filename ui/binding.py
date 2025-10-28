@@ -95,8 +95,8 @@ class Binding:
 
             path = dialog.GetPath()
             try:
-                # with open(path, newline='', encoding='cp949') as csvfile:
-                with open(path, newline='', encoding='utf-8') as csvfile:
+                with open(path, newline='', encoding='cp949') as csvfile:
+                # with open(path, newline='', encoding='utf-8') as csvfile:
                     reader = csv.reader(csvfile)
                     self.parse_setter[index](list(reader))
             except FileNotFoundError as e:
