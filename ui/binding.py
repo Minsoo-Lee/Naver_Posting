@@ -79,12 +79,11 @@ class Binding:
             self.parsing_data.get_keyword_data,
             self.parsing_data.get_cafe_data,
             self.parsing_data.get_account_data,
-            self.parsing_data.get_blog_data,
-            self.parsing_data.get_title_data
+            self.parsing_data.get_blog_data
         ]
 
         self.list_collection = [
-            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.blog_list, self.lists.title_list,
+            self.lists.keyword_list, self.lists.cafe_list, self.lists.account_list, self.lists.blog_list
         ]
 
     def upload_data(self, index, panel):
