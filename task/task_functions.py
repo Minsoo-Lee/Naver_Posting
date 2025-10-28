@@ -294,8 +294,9 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
 
             if button_data.ButtonData().get_toggle_value() is True:
                 ip_trans_execute.trans_ip()
-            if cafe_index < len(cafe_list) - 1:
-                get_waiting_time()
+            # if cafe_index < len(cafe_list) - 1:
+            #     get_waiting_time()
+            get_waiting_time()
 
     return keyword_idx
 
