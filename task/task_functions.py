@@ -155,12 +155,9 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         webdriver.enter_url("https://www.naver.com")
         time.sleep(3)
 
-        # if button_data.ButtonData().get_toggle_value() is True:
-        #     ip_trans_execute.trans_ip()
-        #     is_ip_changed = True
-
-        # if not only_blog:
-        #     get_waiting_time()
+        if button_data.ButtonData().get_toggle_value() is True:
+            ip_trans_execute.trans_ip()
+            is_ip_changed = True
 
         get_waiting_time()
 
