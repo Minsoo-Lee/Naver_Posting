@@ -72,7 +72,7 @@ def create_title(titles, address, company, place):
                     만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
                     .""")
         title_list.append(response.text)
-        log.append_log(title_list)
+        print(title_list)
         return response.text
     except ResourceExhausted as e:
         match = re.search(r'quota_id: "(.*?)"', str(e))
