@@ -219,6 +219,7 @@ def create_title_div(titles, address, company, place):
         print("==================================================================")
         print("rule_summary = " + response)
         print("==================================================================")
+        time.sleep(120)
 
         title_list.append(response)
         return response
