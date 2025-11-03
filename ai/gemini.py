@@ -93,7 +93,7 @@ def create_title(titles, address, company, place):
 
         chat_session = model.start_chat(history=[])
         response = chat_session.send_message(prompt)
-        return response
+        return response.text
     except Exception:
         log.append_log("<UNK> <UNK> <UNK> <UNK> <UNK>.")
         raise
