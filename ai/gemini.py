@@ -1,4 +1,5 @@
 import re
+import time
 
 from ui import log
 import google.generativeai as genai
@@ -148,35 +149,82 @@ def create_content(contents, address, company, place):
         raise
 
 
-# def create_title(address, company, article):
-#     global model
-#
-#     response = model.generate_content(f"""
-#                 다음은 너가 써 준 글이야.
-#
-#                 {article}
-#
-#                 이 글에 맞는 제목을 작성하고 싶어.
-#
-#
-#
-#                 내가 글을 쓸건데, 키워드는 {address}, {company}야.
-#                 예시 글들을 보여줄게.
-#
-#                 예시 1:
-#                 {contents[0]}
-#
-#                 예시 2:
-#                 {contents[1]}
-#
-#                 중간에 사진을 10장 넣을 건데, 너가 생성한 글에서 사진을 넣을 만한 장소에 %사진% 이라고 써 주고, 1500자 내외의 글로 작성해 줘.
-#                 반드시 사진을 10장 넣게 해 줘야 해.
-#                 문장이 . ? ! 이런 끝맺음 기호로 끝날 때마다 줄바꿈은 꼭 해줘야 해.
-#                 사진이 들어가는 공간은 문맥을 해치지 말아야 해. 예를 들면 본문이 하나 끝나고, 소제목이 들어가기 전에 넣어주면 좋겠어.
-#                 그리고 사진에 대한 설명을 적으면 글을 파싱하기 어려우니까, 사진에 대한 설명은 반드시 빼 줘.
-#                 연락처, 주소, 홈페이지 같은 정보는 적지 않아도 돼
-#                 또한, 인사말과 끝맺음말은 내가 직접 적을 거니까 그건 빼줘.
-#                 그리고 **과 같은 마크다운 언어는 쓰지 마.
-#                 .""")
-#
-#     return response.text
+def create_title_div(titles, address, company, place):
+    global model, title_list
+    contents = content_data.ContentData()
+    titles_str = "\n".join(titles)
+    if place == "":
+        place = "신공간 설비업체"
+    print("place = " + place)
+    try:
+        # 첫 번째 프롬프트 - 규칙 구조 인식
+        prompt1 = f"""
+                        나는 {address} 지역에서 {place}라는 회사를 운영 중이며, 
+                        {company} 업종 홍보 글 제목을 작성하려고 해.
+                    
+                        아래는 제목을 작성할 때 반드시 지켜야 할 6가지 규칙이야.
+                    
+                        1. 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용이 존재함
+                        2. 기존에 생성한 제목 리스트(title_list)와 문장 구조나 단어 배열이 겹치지 않아야 함
+                        3. **, ## 같은 마크다운 문법은 절대 쓰지 않기
+                        4. 제목은 딱 한 줄만 제시하기
+                        5. 회사명은 반드시 {place}로 써야 함
+                        6. 제목은 50자 이내, 함축적으로 작성
+                    
+                        이 규칙을 요약해서 한 단락으로 정리해 줘.
+                        그 요약문은 다음 단계에서 참고할 거야.
+                        """
+        rule_summary = model.generate_content(prompt1).text
+        print("==================================================================")
+        print("rule_summary = " + rule_summary)
+        print("==================================================================")
+        time.sleep(120)
+
+        # 두 번째 프롬프트 - 금지어 전달 및 맥락 결합
+        prompt2 = f"""
+            아래는 제목 작성 시 반드시 지켜야 할 규칙 요약문이야:
+            {rule_summary}
+    
+            이제 제목에 절대 포함하면 안 되는 내용들을 알려줄게.
+    
+            {contents.get_ai_detail(company)}
+            {contents.get_ai_common()}
+    
+            위 내용을 포함하지 말아야 한다는 점을 반영해서,
+            ‘규칙과 금지사항 요약문’을 하나의 단락으로 다시 정리해 줘.
+            그 요약문은 다음 단계에서 제목 생성 시 그대로 사용할 거야.
+            """
+        ban_summary = model.generate_content(prompt2).text
+        print("==================================================================")
+        print("rule_summary = " + ban_summary)
+        print("==================================================================")
+        time.sleep(120)
+
+        # 세 번째 프롬프트 - 제목 생성
+        prompt3 = f"""
+            아래는 제목 작성 시 반드시 따라야 할 모든 규칙 및 금지사항 요약문이야:
+            {ban_summary}
+            
+            아래는 상위 노출된 10개 제목 리스트야.
+            {titles_str}
+            
+            아래는 지금까지 네가 생성한 제목 리스트야.
+            {title_list}
+            
+            위 모든 내용을 참고해서 내 회사 {place}에 맞는 제목을 50자 이내로 함축적으로 하나 작성해 줘.
+            규칙 1~6 전부 반드시 지켜야 해.
+            제목은 오직 한 줄만 줘. 다른 옵션은 절대 주지 마.
+            """
+        response = model.generate_content(prompt3).text
+        print("==================================================================")
+        print("rule_summary = " + response)
+        print("==================================================================")
+
+        title_list.append(response)
+        return response
+    except ResourceExhausted:
+        log.append_log("[ERROR] 무료 요금제 제한을 초과하였습니다.")
+        raise
+    except Exception:
+        log.append_log("[ERROR] GEMINI 오류가 발생하였습니다.")
+        raise
