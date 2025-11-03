@@ -18,6 +18,8 @@ def start_task():
 
     # 크롬 초기화
     init()
+    log.append_log("Gemini를 초기화합니다.")
+    gemini.init_gemini()
 
     # 계정 정보 가져오기
     login_list = list_data.get_list_data(list_data.ListData().account_list)

@@ -23,7 +23,7 @@ def collect_titles(address, company):
 
     time.sleep(WAIT)
 
-    gemini.init_gemini()
+    # gemini.init_gemini()
 
     response = gemini.create_title(titles, address, company)
     print(response)

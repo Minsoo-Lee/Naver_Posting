@@ -20,8 +20,9 @@ def parse_contents(address, company, place):
 
 
 def get_body(address, company, place):
-    log.append_log("Gemini를 초기화합니다.")
-    gemini.init_gemini()
+    # 추가: 25.11.08
+    # log.append_log("Gemini를 초기화합니다.")
+    # gemini.init_gemini()
     log.append_log("Gemini에게 요청을 전송합니다.")
     response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place)
     log.append_log("Gemini로부터 응답을 전달받습니다.")
