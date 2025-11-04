@@ -1,17 +1,21 @@
 import re
 import time
+import types
 
 from google.generativeai import GenerationConfig
 
 from ui import log
-import google.generativeai as genai
+import google.generativeai as g_genai
 from google.api_core.exceptions import ResourceExhausted
 from data import text_data
 from data import content_data
 from collections import deque
+from google import genai
+from google.genai import types
 
 # gemini_key = "AIzaSyDo6wlM9Q6SFKS-rpHoS_sJQabVt9OEDnI"
 model = None
+# client = None
 
 # 추가: 25.11.03
 api_key = ""
@@ -20,9 +24,14 @@ title_list = deque(maxlen=20)
 
 def init_gemini():
     global model, api_key
+
     # 테스트 용도로 주석처리
     api_key = text_data.TextData().get_api_number()
-    genai.configure(api_key=api_key)
+    # api_key = "AIzaSyDo6wlM9Q6SFKS-rpHoS_sJQabVt9OEDnI"
+    g_genai.configure(api_key=api_key)
+
+    # 여기는 공식문서에서 가져온 부분
+    # client = genai.Client(api_key="YOUR_API_KEY")
 
     # genai.configure(api_key=gemini_key)
 
@@ -75,25 +84,38 @@ def create_title(titles, address, company, place):
                      만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
                      ."""
     try:
-        generation_config = GenerationConfig(
-            temperature=1,
-            top_p=0.95,
-            top_k=64,
-            max_output_tokens=8192,
-            response_mime_type="text/plain",
-        )
-        safety_settings = []
+        client = genai.Client(api_key=api_key)
 
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel(
-            model_name="gemini-2.0-flash",
-            safety_settings=safety_settings,
-            generation_config=generation_config,
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                temperature=1,
+            )
         )
 
-        chat_session = model.start_chat(history=[])
-        response = chat_session.send_message(prompt)
         return response.text
+
+        # 여기는 이전 작업물 참고
+        # generation_config = GenerationConfig(
+        #     temperature=1,
+        #     top_p=0.95,
+        #     top_k=64,
+        #     max_output_tokens=8192,
+        #     response_mime_type="text/plain",
+        # )
+        # safety_settings = []
+        #
+        # genai.configure(api_key=api_key)
+        # model = genai.GenerativeModel(
+        #     model_name="gemini-2.0-flash",
+        #     safety_settings=safety_settings,
+        #     generation_config=generation_config,
+        # )
+        #
+        # chat_session = model.start_chat(history=[])
+        # response = chat_session.send_message(prompt)
+        # return response.text
     except Exception:
         log.append_log("<UNK> <UNK> <UNK> <UNK> <UNK>.")
         raise
