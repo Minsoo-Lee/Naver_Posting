@@ -132,7 +132,7 @@ def create_title(titles, address, company, place):
                 time.sleep(120)
             else:
                 raise
-    return response
+    return response.text
 
     # try:
     #     response = model.generate_content(f"""
@@ -304,7 +304,7 @@ def create_content(contents, address, company, place):
                 time.sleep(120)
             else:
                 raise
-    return response
+    return response.text
 
 def create_title_div(titles, address, company, place):
     global model, title_list
