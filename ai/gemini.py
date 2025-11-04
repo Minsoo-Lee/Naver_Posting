@@ -47,7 +47,6 @@ def create_title(titles, address, company, place):
     titles_str = "\n".join(titles)
     if place == "":
         place = "신공간 설비업체"
-    print("place = " + place)
     prompt = f"""
                      내가 제목을 작성을 할 거야. 주소 키워드는 {address}, 업종 키워드는 {company}야.
                      한 마디로, 나는 {address} 지역에서 {place}라는 회사를 운영하는데, "홍보 글의 제목"을 작성하고 싶어.
@@ -83,42 +82,57 @@ def create_title(titles, address, company, place):
                      지금까지 얘기한 6가지 요구사항들은 꼭 지켜줘. 하나도 빠짐없이 6개 다 지켜줘야 해.
                      만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
                      ."""
-    try:
-        client = genai.Client(api_key=api_key)
+    response = None
+    for i in range(5):
+        try:
+            client = genai.Client(api_key=api_key)
 
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=1,
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    temperature=1,
+                )
             )
-        )
 
-        return response.text
+            break
 
-        # 여기는 이전 작업물 참고
-        # generation_config = GenerationConfig(
-        #     temperature=1,
-        #     top_p=0.95,
-        #     top_k=64,
-        #     max_output_tokens=8192,
-        #     response_mime_type="text/plain",
-        # )
-        # safety_settings = []
-        #
-        # genai.configure(api_key=api_key)
-        # model = genai.GenerativeModel(
-        #     model_name="gemini-2.0-flash",
-        #     safety_settings=safety_settings,
-        #     generation_config=generation_config,
-        # )
-        #
-        # chat_session = model.start_chat(history=[])
-        # response = chat_session.send_message(prompt)
-        # return response.text
-    except Exception:
-        log.append_log("<UNK> <UNK> <UNK> <UNK> <UNK>.")
-        raise
+            # 여기는 이전 작업물 참고
+            # generation_config = GenerationConfig(
+            #     temperature=1,
+            #     top_p=0.95,
+            #     top_k=64,
+            #     max_output_tokens=8192,
+            #     response_mime_type="text/plain",
+            # )
+            # safety_settings = []
+            #
+            # genai.configure(api_key=api_key)
+            # model = genai.GenerativeModel(
+            #     model_name="gemini-2.0-flash",
+            #     safety_settings=safety_settings,
+            #     generation_config=generation_config,
+            # )
+            #
+            # chat_session = model.start_chat(history=[])
+            # response = chat_session.send_message(prompt)
+            # return response.text
+        except ResourceExhausted:
+            log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
+            if i < 4:
+                log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                time.sleep(120)
+            else:
+                raise
+        except Exception as e:
+            log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
+            log.append_log(f"[ERROR] 오류 이름: {type(e).__name__}")
+            if i < 4:
+                log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                time.sleep(120)
+            else:
+                raise
+    return response
 
     # try:
     #     response = model.generate_content(f"""
@@ -180,8 +194,8 @@ def create_content(contents, address, company, place):
     if place == "":
         place = "신공간 설비업체"
     print("place = " + place)
-    try:
-        response = model.generate_content(f"""
+
+    prompt = f"""
                 내가 글을 쓸건데, 주소 키워드는 {address}, 업종 키워드는 {company}야.
                 그리고 '{place}'라는 회사를 운영하고 있어.
                 예시 글들을 보여줄게.
@@ -218,19 +232,79 @@ def create_content(contents, address, company, place):
 
                 지금까지 얘기한 5가지 요구사항들은 꼭 지켜줘. 하나도 빠짐없이 5개 다 지켜줘야 해.
                 만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
-                .""")
+                ."""
 
-        time.sleep(60)
-        return response.text
-    except ResourceExhausted:
-        log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
-        log.append_log("[ERROR] 충분한 시간이 흐른 뒤에 프로그램을 재시작해 주세요.")
-        raise
-    except Exception as e:
-        log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
-        log.append_log(f"[ERROR] 오류 이름: {type(e).__name__}")
-        raise
+    response = None
+    for i in range(5):
+        try:
+            client = genai.Client(api_key=api_key)
 
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    temperature=1,
+                )
+            )
+
+            break
+            # response = model.generate_content(f"""
+            #         내가 글을 쓸건데, 주소 키워드는 {address}, 업종 키워드는 {company}야.
+            #         그리고 '{place}'라는 회사를 운영하고 있어.
+            #         예시 글들을 보여줄게.
+            #
+            #         예시 1:
+            #         {contents[0]}
+            #
+            #         예시 2:
+            #         {contents[1]}
+            #
+            #         그리고 다음 사항들은 반드시 지켜줘. 하나라도 빼먹으면 안 돼.
+            #
+            #         1. 우리 업체에 관한 내용과 본문에 넣지 말아야 하는 내용은 다음과 같아.
+            #
+            #         {content_ai.get_ai_detail(company)}
+            #         {content_ai.get_ai_common()}
+            #
+            #         너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 하지 말라는 내용은 반드시 빼 줘.
+            #
+            #         2. ** 또는 ##와 같은 마크다운 언어는 쓰지 마.
+            #         제발. 마크다운 언어는 절대 포함하지 마. 어차피 적용 안돼
+            #
+            #         3. 중간에 사진을 10장 넣을 건데, 너가 생성한 글에서 사진을 넣을 만한 장소에 %사진% 이라고 써 주고, 1000자 내외의 글로 작성해 줘.
+            #         반드시 사진을 10장 넣게 해 줘야 해. 꼭.
+            #         사진이 들어가는 공간은 문맥을 해치지 말아야 해.
+            #         그리고 사진에 대한 설명을 적으면 글을 파싱하기 어려우니까, 사진에 대한 설명은 반드시 빼 줘.
+            #
+            #         4. 문장이 . ? ! 이런 끝맺음 기호로 끝날 때마다 줄바꿈은 꼭 해줘야 해.
+            #         그리고 하나의 문단이 끝날 때마다 줄바꿈은 두 번 해줘.
+            #
+            #         5. 연락처, 주소, 홈페이지 같은 정보는 적지 않아도 돼
+            #
+            #         6. 내가 운영하는 회사 이름은 {place}야. 다른 이상한 이름 쓰지 말고 반드시 내 회사명은 {place}로 소개해 줘.
+            #
+            #         지금까지 얘기한 5가지 요구사항들은 꼭 지켜줘. 하나도 빠짐없이 5개 다 지켜줘야 해.
+            #         만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
+            #         .""")
+            #
+            # time.sleep(60)
+            # return response.text
+        except ResourceExhausted:
+            log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
+            if i < 4:
+                log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                time.sleep(120)
+            else:
+                raise
+        except Exception as e:
+            log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
+            log.append_log(f"[ERROR] 오류 이름: {type(e).__name__}")
+            if i < 4:
+                log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                time.sleep(120)
+            else:
+                raise
+    return response
 
 def create_title_div(titles, address, company, place):
     global model, title_list
