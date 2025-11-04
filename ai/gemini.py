@@ -2,6 +2,7 @@ import re
 import time
 import types
 
+from google.genai.errors import ServerError
 from google.generativeai import GenerationConfig
 
 from ui import log
@@ -117,6 +118,10 @@ def create_title(titles, address, company, place):
             # chat_session = model.start_chat(history=[])
             # response = chat_session.send_message(prompt)
             # return response.text
+        except ServerError:
+            log.append_log("[ERROR] GEMINI 서버에 오류가 발생했습니다.")
+            log.append_log("[ERROR] 30분 후 요청을 재개합니다.")
+            time.sleep(1800)
         except ResourceExhausted:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
@@ -126,12 +131,12 @@ def create_title(titles, address, company, place):
                 raise
         except Exception as e:
             log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
-            log.append_log(f"[ERROR] 오류 이름: {type(e).__name__}")
             if i < 4:
                 log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
                 time.sleep(120)
             else:
                 raise
+    time.sleep(120)
     return response.text
 
     # try:
@@ -289,6 +294,10 @@ def create_content(contents, address, company, place):
             #
             # time.sleep(60)
             # return response.text
+        except ServerError:
+            log.append_log("[ERROR] GEMINI 서버에 오류가 발생했습니다.")
+            log.append_log("[ERROR] 30분 후 요청을 재개합니다.")
+            time.sleep(1800)
         except ResourceExhausted:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
@@ -304,6 +313,7 @@ def create_content(contents, address, company, place):
                 time.sleep(120)
             else:
                 raise
+    time.sleep(120)
     return response.text
 
 def create_title_div(titles, address, company, place):
