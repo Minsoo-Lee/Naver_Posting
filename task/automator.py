@@ -49,6 +49,9 @@ def start_task():
     cycle_cnt = 0
     cycle_num = text_data.TextData().get_cycle_num()
 
+    task_index = 1
+    task_length = contents.get_keywords_length()
+
     while keyword_idx < contents.get_keywords_length() or login_idx < login_len:
         print("WHY?")
         login_idx = login_idx % login_len
@@ -60,20 +63,20 @@ def start_task():
 
         # 로그인 다중 접속을 위한 테스트
         # 블로그 / 카페 / 둘다
-        task_index = box_data.BoxData().get_rb_value()
+        platform_index = box_data.BoxData().get_rb_value()
 
         # 아이디, 비밀번호, 장소를 리스트로 넣음
         login_info = [login_list[login_idx][0], login_list[login_idx][1], login_list[login_idx][2]]
 
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현
-        if task_index == 0:
-            keyword_idx = post_blog(contents, category_name, login_info, True, cycle_cnt, cycle_num)
-        elif task_index == 1:
-            keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num)
-        elif task_index == 2:
-            keyword_idx = post_blog(contents, category_name, login_info, False, cycle_cnt, cycle_num)
-            keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num)
+        if platform_index == 0:
+            keyword_idx = post_blog(contents, category_name, login_info, True, cycle_cnt, cycle_num, task_index)
+        elif platform_index == 1:
+            keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index)
+        elif platform_index == 2:
+            keyword_idx = post_blog(contents, category_name, login_info, False, cycle_cnt, cycle_num, task_index)
+            keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index)
 
         webdriver.enter_url(NAVER)
         login.click_logout()
@@ -82,6 +85,7 @@ def start_task():
         login_idx += 1
         if login_idx == login_len:
             cycle_cnt += 1
+        task_index += 1
 
     log.append_log("모든 작업을 완료하였습니다.")
     button_data.ButtonData().execute_button_Enable(True)

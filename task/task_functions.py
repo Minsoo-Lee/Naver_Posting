@@ -48,7 +48,7 @@ def input_login_value(id_val, pw_val):
 
 
 # 키워드 조합 개수대로 블로그 발행
-def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_num):
+def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_num, task_index):
 
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
@@ -145,7 +145,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
             blog.insert_enter()
         log.append_log("해시태그 추가를 완료하였습니다.")
         blog.complete_posting()
-        log.append_log("포스팅을 완료하였습니다.")
+        # log.append_log("포스팅을 완료하였습니다.")
 
         time.sleep(1)
 
@@ -159,8 +159,10 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
           ip_trans_execute.trans_ip()
           is_ip_changed = True
 
+        log.append_log(f"포스팅을 완료하였습니다. {task_index}/{keyword_len * 4}")
+
         get_waiting_time()
-        log.append_log("포스팅을 완료하였습니다.")
+        # log.append_log("포스팅을 완료하였습니다.")
 
     return keyword_idx
 
@@ -212,7 +214,7 @@ def write_content_blog(address, company, article, image_path, image_length, titl
     video.remove_video(video_path)
     image.remove_image(THUMBNAIL_PATH)
 
-def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
+def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index):
     id_val = login_info[0]
     pw_val = login_info[1]
     place = login_info[2]
@@ -295,6 +297,9 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num):
                 ip_trans_execute.trans_ip()
             # if cafe_index < len(cafe_list) - 1:
             #     get_waiting_time()
+
+            log.append_log(f"포스팅을 완료하였습니다. {task_index}/{keyword_len * 4}")
+
             get_waiting_time()
 
     return keyword_idx
