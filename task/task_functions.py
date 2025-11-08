@@ -159,7 +159,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
           ip_trans_execute.trans_ip()
           is_ip_changed = True
 
-        log.append_log(f"포스팅을 완료하였습니다. {task_index}/{keyword_len * 4}")
+        log.append_log(f"포스팅을 완료하였습니다. {task_index}/{keyword_len * 8}")
 
         get_waiting_time()
         # log.append_log("포스팅을 완료하였습니다.")
@@ -298,7 +298,7 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index
             # if cafe_index < len(cafe_list) - 1:
             #     get_waiting_time()
 
-            log.append_log(f"포스팅을 완료하였습니다. {task_index}/{keyword_len * 4}")
+            log.append_log(f"포스팅을 완료하였습니다. {task_index}/{keyword_len * 8}")
 
             get_waiting_time()
 
