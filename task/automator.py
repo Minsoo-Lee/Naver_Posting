@@ -49,7 +49,7 @@ def start_task():
     cycle_cnt = 0
     cycle_num = text_data.TextData().get_cycle_num()
 
-    task_index = 1
+    task_index = [1]
     task_length = contents.get_keywords_length()
 
     while keyword_idx < contents.get_keywords_length() or login_idx < login_len:
@@ -85,7 +85,6 @@ def start_task():
         login_idx += 1
         if login_idx == login_len:
             cycle_cnt += 1
-        task_index += 1
 
     log.append_log("모든 작업을 완료하였습니다.")
     button_data.ButtonData().execute_button_Enable(True)

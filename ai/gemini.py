@@ -120,8 +120,8 @@ def create_title(titles, address, company, place):
             # return response.text
         except ServerError:
             log.append_log("[ERROR] GEMINI 서버에 오류가 발생했습니다.")
-            log.append_log("[ERROR] 30분 후 요청을 재개합니다.")
-            time.sleep(1800)
+            log.append_log("[ERROR] 1시간 후 요청을 재개합니다.")
+            time.sleep(3600)
         except ResourceExhausted:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
@@ -296,8 +296,8 @@ def create_content(contents, address, company, place):
             # return response.text
         except ServerError:
             log.append_log("[ERROR] GEMINI 서버에 오류가 발생했습니다.")
-            log.append_log("[ERROR] 30분 후 요청을 재개합니다.")
-            time.sleep(1800)
+            log.append_log("[ERROR] 1시간 후 요청을 재개합니다.")
+            time.sleep(3600)
         except ResourceExhausted:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
