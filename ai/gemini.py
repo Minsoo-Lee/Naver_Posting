@@ -90,7 +90,7 @@ def create_title(titles, address, company, place):
             client = genai.Client(api_key=api_key)
             print("CLIENT 설정")
             response = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model="gemini-2.0-flash",
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     temperature=1,
@@ -254,7 +254,7 @@ def create_content(contents, address, company, place):
             print("CLIENT 설정")
 
             response = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model="gemini-2.0-flash",
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     temperature=1,
