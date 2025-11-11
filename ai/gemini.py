@@ -1,5 +1,6 @@
 import re
 import time
+import traceback
 import types
 
 from google.genai.errors import ServerError
@@ -87,7 +88,7 @@ def create_title(titles, address, company, place):
     for i in range(5):
         try:
             client = genai.Client(api_key=api_key)
-
+            print("CLIENT 설정")
             response = client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents=prompt,
@@ -118,10 +119,17 @@ def create_title(titles, address, company, place):
             # chat_session = model.start_chat(history=[])
             # response = chat_session.send_message(prompt)
             # return response.text
-        except ServerError:
+        except ServerError as se:
             log.append_log("[ERROR] GEMINI 서버에 오류가 발생했습니다.")
-            log.append_log("[ERROR] 1시간 후 요청을 재개합니다.")
-            time.sleep(3600)
+            if i < 4:
+                log.append_log("[ERROR] 1시간 후 요청을 재개합니다.")
+                print("==============================GEMINI 서버 에러==============================")
+                print(f"[DETAIL] {se}")  # 예외 메시지
+                print(traceback.format_exc())  # 전체 스택 트레이스
+                print("==========================================================================")
+                time.sleep(3600)
+            else:
+                raise
         except ResourceExhausted:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
@@ -243,6 +251,7 @@ def create_content(contents, address, company, place):
     for i in range(5):
         try:
             client = genai.Client(api_key=api_key)
+            print("CLIENT 설정")
 
             response = client.models.generate_content(
                 model="gemini-2.5-flash",
@@ -294,10 +303,17 @@ def create_content(contents, address, company, place):
             #
             # time.sleep(60)
             # return response.text
-        except ServerError:
+        except ServerError as se:
             log.append_log("[ERROR] GEMINI 서버에 오류가 발생했습니다.")
-            log.append_log("[ERROR] 1시간 후 요청을 재개합니다.")
-            time.sleep(3600)
+            if i < 4:
+                log.append_log("[ERROR] 1시간 후 요청을 재개합니다.")
+                print("==============================GEMINI 서버 에러==============================")
+                print(f"[DETAIL] {se}")  # 예외 메시지
+                print(traceback.format_exc())  # 전체 스택 트레이스
+                print("==========================================================================")
+                time.sleep(3600)
+            else:
+                raise
         except ResourceExhausted:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
