@@ -11,6 +11,8 @@ import colorsys
 import random
 import pyperclip
 
+from ui import log
+
 if platform.system() == "Windows":
 	import win32clipboard
 	import win32con
@@ -322,12 +324,18 @@ def remove_image(image_path):
 
 def blog_upload_image_error():
 	try:
+		log.append_log("이미지 업로드 오류를 확인합니다.")
 		webdriver.click_element_xpath_error_one_click("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
+		log.append_log("이미지 업로드 오류가 확인되어 넘어갑니다.")
 	except:
+		log.append_log("발견된 오류가 없습니다.")
 		pass
 
 def cafe_upload_image_error():
 	try:
+		log.append_log("이미지 업로드 오류를 확인합니다.")
 		webdriver.click_element_xpath_error_one_click("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div[3]/button")
+		log.append_log("이미지 업로드 오류가 확인되어 넘어갑니다.")
 	except:
+		log.append_log("발견된 오류가 없습니다.")
 		pass

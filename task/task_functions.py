@@ -194,13 +194,12 @@ def write_content_blog(address, company, article, image_path, image_length, titl
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
                 time.sleep(5)
-                image.blog_upload_image_error()
-                time.sleep(5)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다.\n다음 작업으로 넘어갑니다.")
             finally:
                 image_index += 1
+                time.sleep(5)
                 image.blog_upload_image_error()
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
@@ -328,14 +327,13 @@ def write_content_cafe(address, company, article, image_path, image_length, titl
                 log.append_log(f"이미지를 업로드합니다.")
                 image.draw_border_sample(image_path[image_index])
                 image.upload_image(NEW_IMAGE_PATH)
-                time.sleep(5)
-                image.cafe_upload_image_error()
-                time.sleep(5)
+                time.sleep(10)
                 image.remove_image(NEW_IMAGE_PATH)
             except FileNotFoundError:
                 log.append_log(f"[ERROR] 이미지 경로 [{image_path[image_index]}]를 찾을 수 없습니다.\n다음 작업으로 넘어갑니다.")
             finally:
                 image_index += 1
+                time.sleep(5)
                 image.cafe_upload_image_error()
         elif VIDEO in content:
             # 썸네일 사진을 이용한 영상을 업로드
