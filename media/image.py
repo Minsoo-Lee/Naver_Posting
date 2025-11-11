@@ -308,14 +308,26 @@ def adjust_color_preserving_contrast(fg_color_name, bg_color_name, lightness_shi
 def remove_image(image_path):
 	os.remove(image_path)
 
+# def blog_upload_image_error():
+# 	try:
+# 		webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
+# 	except:
+# 		pass
+#
+# def cafe_upload_image_error():
+# 	try:
+# 		webdriver.click_element_xpath_error("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div[3]/button")
+# 	except:
+# 		pass
+
 def blog_upload_image_error():
 	try:
-		webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
+		webdriver.click_element_xpath_error_one_click("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
 	except:
 		pass
 
 def cafe_upload_image_error():
 	try:
-		webdriver.click_element_xpath_error("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div[3]/button")
+		webdriver.click_element_xpath_error_one_click("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div[3]/button")
 	except:
 		pass
