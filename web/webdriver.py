@@ -88,7 +88,7 @@ def click_element_xpath_error_one_click(xpath):
     try:
         driver.find_element(By.XPATH, xpath).click()
     except:
-        pass
+        raise
 
 def click_element_css(css):
     try:
