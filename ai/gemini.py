@@ -130,10 +130,14 @@ def create_title(titles, address, company, place):
                 time.sleep(3600)
             else:
                 raise
-        except ResourceExhausted:
+        except ResourceExhausted as re:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
                 log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                print("==============================GEMINI 무료 요금제 초과 에러==============================")
+                print(f"[DETAIL] {re}")  # 예외 메시지
+                print(traceback.format_exc())  # 전체 스택 트레이스
+                print("===================================================================================")
                 time.sleep(120)
             else:
                 raise
@@ -141,6 +145,10 @@ def create_title(titles, address, company, place):
             log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
             if i < 4:
                 log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                print("==============================GEMINI 에러==============================")
+                print(f"[DETAIL] {e}")  # 예외 메시지
+                print(traceback.format_exc())  # 전체 스택 트레이스
+                print("======================================================================")
                 time.sleep(120)
             else:
                 raise
@@ -314,10 +322,14 @@ def create_content(contents, address, company, place):
                 time.sleep(3600)
             else:
                 raise
-        except ResourceExhausted:
+        except ResourceExhausted as re:
             log.append_log("[ERROR] 무료 요금제의 하루 일일 요청을 초과하였습니다.")
             if i < 4:
                 log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                print("==============================GEMINI 무료 요금제 초과 에러==============================")
+                print(f"[DETAIL] {re}")  # 예외 메시지
+                print(traceback.format_exc())  # 전체 스택 트레이스
+                print("===================================================================================")
                 time.sleep(120)
             else:
                 raise
@@ -326,6 +338,10 @@ def create_content(contents, address, company, place):
             log.append_log(f"[ERROR] 오류 이름: {type(e).__name__}")
             if i < 4:
                 log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                print("==============================GEMINI 에러==============================")
+                print(f"[DETAIL] {e}")  # 예외 메시지
+                print(traceback.format_exc())  # 전체 스택 트레이스
+                print("======================================================================")
                 time.sleep(120)
             else:
                 raise
