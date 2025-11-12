@@ -144,12 +144,12 @@ def create_title(titles, address, company, place):
         except Exception as e:
             log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
             if i < 4:
-                log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                log.append_log("[ERROR] 15분 후 요청을 재개합니다.")
                 print("==============================GEMINI 에러==============================")
                 print(f"[DETAIL] {e}")  # 예외 메시지
                 print(traceback.format_exc())  # 전체 스택 트레이스
                 print("======================================================================")
-                time.sleep(120)
+                time.sleep(900)
             else:
                 raise
     time.sleep(120)
@@ -337,12 +337,12 @@ def create_content(contents, address, company, place):
             log.append_log("[ERROR] Gemini 소통 중 오류가 발생하였습니다.")
             log.append_log(f"[ERROR] 오류 이름: {type(e).__name__}")
             if i < 4:
-                log.append_log("[ERROR] 2분 후 요청을 재개합니다.")
+                log.append_log("[ERROR] 15분 후 요청을 재개합니다.")
                 print("==============================GEMINI 에러==============================")
                 print(f"[DETAIL] {e}")  # 예외 메시지
                 print(traceback.format_exc())  # 전체 스택 트레이스
                 print("======================================================================")
-                time.sleep(120)
+                time.sleep(900)
             else:
                 raise
     time.sleep(120)
