@@ -5,11 +5,13 @@ import subprocess
 import time
 import io
 
-import clipboard
 from selenium.webdriver import ActionChains, Keys
 import colorsys
 import random
-import pyperclip
+
+import cv2
+import numpy as np
+from PIL import Image, ImageEnhance
 
 from ui import log
 
@@ -80,14 +82,13 @@ def upload_image_alt(image_path, caption):
 	webdriver.driver.execute_script("""
 	  const imgs = document.querySelectorAll('img.se-image-resource');
 	  if (imgs.length > 0) {
-	    const lastImg = imgs[imgs.length - 1];
-	    lastImg.alt = arguments[0];
-	    console.log("ALT 속성 수정 완료:", lastImg);
+		const lastImg = imgs[imgs.length - 1];
+		lastImg.alt = arguments[0];
+		console.log("ALT 속성 수정 완료:", lastImg);
 	  } else {
-	    console.log("이미지를 찾을 수 없습니다.");
+		console.log("이미지를 찾을 수 없습니다.");
 	  }
 	""", caption)
-
 
 @sleep_after(1)
 def upload_image(image_path):
@@ -136,7 +137,6 @@ def copy_image_to_clipboard(image_path):
 	else:
 		raise NotImplementedError("Unsupported OS")
 
-
 def get_korean_font(size=24):
 	try:
 		system = platform.system()
@@ -159,12 +159,84 @@ def draw_bold_text(draw, position, text, font, fill, boldness=1.5):
 	for ox, oy in offsets:
 		draw.text((x + ox, y + oy), text, font=font, fill=fill)
 
-def draw_border_thumbnail(draw, width, height, thickness=3, color="red"):
+def draw_border(draw, width, height, color):
+
+	min_dimension = min(width, height)
+	thickness_percent = random.randint(2, 6) * 5  # 1% ~ 5% 사이 랜덤
+	thickness = int(min_dimension * (thickness_percent / 1000.0))
+
 	for i in range(thickness):
 		draw.rectangle(
 			[i, i, width - i - 1, height - i - 1],
 			outline=color
 		)
+
+def add_watermark(image, phone, address, company):
+	"""
+	image: RGB 또는 RGBA PIL Image
+	"""
+
+	font_size = 30
+	line_spacing = 20
+	opacity = 50
+	text_thickness = 1
+
+	if image.mode != "RGBA":
+		image = image.convert("RGBA")
+	width, height = image.size
+
+	# 워터마크 전용 레이어
+	watermark = Image.new("RGBA", image.size, (0, 0, 0, 0))
+	draw = ImageDraw.Draw(watermark)
+
+	# 랜덤 색상 + alpha
+	color = (
+		random.randrange(256),
+		random.randrange(256),
+		random.randrange(256),
+		opacity
+	)
+
+	font = get_korean_font(font_size)
+
+	# 전화번호 삭제 (추가 가능)
+	lines = [address, company]
+
+	# 전체 텍스트 높이 계산
+	text_heights = []
+	total_height = 0
+
+	for line in lines:
+		bbox = draw.textbbox((0, 0), line, font=font)
+		h = bbox[3] - bbox[1]
+		text_heights.append(h)
+		total_height += h + line_spacing
+
+	total_height -= line_spacing  # 마지막 줄 spacing 제거
+
+	# ✅ 가운데 정렬 기준 Y
+	y = (height - total_height) // 2
+
+	for line, h in zip(lines, text_heights):
+		bbox = draw.textbbox((0, 0), line, font=font)
+		text_width = bbox[2] - bbox[0]
+
+		# ✅ 가운데 정렬 기준 X
+		x = (width - text_width) // 2
+
+		draw.text((x, y), line, fill=color, font=font)
+		draw.text(
+			(x, y),
+			line,
+			fill=color,
+			font=font,
+			stroke_width=text_thickness,
+			stroke_fill=color
+		)
+		y += h + line_spacing
+
+	# 합성
+	return Image.alpha_composite(image, watermark)
 
 def generate_image(phone, address, company):
 	colors = Colors()
@@ -179,9 +251,9 @@ def generate_image(phone, address, company):
 	company_elements = [c.strip() for c in company.split(" ")]
 
 	line_data = [
-		(phone, 50),
 		(address, FONT_SIZE),
 		(company_elements[0], FONT_SIZE),
+		(phone, 50),
 	]
 
 	# 수정
@@ -213,61 +285,62 @@ def generate_image(phone, address, company):
 		_, line_spacing = line_heights[i]
 		start_y += font_size + line_spacing
 
-	# font_size = 40
-	# line_spacing = int(font_size * 1.5)
-	# font = get_korean_font(font_size)
-	# lines = [phone, address, company]
-
-	# ✅ 수정된 전체 텍스트 높이 계산
-	# total_text_height = font_size * len(lines) + line_spacing * (len(lines) - 1)
-	# start_y = (height - total_text_height) // 2
-	#
-	# for line in lines:
-	#     bbox = draw.textbbox((0, 0), line, font=font)
-	#     text_width = bbox[2] - bbox[0]
-	#     x = (width - text_width) // 2
-	#     draw_bold_text(draw, (x, start_y), line, font, fill=text_revised, boldness=0.5)
-	#     start_y += font_size + line_spacing
-
-	draw_border_thumbnail(draw, width, height, thickness=5, color=text_revised)
+	draw_border(draw, width, height, color=text_revised)
 	image.save(THUMBNAIL_PATH)
 
-def draw_border_sample(image_path):
+def draw_border_sample(image_path, phone, address, company):
 	image = Image.open(image_path)
+
+	image = clean_image(image)
+
 	draw = ImageDraw.Draw(image)
 	width, height = image.size
 
 	# 가장 짧은 변을 기준으로 비례 두께 계산 (5% ~ 10%)
-	min_dimension = min(width, height)
-	thickness_percent = random.uniform(0.01, 0.03)  # 5% ~ 10% 사이 랜덤
-	random_thickness = int(min_dimension * thickness_percent)
+	# min_dimension = min(width, height)
+	# thickness_percent = random.uniform(0.01, 0.03)  # 5% ~ 10% 사이 랜덤
+	# random_thickness = int(min_dimension * thickness_percent)
 
 	# 테두리 색상 설정
-	random_color = colors.Colors().get_one_random_color()
+	# random_color = colors.Colors().get_one_random_color()
+	random_color = tuple(random.randint(0, 255) for _ in range(3))
 
 	# 테두리 그리기
-	for i in range(random_thickness):
-		draw.rectangle(
-			[i, i, width - i - 1, height - i - 1],
-			outline=random_color
-		)
-
+	draw_border(draw, width, height, random_color)
+	image = add_watermark(image, phone, address, company)
 	image.save(NEW_IMAGE_PATH)
-	# random_thickness = random.randint(1, 5)
-	# random_color = colors.Colors().get_one_random_color()
-	#
-	# image = Image.open(image_path)
-	# draw = ImageDraw.Draw(image)
-	# width, height = image.size
-	#
-	# i = 0
-	# while i < random_thickness:
-	#     draw.rectangle(
-	#             [i, i, width - i - 1, height - i - 1],
-	#             outline=random_color
-	#         )
-	#     i += 0.5
-	# image.save(NEW_IMAGE_PATH)
+
+def clean_image(image):
+	# PIL → OpenCV
+	cv_img = np.array(image)
+
+	# 색조 살짝 변경 => 이미지 해시값 변
+	hsv = cv2.cvtColor(cv_img, cv2.COLOR_RGB2HSV)
+	h, s, v = cv2.split(hsv)
+	hue_shift = random.choice([-4, -3, -2, 2, 3, 4])
+	h = (h.astype(int) + hue_shift) % 180
+	h = h.astype(np.uint8)
+	hsv = cv2.merge([h, s, v])
+	cv_img = cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
+
+	# 하단 미세 밝기 (그라데이션 설정)
+	hgt, wdt, _ = cv_img.shape
+	gradient = np.linspace(1.0, random.uniform(1.03, 1.05), hgt).reshape(hgt, 1)
+	gradient = np.repeat(gradient, wdt, axis=1)
+	for c in range(3):
+		cv_img[:, :, c] = cv_img[:, :, c] * gradient
+
+	cv_img = np.clip(cv_img, 0, 255).astype(np.uint8)
+
+	# OpenCV → PIL
+	img = Image.fromarray(cv_img)
+
+	# 밝기 / 대비 / 채도 조정
+	img = ImageEnhance.Brightness(img).enhance(random.uniform(1.02, 1.05))
+	img = ImageEnhance.Contrast(img).enhance(random.uniform(1.06, 1.11))
+	img = ImageEnhance.Color(img).enhance(random.uniform(1.03, 1.06))
+
+	return img
 
 def get_luminance(rgb):
 	srgb = [c / 255.0 for c in rgb]
@@ -310,18 +383,6 @@ def adjust_color_preserving_contrast(fg_color_name, bg_color_name, lightness_shi
 def remove_image(image_path):
 	os.remove(image_path)
 
-# def blog_upload_image_error():
-# 	try:
-# 		webdriver.click_element_xpath_error("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div[3]/button")
-# 	except:
-# 		pass
-#
-# def cafe_upload_image_error():
-# 	try:
-# 		webdriver.click_element_xpath_error("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div[3]/button")
-# 	except:
-# 		pass
-
 def blog_upload_image_error():
 	try:
 		log.append_log("이미지 업로드 오류를 확인합니다.")
@@ -339,3 +400,5 @@ def cafe_upload_image_error():
 	except:
 		log.append_log("발견된 오류가 없습니다.")
 		pass
+
+

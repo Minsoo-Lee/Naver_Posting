@@ -16,5 +16,8 @@ pywin32-ctypes
 clipboard~=0.0.4
 matplotlib~=3.10.3
 google-genai
+numpy
+pillow
+opencv-python
 
 webdriver-manager~=4.0.2

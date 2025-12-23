@@ -1,5 +1,7 @@
 import clipboard
 import platform
+
+import pyperclip
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -77,22 +79,22 @@ def enter_context_input():
         "/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[1]/div[2]")
 
 def write_text(content):
-    webdriver.send_keys_action(Keys.RETURN)
-    webdriver.send_keys_action(content)
+    # webdriver.send_keys_action(Keys.RETURN)
+    # webdriver.send_keys_action(content)
 
-    # active_element = webdriver.get_active_element()
-    # active_element.send_keys(Keys.RETURN)
-    # clipboard.copy(content)
-    # webdriver.click_element_css('dev.se-canvas-bottom')
-    #
-    # actions = ActionChains(webdriver.driver)
-    # time.sleep(1)
-    # actions.key_down(KEY).send_keys('v').key_up(KEY).perform()
-    # time.sleep(2)
-    #
-    # active_element = webdriver.get_active_element()
-    # active_element.send_keys(Keys.RETURN)
-    # time.sleep(2)
+    # download .txt
+    with open("tmp.txt", "w", encoding="utf-8") as f:
+        f.write(content + "\n")
+
+    time.sleep(2)
+
+    # open .txt
+    with open("tmp.txt", "r", encoding="utf-8") as f:
+        copy_content = f.read()
+
+    actions = ActionChains(webdriver.driver)
+    pyperclip.copy(copy_content)
+    actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
 def insert_enter():
     # webdriver.click_element_xpath(
