@@ -24,6 +24,10 @@ class LeftPanelData:
         self.api_panel = None
         self.phone_panel = None
         self.account_panel = None
+
+        # 추가
+        self.cycle_panel = None
+
         self.phone_account_panel = None
         self.up_panel = None
         self.middle_panel = None
@@ -74,3 +78,6 @@ class LeftPanelData:
 
     def set_api_panel(self, api_panel):
         self.api_panel = api_panel
+
+    def set_cycle_panel(self, cycle_panel):
+        self.cycle_panel = cycle_panel

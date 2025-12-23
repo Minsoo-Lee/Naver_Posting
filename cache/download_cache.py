@@ -15,6 +15,7 @@ def convert_JSON():
         "waiting_min": texts.waiting_min.GetValue(),
         "phone_number": texts.phone_number.GetValue(),
         "api_number": texts.api_number.GetValue(),
+        "cycle_num": texts.cycle_num.GetValue(),
         "content_input": texts.content_input.GetValue(),
         "status_rb": boxes.status_rb.GetSelection(),
         "comment_cb": boxes.comment_cb.GetValue(),
@@ -28,8 +29,8 @@ def download_JSON():
         json.dump(converted_data, f, indent=4, ensure_ascii=False)
 
 def download_CSV():
-    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list, lists.title_list]
-    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe", ".cache_title"]
+    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list]
+    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe"]
 
     for i in range(len(csv_names)):
         row_count = list_ctrl_list[i].GetItemCount()

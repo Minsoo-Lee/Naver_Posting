@@ -17,7 +17,6 @@ is_exist = False
 def upload_JSON():
     file_path = os.path.join(os.getcwd(), "cache", ".cache_text")
     if os.path.isfile(file_path):
-        print("✅ .cache_text 파일이 존재합니다.")
         with open("cache/.cache_text", "r", encoding="utf-8") as f:
             return json.load(f)
     else:
@@ -27,10 +26,10 @@ def upload_JSON():
 def show_text():
     text_json = upload_JSON()
     text_list = [
-        texts.waiting_max, texts.waiting_min, texts.api_number, texts.phone_number, texts.content_input
+        texts.waiting_max, texts.waiting_min, texts.api_number, texts.phone_number, texts.content_input, texts.cycle_num
     ]
     text_keys = [
-        "waiting_max", "waiting_min", "api_number", "phone_number", "content_input"
+        "waiting_max", "waiting_min", "api_number", "phone_number", "content_input", "cycle_num"
     ]
     for text_input, key in zip(text_list, text_keys):
         text_input.SetValue(text_json.get(key, ""))
@@ -65,7 +64,6 @@ def set_rb_index_utils(boolean, is_each=True):
 def upload_CSV(file_name):
     file_path = os.path.join(os.getcwd(), "cache", file_name)
     if os.path.isfile(file_path):
-        print("✅ .cache_text 파일이 존재합니다.")
         with open(file_path, "r", encoding="utf-8") as f:
             reader = csv.reader(f)
             return [row for row in reader]
@@ -74,8 +72,8 @@ def upload_CSV(file_name):
 
 
 def show_lists():
-    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list, lists.title_list]
-    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe", ".cache_title"]
+    list_ctrl_list = [lists.account_list, lists.keyword_list, lists.blog_list, lists.cafe_list]
+    csv_names = [".cache_account", ".cache_keyword", ".cache_blog", ".cache_cafe"]
 
     for idx in range(len(csv_names)):
         data = upload_CSV(csv_names[idx])
@@ -106,7 +104,7 @@ def show_lists():
     lists.account_list.SetColumnWidth(1, 0)
     lists.account_list.SetColumnWidth(2, 120)
 
-    lists.keyword_list.SetColumnWidth(2, 200)
+    # lists.keyword_list.SetColumnWidth(2, 200)
 
     lists.blog_list.SetColumnWidth(0, 100)
     lists.blog_list.SetColumnWidth(1, 100)

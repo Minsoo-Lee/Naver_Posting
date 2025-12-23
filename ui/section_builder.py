@@ -217,6 +217,24 @@ class SectionBuilder:
         self.left_panel_data.set_phone_panel(phone_panel)
         self.text_data.set_phone_number(phone_input)
 
+    # 반복 횟수 설정 - added
+    def cycle_section(self, panel):
+        cycle_panel = wx.Panel(panel, wx.ID_ANY)
+        cycle_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        cycle_input_label = wx.StaticText(cycle_panel, wx.ID_ANY, "반복 횟수", size=wx.Size(80, 20))
+        cycle_input = wx.TextCtrl(cycle_panel, wx.ID_ANY, size=wx.Size(150, 20))
+
+        cycle_input_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        cycle_input_sizer.Add(cycle_input_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)  # wx.ALIGN_CENTER_VERTICAL로 수직 가운데 정렬
+        cycle_input_sizer.Add(cycle_input, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        cycle_sizer.Add(cycle_input_sizer, 0)
+        cycle_panel.SetSizer(cycle_sizer)
+
+        self.left_panel_data.set_cycle_panel(cycle_panel)
+        self.text_data.set_cycle_num(cycle_input)
+
     # 계정 박스
     def account_section(self, panel):
         account_panel = wx.Panel(panel, wx.ID_ANY)
@@ -253,12 +271,14 @@ class SectionBuilder:
 
         self.api_section(phone_account_panel)
         self.phone_section(phone_account_panel)
+        self.cycle_section(phone_account_panel)
         self.account_section(phone_account_panel)
         # self.ip_section(phone_account_panel)
         #
         # phone_account_sizer.Add(self.left_panel_data.ip_panel, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         phone_account_sizer.Add(self.left_panel_data.api_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
         phone_account_sizer.Add(self.left_panel_data.phone_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
+        phone_account_sizer.Add(self.left_panel_data.cycle_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
         phone_account_sizer.Add(self.left_panel_data.account_panel, 0, wx.ALL | wx.ALIGN_LEFT, 5)
         phone_account_panel.SetSizer(phone_account_sizer)
 
@@ -288,10 +308,12 @@ class SectionBuilder:
         keyword_button.Enable(True)
 
         keyword_list = wx.ListCtrl(keyword_panel, style=wx.LC_REPORT | wx.BORDER_SUNKEN, size=wx.Size(550, LIST_BOX_HEIGHT))
-        keyword_list.InsertColumn(0, "주소", width=120)
-        keyword_list.InsertColumn(1, "업체", width=120)
-        keyword_list.InsertColumn(2, "파일 경로", width=120)
-        keyword_list.InsertColumn(3, "해시태그", width=120)
+        keyword_list.InsertColumn(0, "주소", width=60)
+        keyword_list.InsertColumn(1, "업체", width=60)
+        keyword_list.InsertColumn(2, "파일 경로", width=60)
+        keyword_list.InsertColumn(3, "해시태그", width=60)
+        keyword_list.InsertColumn(4, "AI 개입(상세)", width=60)
+        keyword_list.InsertColumn(5, "AI 개입(공통)", width=60)
 
         keyword_button.Bind(
             wx.EVT_BUTTON,

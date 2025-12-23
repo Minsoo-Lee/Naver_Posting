@@ -73,13 +73,19 @@ def enter_context_input():
         "/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[1]/div[2]/section/article/div[2]/div/div/div/div/p/span[2]")
 
 def write_text(content):
-    # webdriver.send_keys_action(Keys.RETURN)
-    # webdriver.send_keys_action(content)
+    # download .txt
+    with open("tmp.txt", "w", encoding="utf-8") as f:
+        f.write(content + "\n")
+
+    time.sleep(2)
+
+    # open .txt
+    with open("tmp.txt", "r", encoding="utf-8") as f:
+        copy_content = f.read()
+
     actions = ActionChains(webdriver.driver)
-    pyperclip.copy(content)
-    # 테스트 용도로 주석처리
+    pyperclip.copy(copy_content)
     actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
-    # actions.key_down(Keys.COMMAND).send_keys('v').key_up(Keys.COMMAND).perform()
 
 def insert_enter():
     # webdriver.click_element_xpath(

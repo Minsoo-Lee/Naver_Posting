@@ -31,7 +31,7 @@ class ListData:
         self.keyword_list = None
         self.blog_list = None
         self.cafe_list = None
-        self.title_list = None
+        # self.title_list = None
 
         ListData._initialized = True
 
@@ -48,8 +48,8 @@ class ListData:
     def set_cafe_list(self, cafe_list):
         self.cafe_list = cafe_list
 
-    def set_title_list(self, title_list):
-        self.title_list = title_list
+    # def set_title_list(self, title_list):
+    #     self.title_list = title_list
 
     # 리스트 활성화 설정
     def account_list_Enable(self, boolean):
@@ -64,7 +64,7 @@ class ListData:
     def cafe_list_Enable(self, boolean):
         self.cafe_list.Enable(boolean)
 
-    def title_list_Enable(self, boolean):
-        self.title_list.Enable(boolean)
+    # def title_list_Enable(self, boolean):
+    #     self.title_list.Enable(boolean)
 
     # 리스트 값 불러오기

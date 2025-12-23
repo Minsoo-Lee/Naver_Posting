@@ -13,9 +13,13 @@ DURATION = 10
 def input_title(xpath, title):
     webdriver.send_data_by_xpath(xpath, title)
 
+@sleep_after()
+def input_info(xpath, info):
+    webdriver.send_data_by_xpath(xpath, info)
+
 
 @sleep_after(1)
-def upload_video_to_blog(video_path, title):
+def upload_video_to_blog(video_path, title, info):
     webdriver.hide_finder()
 
     webdriver.click_element_css("button[data-name='video']")
@@ -27,13 +31,14 @@ def upload_video_to_blog(video_path, title):
 
     webdriver.send_data_by_xpath("//*[@type='file']", video_path)
     input_title("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[1]/div[2]/input", title)
+    input_info("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[2]/div[2]/textarea", info)
 
     time.sleep(30)  # 업로드 대기
 
     complete_upload("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[3]/button")
 
 @sleep_after()
-def upload_video_to_cafe(video_path, video_title):
+def upload_video_to_cafe(video_path, video_title, video_info):
     webdriver.hide_finder()
 
     webdriver.click_element_css("button[data-name='video']")
@@ -45,6 +50,7 @@ def upload_video_to_cafe(video_path, video_title):
     webdriver.send_data_by_xpath("//*[@type='file']", video_path)
     time.sleep(1)
     input_title("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[1]/div[2]/input", video_title)
+    input_info("/html/body/div[1]/div/div/section/div/div[2]/div[1]/div[3]/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/fieldset/div[2]/div[2]/textarea", video_info)
 
     time.sleep(30)  # 업로드 대기
 
@@ -64,23 +70,18 @@ def generate_video():
     # 수정
     # background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(10)
     background = ColorClip(size=(video_width, video_height), color=(255, 255, 255)).with_duration(DURATION)
-    print(0)
 
     # 1. 이미지 파일을 불러옴
     image_clip = ImageClip(THUMBNAIL_PATH, duration=10).with_duration(DURATION)
-    print(1)
 
     # 4. 이미지 위치 중앙 정렬
     image_clip = image_clip.with_position(("center", "center"))
-    print(2)
 
     # 5. 합성
     final_clip = CompositeVideoClip([background, image_clip]).with_duration(DURATION)
-    print(3)
 
     # 6. 영상으로 저장
     final_clip.write_videofile(VIDEO_PATH, fps=24, logger=None)
-    print(4)
 
     # ==========================================================================================
 

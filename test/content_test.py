@@ -11,7 +11,7 @@ CONTEXT = """
         """
 
 def get_body(address, company):
-    gemini.init_gemini()
+    # gemini.init_gemini()
     response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company)
     print(response)
     response = response.replace("**", "")

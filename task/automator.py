@@ -18,6 +18,8 @@ def start_task():
 
     # 크롬 초기화
     init()
+    log.append_log("Gemini를 초기화합니다.")
+    gemini.init_gemini()
 
     # 계정 정보 가져오기
     login_list = list_data.get_list_data(list_data.ListData().account_list)
@@ -32,55 +34,60 @@ def start_task():
     contents.combinate_keywords()
     # print(contents.keywords)
     contents.set_image_path([row[2] for row in keywords])
-
     contents.set_hashtags([row[3] for row in keywords])
+    contents.set_ai_detail([(row[1], row[4]) for row in keywords])
+    contents.set_ai_common([row[5] for row in keywords])
 
     cafe_list = list_data.get_list_data(list_data.ListData().cafe_list)
     blog_data = list_data.get_list_data(list_data.ListData().blog_list)
     blog_dict = dict(blog_data)
 
-    # 로그인 반복
-    for i in range(len(login_list)):
-        category_name = blog_dict.get(login_list[i][0])
+    keyword_idx = 0
+    login_idx = 0
+    login_len = len(login_list)
+
+    cycle_cnt = 0
+    cycle_num = text_data.TextData().get_cycle_num()
+
+    task_index = [1]
+    task_length = contents.get_keywords_length()
+
+    while keyword_idx < contents.get_keywords_length() or login_idx < login_len:
+        print("WHY?")
+        login_idx = login_idx % login_len
+
+        category_name = blog_dict.get(login_list[login_idx][0])
         log.append_log(f"카테고리를 탐색합니다.\n카테고리 = {category_name}")
-        execute_login(login_list[i][0], login_list[i][1])
-        # 여기서는 키워드 X 키워드대로 글을 생성하여 자동 포스팅 -> 반복문으로 감쌀 것 (for문은 한개만 사용!)
+
+        execute_login(login_list[login_idx][0], login_list[login_idx][1])
 
         # 로그인 다중 접속을 위한 테스트
         # 블로그 / 카페 / 둘다
-        task_index = box_data.BoxData().get_rb_value()
+        platform_index = box_data.BoxData().get_rb_value()
+
+        # 아이디, 비밀번호, 장소를 리스트로 넣음
+        login_info = [login_list[login_idx][0], login_list[login_idx][1], login_list[login_idx][2]]
 
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현
-        if task_index == 0:
-            post_blog(contents, category_name, login_list[i][0], login_list[i][1], login_list[i][2], True)
-        elif task_index == 1:
-            post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
-        elif task_index == 2:
-            post_blog(contents, category_name, login_list[i][0], login_list[i][1], login_list[i][2], False)
-            post_cafe(contents, cafe_list, login_list[i][0], login_list[i][1])
-
-        log.append_log(f"{login_list[i][0]} 계정으로 모든 포스팅을 완료하였습니다.")
+        if platform_index == 0:
+            keyword_idx = post_blog(contents, category_name, login_info, True, cycle_cnt, cycle_num, task_index)
+        elif platform_index == 1:
+            keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index)
+        elif platform_index == 2:
+            keyword_idx = post_blog(contents, category_name, login_info, False, cycle_cnt, cycle_num, task_index)
+            keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index)
 
         webdriver.enter_url(NAVER)
         login.click_logout()
 
-        # 대기시간 설정(안 해도 될듯)
-        # if i < len(login_list) - 1:
-        #     total_time, minutes, seconds = get_waiting_time()
-        #     log.append_log(f"다음 작업까지 대기합니다.\n대기시간 = {minutes}분 {seconds}초")
-        #     time.sleep(total_time)
-        if i == len(login_list) - 1:
-            log.append_log("모든 작업을 완료하였습니다.")
-            button_data.ButtonData().execute_button_Enable(True)
+        # added
+        login_idx += 1
+        if login_idx == login_len:
+            cycle_cnt += 1
 
-        # # 테스트 코드
-        # if button_data.ButtonData().get_toggle_value() is True:
-        #     log.append_log("IP를 변경합니다.")
-        #     ip_trans.toggle_airplane_mode()
-        #     curren_ip = ip_trans.get_current_ip()
-        #     log.append_log(f"현재 IP = {curren_ip}")
-    button_data.ButtonData().set_all_buttons(True)
+    log.append_log("모든 작업을 완료하였습니다.")
+    button_data.ButtonData().execute_button_Enable(True)
 
 def get_waiting_time():
     min_time = text_data.TextData().get_waiting_min()
