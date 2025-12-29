@@ -21,8 +21,7 @@ def init_gpt():
     global client, api_key
 
     # 테스트 용도로 주석처리
-    # api_key = text_data.TextData().get_api_number()
-
+    api_key = text_data.TextData().get_api_number()
     client = OpenAI(api_key=api_key)
 
 
