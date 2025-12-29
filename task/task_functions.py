@@ -3,7 +3,7 @@ import random
 
 from selenium.webdriver import Keys
 
-from ai import gemini
+from ai import gemini, gpt
 from web import login, webdriver, blog, cafe
 from ip_trans import ip_trans_execute
 from media import video, image
@@ -387,7 +387,9 @@ def get_titles(address, company, button_name, place):
     time.sleep(WAIT)
 
     # gemini.init_gemini()
-    response = gemini.create_title(titles, address, company, place)
+    # GEMINI -> GPT로 변경
+    # response = gemini.create_title(titles, address, company, place)
+    response = gpt.create_title_4o(titles, address, company, place)
     # response = "캡션 테스트"
 
     webdriver.enter_url(NAVER)

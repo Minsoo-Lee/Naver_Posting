@@ -314,7 +314,7 @@ def clean_image(image):
 	# PIL → OpenCV
 	cv_img = np.array(image)
 
-	# 색조 살짝 변경 => 이미지 해시값 변
+	# 색조 살짝 변경 => 이미지 해시값 변경
 	hsv = cv2.cvtColor(cv_img, cv2.COLOR_RGB2HSV)
 	h, s, v = cv2.split(hsv)
 	hue_shift = random.choice([-4, -3, -2, 2, 3, 4])

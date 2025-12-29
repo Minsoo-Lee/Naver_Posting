@@ -1,4 +1,4 @@
-from ai import gemini
+from ai import gemini, gpt
 from data import const, text_data, list_data
 import re
 from ui import log
@@ -24,7 +24,11 @@ def get_body(address, company, place):
     # log.append_log("Gemini를 초기화합니다.")
     # gemini.init_gemini()
     log.append_log("Gemini에게 요청을 전송합니다.")
-    response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place)
+
+    # GEMINI -> GPT로 변경
+    # response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place)
+    response = gpt.create_content_4o([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place)
+
     log.append_log("Gemini로부터 응답을 전달받습니다.")
     response = response.replace("**", "")
     contents = [item.strip() for item in re.split(PATTERN, response)]
