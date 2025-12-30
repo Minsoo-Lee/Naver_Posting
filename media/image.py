@@ -335,9 +335,9 @@ def clean_image(image):
 	# OpenCV → PIL
 	img = Image.fromarray(cv_img)
 
-	# 밝기 / 대비 / 채도 조정
+	# 밝기 / 대비 / 채도 조정 (대비는 너무 심해서 낮춤)
 	img = ImageEnhance.Brightness(img).enhance(random.uniform(1.02, 1.05))
-	img = ImageEnhance.Contrast(img).enhance(random.uniform(1.06, 1.11))
+	img = ImageEnhance.Contrast(img).enhance(random.uniform(1.01, 1.03))
 	img = ImageEnhance.Color(img).enhance(random.uniform(1.03, 1.06))
 
 	return img
