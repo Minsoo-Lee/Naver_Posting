@@ -106,7 +106,10 @@ class ContentData:
         return self.hashtags
 
     def get_ai_detail(self, category):
-        return self.ai_detail[category]
+        try:
+            return self.ai_detail[category]
+        except KeyError:
+            return None
 
     def get_ai_detail_all(self):
         return self.ai_detail
