@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from collections import deque
@@ -103,13 +104,17 @@ def init_gpt():
 
     client = OpenAI(api_key=api_key)
 
+
 def create_title_4o(titles, address, company, place):
-    global title_list, model_4o, client, ai_common, ai_detail, prev_title
+    global title_list, model_4o, client, prev_title, ai_detail, ai_common
     last_exception = None
     titles_str = "\n".join(titles)
-    title_list_value = "\n".join(title_list)
-    title_type = random.choice(title_types)
-    print("title_type = " + title_type)
+    keyword_order = [address, company, place]
+    random.shuffle(keyword_order)
+
+    # title_list_value = "\n".join(title_list)
+    # title_type = random.choice(title_types)
+    # print("title_type = " + title_type)
 
     if not place:
         place = "신공간 설비업체"
@@ -123,47 +128,51 @@ def create_title_4o(titles, address, company, place):
     user_prompt = f"""
                     내가 제목을 작성을 할 거야. 주소 키워드는 {address}, 업종 키워드는 {company}야.
                      한 마디로, 나는 {address} 지역에서 {place}라는 회사를 운영하는데, "홍보 글의 제목"을 작성하고 싶어.
-                     내가 수집한 제목 리스트를 보여줄게. 이 리스트들은 상위 노출된 10개 글의 제목들이야.
-    
+                     
+                     1. 내가 수집한 제목 리스트를 보여줄게. 이 리스트들은 상위 노출된 10개 글의 제목들이야.
+
                      {titles_str}
+                     
                      내가 쓰는 글도 상위 노출이 될 수 있게끔 저 리스트들을 참고해서 제목을 하나 작성해 줘.
-    
+
                      그리고 다음 사항들은 반드시 지켜줘. 하나라도 빼먹으면 안 돼.
-    
-                     1. 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
-    
+
+                     2. 우리 업체에 관한 내용과 제목에 넣지 말아야 하는 내용은 다음과 같아.
+
                      {ai_detail}
                      {ai_common}
-    
+
                      너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 하지 말라는 내용은 반드시 빼 줘
                      그리고 서비스만 나열하는 방식으로 제목을 생성하지 마.       
-    
+
                      3. ** 또는 ##와 같은 마크다운 언어는 쓰지 마.
                      제발. 마크다운 언어는 절대 포함하지 마. 어차피 적용 안돼
-    
+
                      4. 그리고 너가 준 제목으로 바로 포스팅을 할거야. 다른 제목 옵션 주지 말고 그냥 제목 딱 한줄만 넘겨줘.
                      이게 중요해. 다른 제목 옵션 주지 말고 제목 딱 한줄만 넘겨줘 제발.
                      그래야 글이 꼬이지 않아.
-    
+
                      5. 내가 운영하는 회사 이름은 {place}야. 다른 이상한 이름 쓰지 말고 반드시 내 회사명은 {place}로 소개해 줘.
                         회사 이름 언급은 문장 내 위치를 다양하게 작성해 줘.
-    
+
                      6. 제목 글자 수는 25-40자 정도로 작성해 줘. 함축적으로 작성해주면 더 좋아.
-                     
-                     7. 아래 리스트는 지금까지 너가 생성해 준 제목 리스트야. 
+
+                     7. 아래 제목은 너가 이전에 생성해 준 제목이야. 
                      너가 지금 새로 생성한 제목과 비교해서, 전혀 다른 제목으로 생성해 줘.
-                     특히, {address}, {place}, {company}의 위치가 중복되지 않아야 해.
                      
                      {prev_title}
                      
-                     8. 
+                     8. 키워드들의 순서는 다음과 같이 해 줘.
+
+                     {keyword_order[0]}, {keyword_order[1]}, {keyword_order[2]}
                      
+                     위의 순서대로 키워드가 등장해야 하는데, 생각없이 나열만 해서는 안돼. 
+                     적절한 조사를 활용해서 자연스럽게 문장이 이어지도록 해 줘.
                      
+                     내가 말한 8가지 규칙을 모두 지켜야 해. 만약 하나라도 지켜지지 않았을 시에는 다시 제목을 생성해 줘.
                     """
     for i in range(5):
         try:
-            print("이전 제목들")
-            print(title_list_value)
             response = client.responses.create(
                 model=model_4o,
                 input=[
@@ -177,6 +186,15 @@ def create_title_4o(titles, address, company, place):
             title = response.output_text.strip()
             title_list.append(title)
             prev_title = title
+
+            with open("gpt_with_keywords.txt", "a", encoding="utf-8") as f:
+                f.write("================================" + "\n")
+                f.write(str(keyword_order) + "\n")
+                f.write(title + "\n")
+
+            with open("gpt_test.txt", "a", encoding="utf-8") as f:
+                f.write(title + "\n")
+
             return title
 
         except Exception as e:
@@ -361,12 +379,9 @@ def create_content_4o(contents, address, company, place):
     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
 
 init_gpt()
-# for i in range(10):
-#     title1 = create_title_4o(titles, address, company, place)
-#     print(title1)
+for i in range(10):
+    create_title_4o(titles, address, company, place)
+    print(str(i + 1) + "번째 끝")
 
-content = create_content_4o(None, address, company, place)
-print(content)
 
-print("=================================================================")
-print("\n".join(title_list))
+

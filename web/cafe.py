@@ -94,7 +94,7 @@ def write_text(content):
 
     actions = ActionChains(webdriver.driver)
     pyperclip.copy(copy_content)
-    actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+    actions.key_down(Keys.COMMAND).send_keys('v').key_up(Keys.COMMAND).perform()
 
 def insert_enter():
     # webdriver.click_element_xpath(

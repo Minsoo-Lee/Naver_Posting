@@ -253,12 +253,13 @@ def generate_image(phone, address, company):
 	line_data = [
 		(address, FONT_SIZE),
 		(company_elements[0], FONT_SIZE),
-		(phone, 50),
 	]
 
 	# 수정
 	if len(company_elements) == 2:
 		line_data.append((company_elements[1], FONT_SIZE))
+
+	line_data.append((phone, 45))
 
 	total_text_height = 0
 	line_spacing = 40 # 수정
