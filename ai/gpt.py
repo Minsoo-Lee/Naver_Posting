@@ -1,8 +1,5 @@
+import random
 import time
-import traceback
-import types
-
-from ui import log
 from data import text_data
 from data import content_data
 from collections import deque
@@ -30,9 +27,14 @@ def create_title_4o(titles, address, company, place):
     last_exception = None
     contents = content_data.ContentData()
     titles_str = "\n".join(titles)
+    keyword_order = [address, company, place]
+    random.shuffle(keyword_order)
+
     # title_list_value = "\n".join(title_list)
     # title_type = random.choice(title_types)
     # print("title_type = " + title_type)
+
+
 
     if not place:
         place = "신공간 설비업체"
@@ -72,10 +74,13 @@ def create_title_4o(titles, address, company, place):
                         회사 이름 언급은 문장 내 위치를 다양하게 작성해 줘.
 
                      6. 제목 글자 수는 25-40자 정도로 작성해 줘. 함축적으로 작성해주면 더 좋아.
+                     
+                     7. 키워드들의 순서는 다음과 같이 해 줘.
+                     
+                     {keyword_order[0]}, {keyword_order[1]}, {keyword_order[2]}
 
-                     7. 아래 리스트는 지금까지 너가 생성해 준 제목 리스트야. 
+                     8. 아래 리스트는 지금까지 너가 생성해 준 제목 리스트야. 
                      너가 지금 새로 생성한 제목과 비교해서, 전혀 다른 제목으로 생성해 줘.
-                     특히, {address}, {place}, {company}의 위치가 중복되지 않아야 해.
 
                      {prev_title}
 

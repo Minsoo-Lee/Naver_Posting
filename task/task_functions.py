@@ -155,9 +155,9 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         webdriver.enter_url("https://www.naver.com")
         time.sleep(3)
 
-        if button_data.ButtonData().get_toggle_value() is True:
-          ip_trans_execute.trans_ip()
-          is_ip_changed = True
+        # if button_data.ButtonData().get_toggle_value() is True:
+        #   ip_trans_execute.trans_ip()
+        #   is_ip_changed = True
 
         log.append_log(f"포스팅을 완료하였습니다. {task_index[0]}/{keyword_len * 8}")
         task_index[0] += 1
@@ -295,8 +295,8 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index
 
             log.append_log("포스팅을 완료하였습니다.")
 
-            if button_data.ButtonData().get_toggle_value() is True:
-                ip_trans_execute.trans_ip()
+            # if button_data.ButtonData().get_toggle_value() is True:
+            #     ip_trans_execute.trans_ip()
             # if cafe_index < len(cafe_list) - 1:
             #     get_waiting_time()
 
