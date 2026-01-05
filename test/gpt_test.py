@@ -179,6 +179,13 @@ def create_title_4o(titles, address, company, place):
                      
                      반드시 위의 8개의 규칙을 꼭 지켜줘. 
                      만약 규칙이 하나라도 지켜지지 않았다면 제목을 다시 생성해 줘.
+                     
+                     9. 이건 너가 이전에 생성해 준 제목이야. 
+                     너가 생성한 제목이 이전 제목과 비교했을 떄, 단어의 배치와 문장의 구조 등이 겹치지 않게 검토해 줘.
+                     
+                     {prev_title}
+                     
+                     위의 9가지 규칙들을 하나도 빠짐없이 반드시 지켜줘. 
                     
                     """
     for i in range(5):
@@ -197,12 +204,12 @@ def create_title_4o(titles, address, company, place):
             title_list.append(title)
             prev_title = title
 
-            with open("gpt_with_keywords.txt", "a", encoding="utf-8") as f:
+            with open("gpt_with_keywords_result1.txt", "a", encoding="utf-8") as f:
                 f.write("================================" + "\n")
                 f.write(str(keyword_order) + "\n")
                 f.write(title + "\n")
 
-            with open("gpt_test.txt", "a", encoding="utf-8") as f:
+            with open("gpt_result1.txt", "a", encoding="utf-8") as f:
                 f.write(title + "\n")
 
             return title

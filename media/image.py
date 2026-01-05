@@ -312,36 +312,74 @@ def draw_border_sample(image_path, phone, address, company):
 	image.save(NEW_IMAGE_PATH)
 
 def clean_image(image):
-	# PIL → OpenCV
+	# # PIL → OpenCV
+	# cv_img = np.array(image)
+	#
+	# # 색조 살짝 변경 => 이미지 해시값 변경
+	# hsv = cv2.cvtColor(cv_img, cv2.COLOR_RGB2HSV)
+	# h, s, v = cv2.split(hsv)
+	# hue_shift = random.choice([-4, -3, -2, 2, 3, 4])
+	# h = (h.astype(int) + hue_shift) % 180
+	# h = h.astype(np.uint8)
+	# hsv = cv2.merge([h, s, v])
+	# cv_img = cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
+	#
+	# # 하단 미세 밝기 (그라데이션 설정)
+	# hgt, wdt, _ = cv_img.shape
+	# gradient = np.linspace(1.0, random.uniform(1.03, 1.05), hgt).reshape(hgt, 1)
+	# gradient = np.repeat(gradient, wdt, axis=1)
+	# for c in range(3):
+	# 	cv_img[:, :, c] = cv_img[:, :, c] * gradient
+	#
+	# cv_img = np.clip(cv_img, 0, 255).astype(np.uint8)
+	#
+	# # OpenCV → PIL
+	# img = Image.fromarray(cv_img)
+	#
+	# # 밝기 / 대비 / 채도 조정 (대비는 너무 심해서 낮춤)
+	# img = ImageEnhance.Brightness(img).enhance(random.uniform(1.02, 1.05))
+	# # img = ImageEnhance.Contrast(img).enhance(random.uniform(1.01, 1.03))
+	# img = ImageEnhance.Color(img).enhance(random.uniform(1.03, 1.06))
+	#
+	# return img
+
+	# PIL → OpenCV (RGB)
 	cv_img = np.array(image)
 
-	# 색조 살짝 변경 => 이미지 해시값 변경
+	# RGB → HSV
 	hsv = cv2.cvtColor(cv_img, cv2.COLOR_RGB2HSV)
 	h, s, v = cv2.split(hsv)
-	hue_shift = random.choice([-4, -3, -2, 2, 3, 4])
-	h = (h.astype(int) + hue_shift) % 180
+
+	# Hue 미세 변경 (해시값 변경용, 과하지 않게)
+	hue_shift = random.choice([-2, -1, 1, 2])
+	h = (h.astype(np.int16) + hue_shift) % 180
 	h = h.astype(np.uint8)
+
+	# 하단 미세 밝기 그라데이션 (V 채널에서만 적용)
+	hgt, wdt = v.shape
+	gradient = np.linspace(
+		1.0,
+		random.uniform(1.02, 1.04),
+		hgt
+	).reshape(hgt, 1)
+	gradient = np.repeat(gradient, wdt, axis=1)
+
+	v = v.astype(np.float32) * gradient
+	v = np.clip(v, 0, 255).astype(np.uint8)
+
+	# HSV → RGB
 	hsv = cv2.merge([h, s, v])
 	cv_img = cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
-
-	# 하단 미세 밝기 (그라데이션 설정)
-	hgt, wdt, _ = cv_img.shape
-	gradient = np.linspace(1.0, random.uniform(1.03, 1.05), hgt).reshape(hgt, 1)
-	gradient = np.repeat(gradient, wdt, axis=1)
-	for c in range(3):
-		cv_img[:, :, c] = cv_img[:, :, c] * gradient
-
-	cv_img = np.clip(cv_img, 0, 255).astype(np.uint8)
 
 	# OpenCV → PIL
 	img = Image.fromarray(cv_img)
 
-	# 밝기 / 대비 / 채도 조정 (대비는 너무 심해서 낮춤)
-	img = ImageEnhance.Brightness(img).enhance(random.uniform(1.02, 1.05))
-	# img = ImageEnhance.Contrast(img).enhance(random.uniform(1.01, 1.03))
-	img = ImageEnhance.Color(img).enhance(random.uniform(1.03, 1.06))
+	# PIL 단계: 아주 미세한 보정만
+	img = ImageEnhance.Brightness(img).enhance(random.uniform(1.01, 1.03))
+	img = ImageEnhance.Color(img).enhance(random.uniform(1.01, 1.04))
 
 	return img
+
 
 def get_luminance(rgb):
 	srgb = [c / 255.0 for c in rgb]
