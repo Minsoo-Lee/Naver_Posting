@@ -11,35 +11,39 @@ api_key = ""
 
 prev_title = ""
 title_types = ["후기형", "문장형", "긴급형", "정보형"]
-title_type_ex = {
-    "정보형": [
-        "1.{address} 지역에서 {company} 점검이 필요한 주요 상황 정리, {place}",
-	"2.	{company} 공사가 필요한 신호를 {address} 사례로 정리한 {place} 안내",
-	"3.	{address} 현장에서 자주 발생하는 {company} 문제와 해결 방향, {place}",
-	"4.	{company} 작업 전 알아두면 좋은 기준을 {address} 기준으로 정리한 {place}",
-	"5.	{address} 기준으로 살펴본 {company} 점검과 공사 흐름, {place}]"],
-    "긴급형": [
-        "1.	갑작스러운 문제 발생 시 {address}에서 필요한 {company} 대응, {place}",
-	"2.	방치하면 커지는 {company} 문제, {address}에서 빠른 대응이 필요한 이유와 {place}",
-	"3.	예상치 못한 고장 상황에서 {address} {company} 조치가 중요한 이유, {place}",
-	"4.	반복되는 증상이라면 {address}에서 즉시 확인해야 할 {company}, {place}",
-	"5.	긴급 조치가 필요한 {company} 상황을 {address} 기준으로 정리한 {place}"
-    ],
-    "후기형": [
-    "1.	작업 이후 달라진 현장 상태, {address} {company} 진행 후 {place} 정리",
-	"2.	공사 완료 후 확인된 변화, {address} {company} 작업 결과와 {place}",
-	"3.	실제 작업을 마친 뒤 느낀 차이, {address} {company} 경험 정리 {place}",
-	"4.	시공 후 관리가 편해진 이유, {address} {company} 작업과 {place}",
-	"5.	작업 전후 비교로 본 변화, {address} {company} 진행 결과 {place}"
-    ],
-    "문장형": [
-    "1.	{address}에서 신중한 {company} 진행이 중요한 이유를 설명하는 {place}",
-	"2.	안정적인 환경을 위해 {address}에서 선택되는 {company}, {place}",
-	"3.	오래 쓰기 위해 고려해야 할 {company}, {address} 기준으로 보는 {place}",
-	"4.	환경에 맞는 {company} 선택이 중요한 {address} 현장과 {place}",
-	"5.	관리 부담을 줄이기 위한 {address} {company} 방향을 제시하는 {place}"
-    ]
-}
+
+def get_title_ex(address, company, place, key, index):
+    title_type_ex = {
+        "정보형": [
+            f"1.{address} 지역에서 {company} 점검이 필요한 주요 상황 정리, {place}",
+        f"2.	{company} 공사가 필요한 신호를 {address} 사례로 정리한 {place} 안내",
+        f"3.	{address} 현장에서 자주 발생하는 {company} 문제와 해결 방향, {place}",
+        f"4.	{company} 작업 전 알아두면 좋은 기준을 {address} 기준으로 정리한 {place}",
+        f"5.	{address} 기준으로 살펴본 {company} 점검과 공사 흐름, {place}]"],
+        "긴급형": [
+            f"1.	갑작스러운 문제 발생 시 {address}에서 필요한 {company} 대응, {place}",
+        f"2.	방치하면 커지는 {company} 문제, {address}에서 빠른 대응이 필요한 이유와 {place}",
+        f"3.	예상치 못한 고장 상황에서 {address} {company} 조치가 중요한 이유, {place}",
+        f"4.	반복되는 증상이라면 {address}에서 즉시 확인해야 할 {company}, {place}",
+        f"5.	긴급 조치가 필요한 {company} 상황을 {address} 기준으로 정리한 {place}"
+        ],
+        "후기형": [
+        f"1.	작업 이후 달라진 현장 상태, {address} {company} 진행 후 {place} 정리",
+        f"2.	공사 완료 후 확인된 변화, {address} {company} 작업 결과와 {place}",
+        f"3.	실제 작업을 마친 뒤 느낀 차이, {address} {company} 경험 정리 {place}",
+        f"4.	시공 후 관리가 편해진 이유, {address} {company} 작업과 {place}",
+        f"5.	작업 전후 비교로 본 변화, {address} {company} 진행 결과 {place}"
+        ],
+        "문장형": [
+        f"1.	{address}에서 신중한 {company} 진행이 중요한 이유를 설명하는 {place}",
+        f"2.	안정적인 환경을 위해 {address}에서 선택되는 {company}, {place}",
+        f"3.	오래 쓰기 위해 고려해야 할 {company}, {address} 기준으로 보는 {place}",
+        f"4.	환경에 맞는 {company} 선택이 중요한 {address} 현장과 {place}",
+        f"5.	관리 부담을 줄이기 위한 {address} {company} 방향을 제시하는 {place}"
+        ]
+    }
+
+    return title_type_ex[key][index]
 
 title_list = deque(maxlen=20)
 client = None
@@ -108,6 +112,7 @@ def init_gpt():
 def create_title_4o(titles, address, company, place):
     global title_list, model_4o, client, prev_title, ai_detail, ai_common
     last_exception = None
+    random.shuffle(titles)
     titles_str = "\n".join(titles)
     keyword_order = [address, company, place]
     random.shuffle(keyword_order)
@@ -120,14 +125,15 @@ def create_title_4o(titles, address, company, place):
         place = "신공간 설비업체"
 
     system_prompt = """
-                    너는 판단하거나 추론하지 않는다.
-                    규칙을 그대로 따르는 생성기다.
-                    조건을 하나라도 어기면 실패다.
+                    너는 홍보 글을 제공하는 마케터야.
+                    내가 알려주는 규칙을 반드시 지키며 제목을 생성해 줘.
                     """
 
     user_prompt = f"""
                     내가 제목을 작성을 할 거야. 주소 키워드는 {address}, 업종 키워드는 {company}야.
                      한 마디로, 나는 {address} 지역에서 {place}라는 회사를 운영하는데, "홍보 글의 제목"을 작성하고 싶어.
+                     
+                     아래 규칙들을 반드시 지켜줘.
                      
                      1. 내가 수집한 제목 리스트를 보여줄게. 이 리스트들은 상위 노출된 10개 글의 제목들이야.
 
@@ -157,19 +163,23 @@ def create_title_4o(titles, address, company, place):
 
                      6. 제목 글자 수는 25-40자 정도로 작성해 줘. 함축적으로 작성해주면 더 좋아.
 
-                     7. 아래 제목은 너가 이전에 생성해 준 제목이야. 
-                     너가 지금 새로 생성한 제목과 비교해서, 전혀 다른 제목으로 생성해 줘.
+                     7. 아래 제목은 너가 이전에 생성해 준 제목이야.
+                     동일한 제목 뼈대(문장 골격)를 이전 제목과 공유해서는 안돼.
                      
                      {prev_title}
+                     
+                     이전 제목과 문장 구조상 유사도가 높다고 판단되면 규칙 위반이야.
                      
                      8. 키워드들의 순서는 다음과 같이 해 줘.
 
                      {keyword_order[0]}, {keyword_order[1]}, {keyword_order[2]}
                      
-                     위의 순서대로 키워드가 등장해야 하는데, 생각없이 나열만 해서는 안돼. 
-                     적절한 조사를 활용해서 자연스럽게 문장이 이어지도록 해 줘.
+                     위의 순서대로 키워드가 등장해야 하는데, 단어들을 나열만 해서는 안돼. 
+                     자연스럽게 문장이 이어지도록 해 줘.
                      
-                     내가 말한 8가지 규칙을 모두 지켜야 해. 만약 하나라도 지켜지지 않았을 시에는 다시 제목을 생성해 줘.
+                     반드시 위의 8개의 규칙을 꼭 지켜줘. 
+                     만약 규칙이 하나라도 지켜지지 않았다면 제목을 다시 생성해 줘.
+                    
                     """
     for i in range(5):
         try:
@@ -379,7 +389,7 @@ def create_content_4o(contents, address, company, place):
     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
 
 init_gpt()
-for i in range(10):
+for i in range(50):
     create_title_4o(titles, address, company, place)
     print(str(i + 1) + "번째 끝")
 
