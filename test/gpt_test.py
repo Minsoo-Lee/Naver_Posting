@@ -222,6 +222,166 @@ def create_title_4o(titles, address, company, place):
 
     raise RuntimeError("GPT-4o-mini 제목 생성 실패") from last_exception
 
+def create_title_4o_simple(titles, address, company, place):
+    global title_list, model_4o, client, prev_title, ai_detail, ai_common
+    last_exception = None
+    random.shuffle(titles)
+    titles_str = "\n".join(titles)
+    keyword_order = [address, company, place]
+    random.shuffle(keyword_order)
+
+    # title_list_value = "\n".join(title_list)
+    # title_type = random.choice(title_types)
+    # print("title_type = " + title_type)
+
+    if not place:
+        place = "신공간 설비업체"
+
+    system_prompt = """
+                    너는 홍보 글을 제공하는 마케터야.
+                    내가 알려주는 규칙을 반드시 지키며 제목을 생성해 줘.
+                    """
+
+    user_prompt = f"""
+                    반드시 아래 내용을 지켜서 홍보 글을 생성하라.
+                    지역: {address}
+                    업종: {company}
+                    상호명: {place}
+                    
+                    [상위 노출된 제목들]
+                    
+                    {titles_str}
+                    
+                    [회사에 관한 내용과 넣지 말아야 하는 내용 - 법적 분쟁에 휘말릴 수 있으니 넣지 말아야 하는 내용은 반드시 뺼 것]
+                    
+                    {ai_detail}
+                    {ai_common}
+                    
+                    [이전에 생성한 제목 - 문장 구조를 이전 제목과 공유하지 말 것]
+                    {prev_title}
+       
+
+                     1. 마크다운 언어 사용 금지
+                     2. 추가 옵션 외에 제목 한 줄만 응답
+                     3. 제목 글자 수는 25-40자
+                     4. 문장 내 지역, 업종, 상호명 순서는 반드시 다음과 같을 것.
+                     또한, 단순히 나열만 하지 말고 자연스러운 문장으로 구성할 것.
+                     문장 내에 나타나는 다음 키워드들의 순서가 틀릴 경우 규칙 위반으로 간주
+                     {keyword_order[0]}, {keyword_order[1]}, {keyword_order[2]}
+                    """
+    for i in range(5):
+        try:
+            response = client.responses.create(
+                model=model_4o,
+                input=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.2,  # ⭐ 낮음
+                max_output_tokens=100,
+                store=False
+            )
+            title = response.output_text.strip()
+            title_list.append(title)
+            prev_title = title
+
+            with open("gpt_with_keywords.txt", "a", encoding="utf-8") as f:
+                f.write("================================" + "\n")
+                f.write(str(keyword_order) + "\n")
+                f.write(title + "\n")
+
+            with open("gpt.txt", "a", encoding="utf-8") as f:
+                f.write(title + "\n")
+
+            return title
+
+        except Exception as e:
+            print(e)
+            if i == 4:
+                raise
+            time.sleep(60)
+
+    raise RuntimeError("GPT-4o-mini 제목 생성 실패") from last_exception
+
+def create_title_4o_template(titles, address, company, place):
+    global title_list, model_4o, client, prev_title, ai_detail, ai_common
+    last_exception = None
+    random.shuffle(titles)
+    # titles_str = "\n".join(titles)
+    # keyword_order = [address, company, place]
+    # random.shuffle(keyword_order)
+
+    # title_list_value = "\n".join(title_list)
+    # title_type = random.choice(title_types)
+    # print("title_type = " + title_type)
+
+    title_key = title_types[random.randint(0, len(title_types) - 1)]
+    title_index = random.randint(0, 4)
+    title_template = get_title_ex(address, company, place, title_key, title_index)
+
+    if not place:
+        place = "신공간 설비업체"
+
+    system_prompt = """
+                    너는 홍보 글을 제공하는 마케터야.
+                    내가 알려주는 규칙을 반드시 지키며 제목을 생성해 줘.
+                    """
+
+    user_prompt = f"""
+                    반드시 아래 내용을 지켜서 홍보 글을 생성하라.
+                    지역: {address}
+                    업종: {company}
+                    상호명: {place}
+
+                    [회사에 관한 내용과 넣지 말아야 하는 내용 - 법적 분쟁에 휘말릴 수 있으니 넣지 말아야 하는 내용은 반드시 뺼 것]
+
+                    {ai_detail}
+                    {ai_common}
+
+                    [이전에 생성한 제목 - 문장 구조를 이전 제목과 공유하지 말 것]
+                    
+                    {prev_title}
+
+                     1. 마크다운 언어 사용 금지
+                     2. 추가 옵션 외에 제목 한 줄만 응답
+                     3. 제목 글자 수는 25-40자
+                     4. 아래 제목 템플릿을 활용하여 새로운 제목을 생성할 것.
+                     {title_template}
+                    """
+    for i in range(5):
+        try:
+            response = client.responses.create(
+                model=model_4o,
+                input=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.2,  # ⭐ 낮음
+                max_output_tokens=100,
+                store=False
+            )
+            title = response.output_text.strip()
+            title_list.append(title)
+            prev_title = title
+
+            with open("gpt_with_template.txt", "a", encoding="utf-8") as f:
+                f.write("================================" + "\n")
+                f.write(title_template + "\n")
+                f.write(title + "\n")
+
+            with open("gpt.txt", "a", encoding="utf-8") as f:
+                f.write(title + "\n")
+
+            return title
+
+        except Exception as e:
+            print(e)
+            if i == 4:
+                raise
+            time.sleep(60)
+
+    raise RuntimeError("GPT-4o-mini 제목 생성 실패") from last_exception
+
 def create_title_5o(titles, address, company, place):
     global title_list, client, model_5o, ai_detail, ai_common
 
@@ -396,8 +556,8 @@ def create_content_4o(contents, address, company, place):
     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
 
 init_gpt()
-for i in range(50):
-    create_title_4o(titles, address, company, place)
+for i in range(10):
+    create_title_4o_template(titles, address, company, place)
     print(str(i + 1) + "번째 끝")
 
 
