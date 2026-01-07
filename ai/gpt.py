@@ -1,6 +1,6 @@
 import random
 import time
-from data import text_data
+from data import text_data, const
 from data import content_data
 from collections import deque
 
@@ -14,6 +14,41 @@ prev_title = ""
 title_list = deque(maxlen=20)
 client = None
 
+title_types = ["후기형", "문장형", "긴급형", "정보형"]
+
+def get_title_ex(address, company, place, key, index):
+    title_type_ex = {
+        "정보형": [
+            f"1.{address} 지역에서 {company} 점검이 필요한 주요 상황 정리, {place}",
+        f"2.	{company} 공사가 필요한 신호를 {address} 사례로 정리한 {place} 안내",
+        f"3.	{address} 현장에서 자주 발생하는 {company} 문제와 해결 방향, {place}",
+        f"4.	{company} 작업 전 알아두면 좋은 기준을 {address} 기준으로 정리한 {place}",
+        f"5.	{address} 기준으로 살펴본 {company} 점검과 공사 흐름, {place}]"],
+        "긴급형": [
+            f"1.	갑작스러운 문제 발생 시 {address}에서 필요한 {company} 대응, {place}",
+        f"2.	방치하면 커지는 {company} 문제, {address}에서 빠른 대응이 필요한 이유와 {place}",
+        f"3.	예상치 못한 고장 상황에서 {address} {company} 조치가 중요한 이유, {place}",
+        f"4.	반복되는 증상이라면 {address}에서 즉시 확인해야 할 {company}, {place}",
+        f"5.	긴급 조치가 필요한 {company} 상황을 {address} 기준으로 정리한 {place}"
+        ],
+        "후기형": [
+        f"1.	작업 이후 달라진 현장 상태, {address} {company} 진행 후 {place} 정리",
+        f"2.	공사 완료 후 확인된 변화, {address} {company} 작업 결과와 {place}",
+        f"3.	실제 작업을 마친 뒤 느낀 차이, {address} {company} 경험 정리 {place}",
+        f"4.	시공 후 관리가 편해진 이유, {address} {company} 작업과 {place}",
+        f"5.	작업 전후 비교로 본 변화, {address} {company} 진행 결과 {place}"
+        ],
+        "문장형": [
+        f"1.	{address}에서 신중한 {company} 진행이 중요한 이유를 설명하는 {place}",
+        f"2.	안정적인 환경을 위해 {address}에서 선택되는 {company}, {place}",
+        f"3.	오래 쓰기 위해 고려해야 할 {company}, {address} 기준으로 보는 {place}",
+        f"4.	환경에 맞는 {company} 선택이 중요한 {address} 현장과 {place}",
+        f"5.	관리 부담을 줄이기 위한 {address} {company} 방향을 제시하는 {place}"
+        ]
+    }
+
+    return title_type_ex[key][index]
+
 def init_gpt():
     global client, api_key
 
@@ -21,8 +56,7 @@ def init_gpt():
     api_key = text_data.TextData().get_api_number()
     client = OpenAI(api_key=api_key)
 
-
-def create_title_4o(titles, address, company, place):
+def create_title_4o_legacy(titles, address, company, place):
     global title_list, model_4o, client, prev_title
     last_exception = None
     contents = content_data.ContentData()
@@ -100,6 +134,71 @@ def create_title_4o(titles, address, company, place):
             title = response.output_text.strip()
             title_list.append(title)
             prev_title = title
+            return title
+
+        except Exception as e:
+            print(e)
+            if i == 4:
+                raise
+            time.sleep(60)
+
+    raise RuntimeError("GPT-4o-mini 제목 생성 실패") from last_exception
+
+def create_title_4o(title, address, company, place):
+    global title_list, model_4o, client, prev_title
+    last_exception = None
+    random.shuffle(title)
+    contents = content_data.ContentData()
+
+    title_key = title_types[random.randint(0, len(title_types) - 1)]
+    title_index = random.randint(0, 4)
+    title_template = get_title_ex(address, company, place, title_key, title_index)
+
+    if not place:
+        place = "신공간 설비업체"
+
+    system_prompt = """
+                        너는 홍보 글을 제공하는 마케터야.
+                        내가 알려주는 규칙을 반드시 지키며 제목을 생성해 줘.
+                        """
+
+    user_prompt = f"""
+                        반드시 아래 내용을 지켜서 홍보 글을 생성하라.
+                        지역: {address}
+                        업종: {company}
+                        상호명: {place}
+
+                        [회사에 관한 내용과 넣지 말아야 하는 내용 - 법적 분쟁에 휘말릴 수 있으니 넣지 말아야 하는 내용은 반드시 뺼 것]
+
+                        {contents.get_ai_detail(company)}
+                        {contents.get_ai_common()}
+
+                        [이전에 생성한 제목 - 문장 구조를 이전 제목과 공유하지 말 것]
+
+                        {prev_title}
+
+                         1. 마크다운 언어 사용 금지
+                         2. 추가 옵션 외에 제목 한 줄만 응답
+                         3. 제목 글자 수는 25-40자
+                         4. 아래 제목 템플릿을 활용하여 새로운 제목을 생성할 것.
+                         {title_template}
+                        """
+    for i in range(5):
+        try:
+            response = client.responses.create(
+                model=model_4o,
+                input=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.2,  # ⭐ 낮음
+                max_output_tokens=100,
+                store=False
+            )
+            title = response.output_text.strip()
+            title_list.append(title)
+            prev_title = title
+
             return title
 
         except Exception as e:
@@ -246,8 +345,7 @@ def create_title_5o(titles, address, company, place):
 
     raise RuntimeError("GPT-5o-mini 제목 생성 실패") from last_exception
 
-
-def create_content_4o(contents, address, company, place):
+def create_content_4o_legacy(contents, address, company, place):
     global client, model_4o
 
     last_exception = None
@@ -396,3 +494,79 @@ def create_content_4o(contents, address, company, place):
 #             time.sleep(60)
 #
 #     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
+
+def create_content_4o(address, company, place):
+    global client, model_4o
+    imoji_list = const.IMOJI_LIST
+    random.shuffle(imoji_list)
+    contents = content_data.ContentData()
+    imoji = imoji_list[0]
+
+    last_exception = None
+
+    if not place:
+        place = "신공간 설비업체"
+
+    system_prompt = """
+        너는 마케팅 AI가 아니라 규칙을 엄격히 집행하는 자동 생성 엔진이다.
+        아래 규칙을 어기면 실패다.
+        추론하거나 해석하지 말고 문자 그대로 지켜라.
+        """
+    user_prompt = f"""
+                    반드시 아래 규칙을 지켜 글을 생성하라.
+
+                    마크다운 언어는 절대 사용하지 마라.
+
+                    주소: {address}
+                    업종: {company}
+                    상호명: {place}
+
+                    [회사에 관한 내용과 넣지 말아야 하는 내용 - 법적 분쟁에 휘말릴 수 있으니 넣지 말아야 하는 내용은 반드시 뺼 것]
+
+                    {contents.get_ai_detail(company)}
+                    {contents.get_ai_common()}
+
+                    회사에 관해 넣을 내용 중 {company}와 관련된 내용만 넣을 것.
+
+                    1. {company}와 관련된 내용만 넣어라. {company}와 관련이 없는 내용은 과감하게 삭제하라.
+                       {company}에 관한 설명도 적어라.
+                    2. 본문은 {imoji}으로 시작하고, 리스트 또한 적극 활용하라.
+                    3. 문단은 11개가 되어야 하며, 각 문단마다 150자 내외로 작성하라.
+                    4. 문단이 끝날 때마다 줄바꿈 삽입 후 %사진%이라는 구분자를 삽입하라.
+                       예시)
+                       문단1
+
+                       %사진
+
+                       문단2
+                    5. , . ! ?처럼 끝맺음 기호로 문장이 끝날 때마다 줄바꿈 사용 
+                    6. **와 같은 마크다운 언어 절대로 사용 금지
+                    7. 연락처, 주소, 홈페이지와 같은 정보는 작성 금지
+                    8. 네이버 블로그 정책에 맞는 본문을 작성하라.
+
+                    언급한 규칙들을 반드시 지키고, 하나라도 누락될 시에는 다시 본문을 생성하라.
+        """
+
+    for i in range(5):
+        try:
+            response = client.responses.create(
+                model=model_4o,  # gpt-4o-mini
+                input=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.2,
+                max_output_tokens=1500,
+                store=False
+            )
+
+            return response.output_text.strip()
+
+        except Exception as e:
+            print(e)
+            last_exception = e
+            if i == 4:
+                raise
+            time.sleep(60)
+
+    raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception

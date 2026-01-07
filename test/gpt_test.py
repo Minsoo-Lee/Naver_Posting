@@ -477,6 +477,9 @@ E. 결과/변화
 
 def create_content_4o(contents, address, company, place):
     global client, model_4o, ai_detail, ai_common
+    imoji_list = const.IMOJI_LIST
+    random.shuffle(imoji_list)
+    imoji = imoji_list[0]
 
     last_exception = None
 
@@ -488,49 +491,41 @@ def create_content_4o(contents, address, company, place):
     아래 규칙을 어기면 실패다.
     추론하거나 해석하지 말고 문자 그대로 지켜라.
     """
-
     user_prompt = f"""
-    내가 글을 쓸건데, 주소 키워드는 {address}, 업종 키워드는 {company}야.
-                그리고 '{place}'라는 회사를 운영하고 있어.
-                예시 글들을 보여줄게.
+                반드시 아래 규칙을 지켜 글을 생성하라.
+                
+                마크다운 언어는 절대 사용하지 마라.
+                
+                주소: {address}
+                업종: {company}
+                상호명: {place}
 
-                예시 1:
-                {const.CONTENT_EX1}
-
-                예시 2:
-                {const.CONTENT_EX2}
-
-                그리고 다음 사항들은 반드시 지켜줘. 하나라도 빼먹으면 안 돼.
-
-                1. 우리 업체에 관한 내용과 본문에 넣지 말아야 하는 내용은 다음과 같아.
+                [회사에 관한 내용과 넣지 말아야 하는 내용 - 법적 분쟁에 휘말릴 수 있으니 넣지 말아야 하는 내용은 반드시 뺼 것]
 
                 {ai_detail}
                 {ai_common}
-
-                너가 넣지 말아야 하는 내용을 넣어버리면 법적 분쟁에 휘말려 큰 손해를 볼 수도 있어. 하지 말라는 내용은 반드시 빼 줘.
-
-                2. ** 또는 ##와 같은 마크다운 언어는 쓰지 마.
-                제발. 마크다운 언어는 절대 포함하지 마. 어차피 적용 안돼
-
-                3. 중간에 사진을 10장 넣을 건데, 너가 생성한 글에서 사진을 넣을 만한 장소에 %사진% 이라고 써 주고, 1000자 내외의 글로 작성해 줘.
-                반드시 사진을 10장 넣게 해 줘야 해. 꼭.
-                사진이 들어가는 공간은 문맥을 해치지 말아야 해.
-                그리고 사진에 대한 설명을 적으면 글을 파싱하기 어려우니까, 사진에 대한 설명은 반드시 빼 줘.
-
-                4. 문장이 . ? ! 이런 끝맺음 기호로 끝날 때마다 줄바꿈은 꼭 해줘야 해.
-                그리고 하나의 문단이 끝날 때마다 줄바꿈은 두 번 해줘.
-
-                5. 연락처, 주소, 홈페이지 같은 정보는 적지 않아도 돼
-
-                6. 내가 운영하는 회사 이름은 {place}야. 다른 이상한 이름 쓰지 말고 반드시 내 회사명은 {place}로 소개해 줘.
                 
-                7. 네이버 정책에 맞는 본문을 생성해 줘.
+                회사에 관해 넣을 내용 중 {company}와 관련된 내용만 넣을 것.
                 
-                8. 가독성을 더 높이기 위해 이모지를 적절하게 활용해 줘
-
-                지금까지 얘기한 7가지 요구사항들은 꼭 지켜줘. 하나도 빠짐없이 7개 다 지켜줘야 해.
-                만약에 이 중 하나라도 빠진 부분이 있다면 처음부터 다시 생성해 줘.
+                1. {company}와 관련된 내용만 넣어라. {company}와 관련이 없는 내용은 과감하게 삭제하라.
+                   {company}에 관한 설명도 적어라.
+                2. 본문은 {imoji}으로 시작하고, 리스트 또한 적극 활용하라.
+                3. 문단은 11개가 되어야 하며, 각 문단마다 150자 내외로 작성하라.
+                4. 문단이 끝날 때마다 줄바꿈 삽입 후 %사진%이라는 구분자를 삽입하라.
+                   예시)
+                   문단1
+                   
+                   %사진
+                   
+                   문단2
+                5. , . ! ?처럼 끝맺음 기호로 문장이 끝날 때마다 줄바꿈 사용 
+                6. **와 같은 마크다운 언어 절대로 사용 금지
+                7. 연락처, 주소, 홈페이지와 같은 정보는 작성 금지
+                8. 네이버 블로그 정책에 맞는 본문을 작성하라.
+                
+                언급한 규칙들을 반드시 지키고, 하나라도 누락될 시에는 다시 본문을 생성하라.
     """
+
 
     for i in range(5):
         try:
@@ -542,6 +537,7 @@ def create_content_4o(contents, address, company, place):
                 ],
                 temperature=0.2,
                 max_output_tokens=1500,
+                store=False
             )
 
             return response.output_text.strip()
@@ -556,9 +552,9 @@ def create_content_4o(contents, address, company, place):
     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
 
 init_gpt()
-for i in range(10):
-    create_title_4o_template(titles, address, company, place)
-    print(str(i + 1) + "번째 끝")
-
+# for i in range(10):
+#     create_title_4o_template(titles, address, company, place)
+#     print(str(i + 1) + "번째 끝")
+print(create_content_4o(None, address, company, place))
 
 
