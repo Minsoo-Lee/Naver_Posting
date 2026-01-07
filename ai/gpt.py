@@ -495,7 +495,7 @@ def create_content_4o_legacy(contents, address, company, place):
 #
 #     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
 
-def create_content_4o(address, company, place):
+def create_content_4o(content, address, company, place):
     global client, model_4o
     imoji_list = const.IMOJI_LIST
     random.shuffle(imoji_list)
