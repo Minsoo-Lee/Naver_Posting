@@ -117,7 +117,8 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
 
         # 테스트를 위해 주석처리
         # 본문 제작
-        article = parsing.parse_contents(address, company, place)
+
+        article = parsing.parse_contents(title, address, company, place)
 
         # 사진 개수 파악
         count = sum(1 for text in article if text == PHOTO)
@@ -265,7 +266,7 @@ def  post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index
             cafe.enter_content_input()
 
             # 본문 제작
-            article = parsing.parse_contents(address, company, place)
+            article = parsing.parse_contents(title, address, company, place)
 
             # 사진 개수 파악
             count = sum(1 for text in article if text == PHOTO)
