@@ -495,7 +495,7 @@ def create_content_4o_legacy(contents, address, company, place):
 #
 #     raise RuntimeError("GPT-4o-mini 본문 생성 실패") from last_exception
 
-def create_content_4o(content, address, company, place):
+def create_content_4o(content, address, company, place, title):
     global client, model_4o
     imoji_list = const.IMOJI_LIST
     random.shuffle(imoji_list)
@@ -514,6 +514,9 @@ def create_content_4o(content, address, company, place):
         """
     user_prompt = f"""
                     반드시 아래 규칙을 지켜 글을 생성하라.
+                    
+                    제목은 "{title}" 이며, 이 제목을 주제로 작성하라.
+                    이 부분이 아주 중요한 부분이다.
 
                     마크다운 언어는 절대 사용하지 마라.
 

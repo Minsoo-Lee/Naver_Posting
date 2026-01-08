@@ -5,10 +5,10 @@ from ui import log
 
 PATTERN = r'  |\n+'
 
-def parse_contents(address, company, place):
+def parse_contents(title, address, company, place):
     header, footer = parse_boilerplate()
     log.append_log("Gemini를 통해 본문을 생성합니다.")
-    body = get_body(address, company, place)
+    body = get_body(title, address, company, place)
     log.append_log("본문 생성이 완료되었습니다.")
     content = []
     header = parse_header(header, address, company)
@@ -19,7 +19,7 @@ def parse_contents(address, company, place):
     return content
 
 
-def get_body(address, company, place):
+def get_body(title, address, company, place):
     # 추가: 25.11.08
     # log.append_log("Gemini를 초기화합니다.")
     # gemini.init_gemini()
@@ -27,7 +27,7 @@ def get_body(address, company, place):
 
     # GEMINI -> GPT로 변경
     # response = gemini.create_content([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place)
-    response = gpt.create_content_4o([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place)
+    response = gpt.create_content_4o([const.CONTENT_EX1, const.CONTENT_EX2], address, company, place, title)
 
     log.append_log("GPT로부터 응답을 전달받습니다.")
     response = response.replace("**", "")
