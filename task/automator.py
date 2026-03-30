@@ -18,7 +18,7 @@ def start_task():
 
     # 크롬 초기화
     init()
-    log.append_log("Gemini를 초기화합니다.")
+    log.append_log("GPT를 초기화합니다.")
 
     # GEMINI -> GPT로 변경
     # gemini.init_gemini()

@@ -7,7 +7,7 @@ PATTERN = r'  |\n+'
 
 def parse_contents(title, address, company, place):
     header, footer = parse_boilerplate()
-    log.append_log("Gemini를 통해 본문을 생성합니다.")
+    log.append_log("GPT를 통해 본문을 생성합니다.")
     body = get_body(title, address, company, place)
     log.append_log("본문 생성이 완료되었습니다.")
     content = []
