@@ -13,8 +13,8 @@ def append_log(log):
         return
 
     current_time = time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime())
-    color = wx.WHITE
-    # color = wx.BLACK
+    # color = wx.WHITE
+    color = wx.BLACK
     if '[ERROR]' in log or '오답' in log:
         color = wx.RED
     elif '작업이 모두 끝났습니다.' in log or '완료' in log:
