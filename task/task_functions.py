@@ -158,7 +158,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         webdriver.enter_url("https://www.naver.com")
         log.append_log("???? 2")
         time.sleep(3)
-        log.append_log("유동 IP 선택여부 = " + button_data.ButtonData().get_toggle_value())
+        log.append_log(f"유동 IP 선택 여부 = {button_data.ButtonData().get_toggle_value()}")
         log.append_log("???? 3")
 
         if button_data.ButtonData().get_toggle_value() is True:
