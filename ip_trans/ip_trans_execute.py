@@ -68,6 +68,7 @@ def enable_airplane_mode():
 
 def trans_ip():
     global transferred_ip
+    log.append_log("IP 변환을 시작합니다.")
 
     if not check_usb_connection():
         log.append_log("핸드폰이 연결되어 있지 않습니다.")
