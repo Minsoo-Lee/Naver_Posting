@@ -368,9 +368,12 @@ def get_titles(address, company, button_name, place):
     # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
     time.sleep(1)
     webdriver.enter_url(NAVER)
-    webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[2]/div/div[3]/div/div/form/fieldset/div/input",
-                                      f"{address} {company}")
-    webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[2]/div/div[3]/div/div/form/fieldset/div/input")
+
+    # 보류
+    # webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[2]/div/div[3]/div/div/form/fieldset/div/input",
+    #                                   f"{address} {company}")
+
+    webdriver.send_data_by_xpath_loop("//*[@id='query']", f"{address} {company}")
 
     webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
 
