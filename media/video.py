@@ -35,7 +35,9 @@ def upload_video_to_blog(video_path, title, info):
 
     time.sleep(30)  # 업로드 대기
 
-    complete_upload("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[3]/button")
+    # complete_upload("/html/body/div[1]/div/div[3]/div/div/div[1]/div/div[4]/div[2]/div/div/div/div[3]/button")
+    complete_upload("//*[@id='video-uploader-wrap']/div/div/div[3]/button")
+
 
 @sleep_after()
 def upload_video_to_cafe(video_path, video_title, video_info):

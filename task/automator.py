@@ -56,7 +56,6 @@ def start_task():
     task_length = contents.get_keywords_length()
 
     while keyword_idx < contents.get_keywords_length() or login_idx < login_len:
-        print("WHY?")
         login_idx = login_idx % login_len
 
         category_name = blog_dict.get(login_list[login_idx][0])

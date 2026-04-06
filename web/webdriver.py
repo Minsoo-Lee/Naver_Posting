@@ -68,6 +68,7 @@ def click_element_xpath(xpath):
             break
         except:
             time.sleep(1)
+            print("Failed to click element xpath")
             continue
 
 def click_element_class_name(class_name):
@@ -91,6 +92,7 @@ def click_element_xpath_error_one_click(xpath):
     except:
         raise
 
+@sleep_after()
 def click_element_css(css):
     try:
         driver.find_element(By.CSS_SELECTOR, css).click()
@@ -208,16 +210,13 @@ def push_search_blog_cafe_button(platform):
         try:
             a_tag = box.find_element(By.TAG_NAME, "a")
             text = a_tag.text.strip()
-            print(f"탭 텍스트: {text}")
 
             if text == platform:
                 a_tag.click()
-                print(f"{platform} 탭 클릭 완료")
                 return True
 
         except Exception as e:
             print(f"에러 발생: {e}")
             continue
 
-    print(f"{platform} 탭을 찾지 못했습니다.")
     return False

@@ -22,8 +22,8 @@ def enter_blog(is_initial = False):
         # webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[2]/div/div/ul/li[3]/a")
         time.sleep(3)
     # 이거
-    # webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[1]/a[2]")
-    webdriver.click_element_xpath("//*[@id='account']/div[3]/div[2]/div[2]/a")
+    # webdriver.click_element_xpath("/html/body/div[2]/div[3]/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[1]/a[2]")
+    webdriver.click_element_xpath("//*[@id='account']/div[3]/div[2]/div[1]/a[2]")
     time.sleep(3)
     webdriver.switch_window()
 

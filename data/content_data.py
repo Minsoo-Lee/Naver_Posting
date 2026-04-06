@@ -72,10 +72,8 @@ class ContentData:
         # return len(self.keywords)
         try:
             result = len(self.keywords)
-            print(f"[DEBUG] get_keywords_length() -> {result}")
             return result
         except Exception as e:
-            print(f"[DEBUG] get_keywords_length() EXCEPTION: {e}")
             return None
 
     def set_image_path(self, path):
