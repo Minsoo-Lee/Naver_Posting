@@ -375,7 +375,8 @@ def get_titles(address, company, button_name, place):
 
     webdriver.send_data_by_xpath_loop("//*[@id='query']", f"{address} {company}")
 
-    webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
+    webdriver.click_element_xpath("//*[@id='sform']/fieldset/button")
+    # webdriver.click_element_xpath("/html/body/div[2]/div[2]/div/div[3]/div/div/form/fieldset/button")
 
     webdriver.push_search_blog_cafe_button(button_name)
 
