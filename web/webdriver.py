@@ -60,6 +60,7 @@ def init_chrome():
 def enter_url(url):
     driver.get(url)
 
+@sleep_after()
 def click_element_xpath(xpath):
     while True:
         try:
