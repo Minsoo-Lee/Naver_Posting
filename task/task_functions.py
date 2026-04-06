@@ -49,6 +49,8 @@ def input_login_value(id_val, pw_val):
 
 # 키워드 조합 개수대로 블로그 발행
 def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_num, task_index):
+    # 여기?
+    print("[ERROR?] 5")
 
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
@@ -59,7 +61,12 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
 
     keyword_idx = 0
 
+    # 여기?
+    print("[ERROR?] 6")
+
     for i in range(cycle_num):
+
+        # 여기?
         keyword_idx = cycle_num * cycle_cnt + i
         if keyword_idx >= keyword_len:
             return keyword_idx
@@ -363,6 +370,8 @@ def get_waiting_time():
     return total_time, minutes, seconds
 
 def get_titles(address, company, button_name, place):
+    # 여기?
+    print("[ERROR?] 7")
 
     # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
     time.sleep(1)

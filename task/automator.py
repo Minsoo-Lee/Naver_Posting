@@ -64,20 +64,33 @@ def start_task():
 
         execute_login(login_list[login_idx][0], login_list[login_idx][1])
 
+        # 여기?
+        print("[ERROR?] 1")
+
         # 로그인 다중 접속을 위한 테스트
         # 블로그 / 카페 / 둘다
         platform_index = box_data.BoxData().get_rb_value()
 
+        # 여기?
+        print("[ERROR?] 2")
+
         # 아이디, 비밀번호, 장소를 리스트로 넣음
         login_info = [login_list[login_idx][0], login_list[login_idx][1], login_list[login_idx][2]]
+
+        # 여기?
+        print("[ERROR?] 3")
 
         # 맵 / 딕셔너리로 코드 간단하게 구현할 수는 있지만
         # 성능 최적화를 위해서 if문으로 단순하게 구현
         if platform_index == 0:
+            # 여기?
             keyword_idx = post_blog(contents, category_name, login_info, True, cycle_cnt, cycle_num, task_index)
         elif platform_index == 1:
+            # 여기?
             keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index)
         elif platform_index == 2:
+            # 여기?
+            print("[ERROR?] 4")
             keyword_idx = post_blog(contents, category_name, login_info, False, cycle_cnt, cycle_num, task_index)
             keyword_idx = post_cafe(contents, cafe_list, login_info, cycle_cnt, cycle_num, task_index)
 
