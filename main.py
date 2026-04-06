@@ -12,14 +12,16 @@ def open_auth_dialog():
 
 if __name__ == "__main__":
     app = wx.App(False)
-    # frame = window.MainFrame()
-    # frame.Show()
-    # app.MainLoop()
+    # 내 환경에서 테스트 할 땐 주석처리
+    frame = window.MainFrame()
+    frame.Show()
+    app.MainLoop()
 
-    if open_auth_dialog():
-        print("인증 성공. 메인 실행")
-        frame = window.MainFrame()
-        frame.Show()
-        app.MainLoop()
-    else:
-        print("인증 실패. 종료합니다.")
+    # 배포 시 주석처리 해제
+    # if open_auth_dialog():
+    #     print("인증 성공. 메인 실행")
+    #     frame = window.MainFrame()
+    #     frame.Show()
+    #     app.MainLoop()
+    # else:
+    #     print("인증 실패. 종료합니다.")
