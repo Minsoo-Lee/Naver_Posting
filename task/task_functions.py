@@ -68,7 +68,6 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
 
         # 주소, 업체 추출
         address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
-        print("address = " + address + " / company = " + company)
         # 제목 생성
         title = get_titles(address, company, "블로그", place)
 
@@ -367,11 +366,11 @@ def get_waiting_time():
 
 def get_titles(address, company, button_name, place):
     # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
-    print("[ERROR?] 0")
     time.sleep(1)
     webdriver.enter_url(NAVER)
-    webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/div/input",
+    webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[2]/div/div[3]/div/div/form/fieldset/div/input",
                                       f"{address} {company}")
+    webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[2]/div/div[3]/div/div/form/fieldset/div/input")
 
     webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
 
