@@ -148,11 +148,12 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
             blog.insert_enter()
         log.append_log("해시태그 추가를 완료하였습니다.")
         blog.complete_posting()
-        # log.append_log("포스팅을 완료하였습니다.")
+        log.append_log("포스팅을 완료?")
 
         time.sleep(1)
 
         blog.exit_iframe()
+        log.append_log("???? 2")
         blog.exit_tab()
 
         webdriver.enter_url("https://www.naver.com")

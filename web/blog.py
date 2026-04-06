@@ -122,6 +122,7 @@ def send_hashtag(hashtag):
 
 @sleep_after()
 def complete_posting():
+    log.append_log("???? 1")
     webdriver.click_element_xpath_error("/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button")
     # webdriver.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/div/button").click()
 
