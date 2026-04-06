@@ -158,6 +158,8 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
         webdriver.enter_url("https://www.naver.com")
         time.sleep(3)
 
+        log.append_log("유동 IP 선택여부 = " + button_data.ButtonData().get_toggle_value())
+
         if button_data.ButtonData().get_toggle_value() is True:
           ip_trans_execute.trans_ip()
           is_ip_changed = True

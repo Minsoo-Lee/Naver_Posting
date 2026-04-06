@@ -70,6 +70,7 @@ def trans_ip():
     global transferred_ip
 
     if not check_usb_connection():
+        log.append_log("핸드폰이 연결되어 있지 않습니다.")
         return
 
     previous_internal_ip, interface = get_inner_IP()
