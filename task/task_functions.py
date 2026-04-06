@@ -49,8 +49,6 @@ def input_login_value(id_val, pw_val):
 
 # 키워드 조합 개수대로 블로그 발행
 def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_num, task_index):
-    # 여기?
-    print("[ERROR?] 5")
 
     is_ip_changed = False
     keyword_len = contents.get_keywords_length()
@@ -60,9 +58,6 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
     place = login_info[2]
 
     keyword_idx = 0
-
-    # 여기?
-    print("[ERROR?] 6")
 
     for i in range(cycle_num):
 
