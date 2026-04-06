@@ -202,14 +202,21 @@ def get_text_from_css_selector(value):
 
 def push_search_blog_cafe_button(platform):
     boxes = driver.find_elements(By.CLASS_NAME, "flick_bx")
+
     for box in boxes:
         try:
             a_tag = box.find_element(By.TAG_NAME, "a")
-            text = a_tag.get_attribute("textContent").strip()
-            print(text)
+            text = a_tag.text.strip()
+            print(f"탭 텍스트: {text}")
+
             if text == platform:
-                box.click()
-                break
-            time.sleep(1)
-        except:
+                a_tag.click()
+                print(f"{platform} 탭 클릭 완료")
+                return True
+
+        except Exception as e:
+            print(f"에러 발생: {e}")
             continue
+
+    print(f"{platform} 탭을 찾지 못했습니다.")
+    return False
