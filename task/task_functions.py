@@ -370,19 +370,20 @@ def get_waiting_time():
     return total_time, minutes, seconds
 
 def get_titles(address, company, button_name, place):
-    # 여기?
-    print("[ERROR?] 7")
-
     # 여기서는 다 존재하는 요소들이기 때문에 루프 돌려서 찾을 것. (time.sleep 하지 말고)
+    print("[ERROR?] 0")
     time.sleep(1)
     webdriver.enter_url(NAVER)
-
+    print("[ERROR?] 1")
     webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/div/input",
                                       f"{address} {company}")
+    print("[ERROR?] 2")
 
     webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
+    print("[ERROR?] 3")
 
     webdriver.push_search_blog_cafe_button(button_name)
+    print("[ERROR?] 4")
 
     ###
     # if is_blog:
