@@ -165,6 +165,7 @@ def send_data_by_xpath_loop(xpath, value):
             break
         except:
             time.sleep(1)
+            print("NOT FOUND")
             continue
 
 def hide_finder():

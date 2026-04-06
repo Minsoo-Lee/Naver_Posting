@@ -68,6 +68,7 @@ def post_blog(contents, category_name, login_info, only_blog, cycle_cnt, cycle_n
 
         # 주소, 업체 추출
         address, company = contents.get_address(keyword_idx), contents.get_company(keyword_idx)
+        print("address = " + address + " / company = " + company)
         # 제목 생성
         title = get_titles(address, company, "블로그", place)
 
@@ -369,16 +370,12 @@ def get_titles(address, company, button_name, place):
     print("[ERROR?] 0")
     time.sleep(1)
     webdriver.enter_url(NAVER)
-    print("[ERROR?] 1")
     webdriver.send_data_by_xpath_loop("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/div/input",
                                       f"{address} {company}")
-    print("[ERROR?] 2")
 
     webdriver.click_element_xpath("/html/body/div[2]/div[1]/div/div[3]/div/div/form/fieldset/button")
-    print("[ERROR?] 3")
 
     webdriver.push_search_blog_cafe_button(button_name)
-    print("[ERROR?] 4")
 
     ###
     # if is_blog:
