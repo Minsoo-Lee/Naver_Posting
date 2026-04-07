@@ -136,7 +136,8 @@ def click_login_not_save():
 
 @sleep_after()
 def click_logout():
-    webdriver.click_element_xpath("/html/body/div[2]/div[2]/div[2]/div[2]/div/div/div[1]/div[1]/div/button")
+    webdriver.click_element_xpath("//*[@id='account']/div[1]/div/button")
+
 
 def switch_to_popup():
     webdriver.switch_window()
